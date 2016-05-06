@@ -1,0 +1,20 @@
+#app {
+  margin: 30px;
+}
+
+:root {
+  height: 100%;
+}
+
+body {
+  /*background-color: rgb(116, 201, 242);*/
+  background: rgb(79,133,187); /* Old browsers */
+  background: -webkit-linear-gradient(rgba(79,133,187,1) 0%, rgba(79,133,187,1) 100%);
+  background: -o-linear-gradient(rgba(79,133,187,1) 0%, rgba(79,133,187,1) 100%);
+  background: linear-gradient(rgba(79,133,187,1) 0%, rgba(79,133,187,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f85bb', endColorstr='#4f85bb',GradientType=0 );
+}
+
+.header-main-container {
+  position: relative;
+}

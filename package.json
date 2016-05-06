@@ -35,7 +35,8 @@
     "if-env": "^1.0.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-router": "^2.4.0"
+    "react-router": "^2.4.0",
+    "semantic-ui": "^2.1.8"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.22.0",
