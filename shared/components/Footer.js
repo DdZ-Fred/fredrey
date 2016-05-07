@@ -10,7 +10,7 @@ class Footer extends React.Component {
         <div className="nine wide column">
           LOGO HERE
           <br/>
-          <a href="#">Source Code</a>
+          <a href="https://github.com/DdZ-Fred/fredrey">Source Code</a>
         </div>
         <div className="three wide column">
           RIGHT
