@@ -2,7 +2,12 @@ import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import Header from '../Header';
 
-function getHeader() {
+function getHeader(data) {
+  if (data) {
+    return (
+      <Friends />
+    );
+  }
   return (
     <Header />
   );
