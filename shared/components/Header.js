@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
+import HeaderContentLeft from './HeaderContentLeft';
+import HeaderContentRight from './HeaderContentRight';
 
 function Header(props) {
-  const divider1 = '<';
-  const divider2 = '/>';
   return (
     <div className="three column row header-main-container">
 
@@ -15,10 +15,13 @@ function Header(props) {
           <div className="image">
             <img src="https://avatars.githubusercontent.com/u/6842608?v=3" alt=""/>
           </div>
-          <div className="content">
-            <a className="header">Frederic Rey</a>
-            <div className="meta">
-              <span className="date">Joined in 2016</span>
+          <div className="ui grid content">
+            <div className="two column row">
+              <HeaderContentLeft />
+              <div className="ui vertical divider">
+                <i className="random icon"></i>
+              </div>
+              <HeaderContentRight />
             </div>
             <div className="description">
               Frederic is patiti patata......

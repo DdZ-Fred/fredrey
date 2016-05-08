@@ -5,16 +5,3 @@
 :root {
   height: 100%;
 }
-
-body {
-  /*background-color: rgb(116, 201, 242);*/
-  background: rgb(97, 173, 249);
-  background: -webkit-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
-  background: -o-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
-  background: linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
-  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f85bb', endColorstr='#4f85bb',GradientType=0 );*/
-}
-
-.header-main-container {
-  position: relative;
-}
