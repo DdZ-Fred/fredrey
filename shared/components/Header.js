@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import HeaderContentLeft from './HeaderContentLeft';
 import HeaderContentRight from './HeaderContentRight';
 
@@ -24,8 +25,8 @@ function Header(props) {
               <HeaderContentRight />
             </div>
             <div className="description">
-              Frederic is patiti patata......
-              <a className="">findMore</a>
+              Frederic is et patiti et patata...
+              <a data-scroll href="#aboutMe">find more</a>
             </div>
           </div>
           <div className="extra content">

@@ -26,6 +26,7 @@ function renderPage(appHtml) {
       <meta charset=utf-8/>
       <title>My First React Router App</title>
       <link rel="stylesheet" href="/semantic/dist/semantic.min.css">
+      <link rel="stylesheet" href="/common.css">
       <link rel=stylesheet href=/index.css>
       <div id=app>${appHtml}</div>
       <script src="/semantic/dist/semantic.min.js"></script>

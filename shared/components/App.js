@@ -10,9 +10,18 @@ class App extends React.Component {
     return (
       <div className="ui centered grid">
         <Header />
-        <AboutMe />
         <Friends />
         <Footer />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <Friends />
+        <AboutMe />
       </div>
     );
   }

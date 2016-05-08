@@ -1,9 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
+import smoothScroll from 'smooth-scroll';
 import routes from './shared/routes';
 
 render(
-  <Router routes={routes} history={browserHistory} />,
+  <Router
+    routes={routes}
+    history={browserHistory} />,
   document.getElementById('app')
 );
+
+smoothScroll.init({
+  speed: 700,
+  easing: 'easeInQuad',
+  updateURL: true,
+  callback(anchor, toggle) {
+    // Post-scroll callback
+    //
+  },
+});

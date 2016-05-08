@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 function AboutMe(props) {
   return (
-    <div className="one column row">
+    <div id="aboutMe" className="one column row">
       <div className="column">
         <div className="ui segment">
           <a className="ui blue ribbon label"><h3>About me</h3></a>
