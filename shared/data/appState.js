@@ -31,34 +31,9 @@ export default {
       icon: 'mongodb',
     },
     {
-      name: 'Emmet',
-      provider: '',
-      icon: '',
-    },
-    {
       name: 'Webpack',
-      provider: '',
-      icon: '',
-    },
-    {
-      name: 'Babel',
-      provider: '',
-      icon: '',
-    },
-    {
-      name: 'ESLint',
-      provider: '',
-      icon: '',
-    },
-    {
-      name: 'React-Router',
-      provider: '',
-      icon: '',
-    },
-    {
-      name: 'Airbnb JS Style',
-      provider: '',
-      icon: '',
+      provider: 'svg',
+      icon: 'webpack',
     },
 
   ],
@@ -66,31 +41,36 @@ export default {
     {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
-      // OR 'linkedin square'
+      provider: 'semantic',
+      // Semantic UI: OR 'linkedin square'
       icon: 'linkedin',
     },
     {
       name: 'GitHub',
       url: 'https://github.com/DdZ-Fred',
-      // OR 'github alternate' OR 'github square'
+      provider: 'semantic',
+      // Semantic UI: OR 'github alternate' OR 'github square'
       icon: 'github',
     },
     {
       name: 'BitBucket',
       url: 'https://bitbucket.org/DdZ-Fred',
-      // OR 'bitbucket square'
+      provider: 'semantic',
+      // Semantic UI: OR 'bitbucket square'
       icon: 'bitbucket',
     },
     {
       name: 'Facebook',
       url: 'https://www.facebook.com/Fred.REY.DdZ',
-      // OR 'facebook square'
+      provider: 'semantic',
+      // Semantic UI: OR 'facebook square'
       icon: 'facebook',
     },
     {
       name: 'Twitter',
       url: 'https://bitbucket.org/DdZ-Fred',
-      // OR 'twitter square'
+      provider: 'semantic',
+      // Semantic UI: OR 'twitter square'
       icon: 'twitter',
     },
   ],

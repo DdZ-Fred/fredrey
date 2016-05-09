@@ -60,9 +60,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(13);
-	var path = __webpack_require__(14);
-	var compression = __webpack_require__(15);
+	var express = __webpack_require__(15);
+	var path = __webpack_require__(16);
+	var compression = __webpack_require__(17);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -78,7 +78,7 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>My First React Router App</title>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <div id=app>' + appHtml + '</div>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>My First React Router App</title>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <div id=app>' + appHtml + '</div>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
 
 	app.get('*', function (req, res) {
@@ -187,9 +187,13 @@
 
 	var _Friends2 = _interopRequireDefault(_Friends);
 
-	var _Footer = __webpack_require__(12);
+	var _Footer = __webpack_require__(13);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _appState = __webpack_require__(14);
+
+	var _appState2 = _interopRequireDefault(_appState);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -202,10 +206,13 @@
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
-	  function App() {
+	  function App(props) {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+
+	    _this.state = _appState2.default;
+	    return _this;
 	  }
 
 	  _createClass(App, [{
@@ -214,9 +221,9 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'ui centered grid' },
-	        _react2.default.createElement(_Header2.default, null),
+	        _react2.default.createElement(_Header2.default, { friends: this.state.friends }),
 	        _react2.default.createElement(_AboutMe2.default, null),
-	        _react2.default.createElement(_Friends2.default, null),
+	        _react2.default.createElement(_Friends2.default, { friends: this.state.friends }),
 	        _react2.default.createElement(_Footer2.default, null)
 	      );
 	    }
@@ -240,6 +247,8 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(3);
 
 	var _HeaderContentLeft = __webpack_require__(8);
 
@@ -284,11 +293,11 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'description' },
-	            'Frederic is patiti patata......',
+	            'Frederic is et patiti et patata...',
 	            _react2.default.createElement(
 	              'a',
-	              { className: '' },
-	              'findMore'
+	              { 'data-scroll': true, href: '#aboutMe' },
+	              'find more'
 	            )
 	          )
 	        ),
@@ -297,7 +306,7 @@
 	          { className: 'extra content' },
 	          _react2.default.createElement(
 	            'a',
-	            null,
+	            { 'data-scroll': true, href: '#friends' },
 	            '20+ Tech-Friends'
 	          )
 	        )
@@ -430,7 +439,7 @@
 	function AboutMe(props) {
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "one column row" },
+	    { id: "aboutMe", className: "one column row" },
 	    _react2.default.createElement(
 	      "div",
 	      { className: "column" },
@@ -466,7 +475,72 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Friend = __webpack_require__(12);
+
+	var _Friend2 = _interopRequireDefault(_Friend);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var propTypes = {
+	  friends: _react.PropTypes.array.isRequired
+	};
+
+	function Friends(_ref) {
+	  var friends = _ref.friends;
+
+	  return _react2.default.createElement(
+	    'div',
+	    { id: 'friends', className: 'one column row' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'column' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'ui segment' },
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'ui blue right ribbon label' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Friends'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui large horizontal divided list' },
+	          friends.map(function (friend, idx) {
+	            return _react2.default.createElement(_Friend2.default, {
+	              key: idx,
+	              name: friend.name,
+	              provider: friend.provider,
+	              icon: friend.icon });
+	          })
+	        )
+	      )
+	    )
+	  );
+	}
+
+	Friends.propTypes = propTypes;
+
+	exports.default = Friends;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -478,39 +552,59 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Friends(props) {
+	var propTypes = {
+	  name: _react.PropTypes.string.isRequired,
+	  provider: _react.PropTypes.string,
+	  icon: _react.PropTypes.string
+	};
+
+	function DeviconsIcon(_ref) {
+	  var icon = _ref.icon;
+
+	  var iconClass = 'devicons devicons-' + icon;
+	  return _react2.default.createElement('span', { className: iconClass });
+	}
+
+	function generateIcon(provider, icon) {
+	  switch (provider) {
+	    case 'devicons':
+	      return _react2.default.createElement(DeviconsIcon, { icon: icon });
+
+	    case 'other':
+	      return function otherGen(icon) {};
+
+	    default:
+	      return DeviconsIcon;
+	  }
+	}
+
+	function Friend(_ref2) {
+	  var name = _ref2.name;
+	  var provider = _ref2.provider;
+	  var icon = _ref2.icon;
+
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "one column row" },
+	    'div',
+	    { className: 'item friend' },
+	    provider ? generateIcon(provider, icon) : '',
 	    _react2.default.createElement(
-	      "div",
-	      { className: "column" },
+	      'div',
+	      { className: 'content' },
 	      _react2.default.createElement(
-	        "div",
-	        { className: "ui segment" },
-	        _react2.default.createElement(
-	          "a",
-	          { className: "ui blue right ribbon label" },
-	          _react2.default.createElement(
-	            "h3",
-	            null,
-	            "Friends"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          "My Friends/Skills here"
-	        )
+	        'div',
+	        { className: 'header' },
+	        name
 	      )
 	    )
 	  );
 	}
 
-	exports.default = Friends;
+	Friend.propTypes = propTypes;
+
+	exports.default = Friend;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -579,19 +673,106 @@
 	exports.default = Footer;
 
 /***/ },
-/* 13 */
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  friends: [{
+	    name: 'HTML/CSS',
+	    provider: 'devicons',
+	    icon: 'html5'
+	  }, {
+	    name: 'JavaScript/ES6',
+	    provider: 'devicons',
+	    icon: 'javascript_badge'
+	  }, {
+	    name: 'NodeJS',
+	    provider: 'devicons',
+	    icon: 'nodejs_small'
+	  }, {
+	    name: 'React',
+	    provider: 'devicons',
+	    icon: 'react'
+	  }, {
+	    name: 'Meteor',
+	    provider: 'devicons',
+	    icon: 'meteor'
+	  }, {
+	    name: 'MongoDB',
+	    provider: 'devicons',
+	    icon: 'mongodb'
+	  }, {
+	    name: 'Emmet',
+	    provider: '',
+	    icon: ''
+	  }, {
+	    name: 'Webpack',
+	    provider: '',
+	    icon: ''
+	  }, {
+	    name: 'Babel',
+	    provider: '',
+	    icon: ''
+	  }, {
+	    name: 'ESLint',
+	    provider: '',
+	    icon: ''
+	  }, {
+	    name: 'React-Router',
+	    provider: '',
+	    icon: ''
+	  }, {
+	    name: 'Airbnb JS Style',
+	    provider: '',
+	    icon: ''
+	  }],
+	  networks: [{
+	    name: 'Linkedin',
+	    url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
+	    // OR 'linkedin square'
+	    icon: 'linkedin'
+	  }, {
+	    name: 'GitHub',
+	    url: 'https://github.com/DdZ-Fred',
+	    // OR 'github alternate' OR 'github square'
+	    icon: 'github'
+	  }, {
+	    name: 'BitBucket',
+	    url: 'https://bitbucket.org/DdZ-Fred',
+	    // OR 'bitbucket square'
+	    icon: 'bitbucket'
+	  }, {
+	    name: 'Facebook',
+	    url: 'https://www.facebook.com/Fred.REY.DdZ',
+	    // OR 'facebook square'
+	    icon: 'facebook'
+	  }, {
+	    name: 'Twitter',
+	    url: 'https://bitbucket.org/DdZ-Fred',
+	    // OR 'twitter square'
+	    icon: 'twitter'
+	  }]
+	};
+
+/***/ },
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

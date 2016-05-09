@@ -7,6 +7,12 @@ body {
   /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f85bb', endColorstr='#4f85bb',GradientType=0 );*/
 }
 
+.svgIcon {
+  /*width: auto;
+  height: auto;*/
+  width: 4em;
+}
+
 .header-main-container {
   position: relative;
 }
