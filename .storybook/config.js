@@ -1,6 +1,7 @@
 import { configure } from '@kadira/storybook';
 
 import '../public/semantic/dist/semantic.min.css';
+import '../public/devicons/css/devicons.min.css';
 import '../public/common.css';
 import './index.css';
 

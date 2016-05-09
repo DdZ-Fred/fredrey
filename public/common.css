@@ -25,3 +25,13 @@ body {
   text-align: right;
   margin: 3px;
 }
+
+/* FRIEND COMPONENT*/
+.friend {
+  text-align: center;
+}
+
+
+.devicons {
+  font-size: 4em;
+}

@@ -3,25 +3,21 @@ import Header from './Header';
 import AboutMe from './AboutMe';
 import Friends from './Friends';
 import Footer from './Footer';
+import appState from '../data/appState';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = appState;
+  }
 
   render() {
     return (
       <div className="ui centered grid">
-        <Header />
-        <Friends />
-        <Footer />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
-        <Friends />
+        <Header friends={this.state.friends} />
         <AboutMe />
+        <Friends friends={this.state.friends}/>
+        <Footer />
       </div>
     );
   }

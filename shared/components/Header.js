@@ -30,7 +30,7 @@ function Header(props) {
             </div>
           </div>
           <div className="extra content">
-            <a>20+ Tech-Friends</a>
+            <a data-scroll href="#friends">20+ Tech-Friends</a>
           </div>
         </div>
       </div>
