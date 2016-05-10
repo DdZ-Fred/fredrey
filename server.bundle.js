@@ -60,9 +60,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(15);
-	var path = __webpack_require__(16);
-	var compression = __webpack_require__(17);
+	var express = __webpack_require__(21);
+	var path = __webpack_require__(22);
+	var compression = __webpack_require__(23);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -183,15 +183,23 @@
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _Friends = __webpack_require__(11);
+	var _Superpowers = __webpack_require__(11);
 
-	var _Friends2 = _interopRequireDefault(_Friends);
+	var _Superpowers2 = _interopRequireDefault(_Superpowers);
 
-	var _Footer = __webpack_require__(13);
+	var _Works = __webpack_require__(17);
+
+	var _Works2 = _interopRequireDefault(_Works);
+
+	var _Contact = __webpack_require__(18);
+
+	var _Contact2 = _interopRequireDefault(_Contact);
+
+	var _Footer = __webpack_require__(19);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(14);
+	var _appState = __webpack_require__(20);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -221,9 +229,16 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'ui centered grid' },
-	        _react2.default.createElement(_Header2.default, { friends: this.state.friends }),
+	        _react2.default.createElement(_Header2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_AboutMe2.default, null),
-	        _react2.default.createElement(_Friends2.default, { friends: this.state.friends }),
+	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
+	        _react2.default.createElement(_Works2.default, null),
+	        _react2.default.createElement(_Contact2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui horizontal divider' },
+	          _react2.default.createElement('i', { className: 'rocket icon' })
+	        ),
 	        _react2.default.createElement(_Footer2.default, null)
 	      );
 	    }
@@ -270,7 +285,7 @@
 	      { className: 'nine wide column' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'ui centered teal card' },
+	        { className: 'ui centered blue card' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'image' },
@@ -283,11 +298,6 @@
 	            'div',
 	            { className: 'two column row' },
 	            _react2.default.createElement(_HeaderContentLeft2.default, null),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'ui vertical divider' },
-	              _react2.default.createElement('i', { className: 'random icon' })
-	            ),
 	            _react2.default.createElement(_HeaderContentRight2.default, null)
 	          ),
 	          _react2.default.createElement(
@@ -306,8 +316,8 @@
 	          { className: 'extra content' },
 	          _react2.default.createElement(
 	            'a',
-	            { 'data-scroll': true, href: '#friends' },
-	            '20+ Tech-Friends'
+	            { 'data-scroll': true, href: '#superpowers' },
+	            '7 Superpowers'
 	          )
 	        )
 	      )
@@ -485,22 +495,22 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Friend = __webpack_require__(12);
+	var _Superpower = __webpack_require__(12);
 
-	var _Friend2 = _interopRequireDefault(_Friend);
+	var _Superpower2 = _interopRequireDefault(_Superpower);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var propTypes = {
-	  friends: _react.PropTypes.array.isRequired
+	  superpowers: _react.PropTypes.array.isRequired
 	};
 
-	function Friends(_ref) {
-	  var friends = _ref.friends;
+	function Superpowers(_ref) {
+	  var superpowers = _ref.superpowers;
 
 	  return _react2.default.createElement(
 	    'div',
-	    { id: 'friends', className: 'one column row' },
+	    { id: 'superpowers', className: 'one column row' },
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'column' },
@@ -513,18 +523,18 @@
 	          _react2.default.createElement(
 	            'h3',
 	            null,
-	            'Friends'
+	            'Super-Powers'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui large horizontal divided list' },
-	          friends.map(function (friend, idx) {
-	            return _react2.default.createElement(_Friend2.default, {
+	          superpowers.map(function (superpower, idx) {
+	            return _react2.default.createElement(_Superpower2.default, {
 	              key: idx,
-	              name: friend.name,
-	              provider: friend.provider,
-	              icon: friend.icon });
+	              name: superpower.name,
+	              provider: superpower.provider,
+	              icon: superpower.icon });
 	          })
 	        )
 	      )
@@ -532,9 +542,9 @@
 	  );
 	}
 
-	Friends.propTypes = propTypes;
+	Superpowers.propTypes = propTypes;
 
-	exports.default = Friends;
+	exports.default = Superpowers;
 
 /***/ },
 /* 12 */
@@ -550,6 +560,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _utils = __webpack_require__(13);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var propTypes = {
@@ -558,35 +570,15 @@
 	  icon: _react.PropTypes.string
 	};
 
-	function DeviconsIcon(_ref) {
+	function Superpower(_ref) {
+	  var name = _ref.name;
+	  var provider = _ref.provider;
 	  var icon = _ref.icon;
-
-	  var iconClass = 'devicons devicons-' + icon;
-	  return _react2.default.createElement('span', { className: iconClass });
-	}
-
-	function generateIcon(provider, icon) {
-	  switch (provider) {
-	    case 'devicons':
-	      return _react2.default.createElement(DeviconsIcon, { icon: icon });
-
-	    case 'other':
-	      return function otherGen(icon) {};
-
-	    default:
-	      return DeviconsIcon;
-	  }
-	}
-
-	function Friend(_ref2) {
-	  var name = _ref2.name;
-	  var provider = _ref2.provider;
-	  var icon = _ref2.icon;
 
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'item friend' },
-	    provider ? generateIcon(provider, icon) : '',
+	    { className: 'item superpower' },
+	    provider ? (0, _utils.generateIcon)(provider, icon) : '',
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'content' },
@@ -599,12 +591,245 @@
 	  );
 	}
 
-	Friend.propTypes = propTypes;
+	Superpower.propTypes = propTypes;
 
-	exports.default = Friend;
+	exports.default = Superpower;
 
 /***/ },
 /* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.generateIcon = generateIcon;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _DeviconsIcon = __webpack_require__(14);
+
+	var _DeviconsIcon2 = _interopRequireDefault(_DeviconsIcon);
+
+	var _SemanticIcon = __webpack_require__(15);
+
+	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
+
+	var _SvgIcon = __webpack_require__(16);
+
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function generateIcon(provider, icon) {
+	  switch (provider) {
+	    case 'devicons':
+	      return _react2.default.createElement(_DeviconsIcon2.default, { icon: icon });
+
+	    case 'semantic':
+	      return _react2.default.createElement(_SemanticIcon2.default, { icon: icon });
+
+	    case 'svg':
+	      return _react2.default.createElement(_SvgIcon2.default, { icon: icon });
+
+	    default:
+	      return _DeviconsIcon2.default;
+	  }
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var propTypes = {
+	  icon: _react.PropTypes.string.isRequired
+	};
+
+	function DeviconsIcon(_ref) {
+	  var icon = _ref.icon;
+
+	  var iconClass = 'devicons devicons-' + icon;
+	  return _react2.default.createElement('span', { className: iconClass });
+	}
+
+	DeviconsIcon.propTypes = propTypes;
+
+	exports.default = DeviconsIcon;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var propTypes = {
+	  icon: _react.PropTypes.string.isRequired
+	};
+
+	function SemanticIcon(_ref) {
+	  var icon = _ref.icon;
+
+	  var iconClass = icon + ' icon';
+	  return _react2.default.createElement('i', { className: iconClass });
+	}
+
+	SemanticIcon.propTypes = propTypes;
+
+	exports.default = SemanticIcon;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var propTypes = {
+	  icon: _react.PropTypes.string.isRequired
+	};
+
+	function SvgIcon(_ref) {
+	  var icon = _ref.icon;
+
+	  var iconSrc = "/svg/" + icon + ".svg";
+	  return _react2.default.createElement("img", {
+	    className: "svgIcon",
+	    src: iconSrc,
+	    alt: icon
+	  });
+	}
+
+	SvgIcon.propTypes = propTypes;
+
+	exports.default = SvgIcon;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Works(props) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "eight wide column" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "ui segment" },
+	      _react2.default.createElement(
+	        "a",
+	        { className: "ui blue left ribbon label" },
+	        _react2.default.createElement(
+	          "h3",
+	          null,
+	          "Works"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "p",
+	        null,
+	        "Please! check my works on:"
+	      ),
+	      _react2.default.createElement(
+	        "p",
+	        null,
+	        "The source code of this website is even available at the bottom of the page."
+	      )
+	    )
+	  );
+	}
+
+	exports.default = Works;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Contact(props) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "eight wide column" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "ui segment" },
+	      _react2.default.createElement(
+	        "a",
+	        { className: "ui blue right ribbon label" },
+	        _react2.default.createElement(
+	          "h3",
+	          null,
+	          "Contact"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "p",
+	        null,
+	        "Social Profiles here"
+	      )
+	    )
+	  );
+	}
+
+	exports.default = Contact;
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -641,27 +866,21 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "div",
-	        { className: "three column row" },
+	        { className: "one column row" },
 	        _react2.default.createElement(
 	          "div",
-	          { className: "three wide column" },
-	          "LEFT"
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "nine wide column" },
-	          "LOGO HERE",
+	          { className: "column" },
+	          "ONE LINE LINKS",
+	          _react2.default.createElement("br", null),
+	          "Design with ",
+	          _react2.default.createElement("i", { className: "heart icon" }),
+	          " with  React & Semantic-UI. by Frederi Rey",
 	          _react2.default.createElement("br", null),
 	          _react2.default.createElement(
 	            "a",
 	            { href: "https://github.com/DdZ-Fred/fredrey" },
 	            "Source Code"
 	          )
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "three wide column" },
-	          "RIGHT"
 	        )
 	      );
 	    }
@@ -673,7 +892,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 14 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -682,97 +901,89 @@
 	  value: true
 	});
 	exports.default = {
-	  friends: [{
+	  superpowers: [{
 	    name: 'HTML/CSS',
 	    provider: 'devicons',
-	    icon: 'html5'
+	    icon: 'html5',
+	    strength: 5
 	  }, {
 	    name: 'JavaScript/ES6',
 	    provider: 'devicons',
-	    icon: 'javascript_badge'
+	    icon: 'javascript_badge',
+	    strength: 5
 	  }, {
 	    name: 'NodeJS',
 	    provider: 'devicons',
-	    icon: 'nodejs_small'
+	    icon: 'nodejs_small',
+	    strength: 5
 	  }, {
 	    name: 'React',
 	    provider: 'devicons',
-	    icon: 'react'
+	    icon: 'react',
+	    strength: 5
 	  }, {
 	    name: 'Meteor',
 	    provider: 'devicons',
-	    icon: 'meteor'
+	    icon: 'meteor',
+	    strength: 5
 	  }, {
 	    name: 'MongoDB',
 	    provider: 'devicons',
-	    icon: 'mongodb'
-	  }, {
-	    name: 'Emmet',
-	    provider: '',
-	    icon: ''
+	    icon: 'mongodb',
+	    strength: 5
 	  }, {
 	    name: 'Webpack',
-	    provider: '',
-	    icon: ''
-	  }, {
-	    name: 'Babel',
-	    provider: '',
-	    icon: ''
-	  }, {
-	    name: 'ESLint',
-	    provider: '',
-	    icon: ''
-	  }, {
-	    name: 'React-Router',
-	    provider: '',
-	    icon: ''
-	  }, {
-	    name: 'Airbnb JS Style',
-	    provider: '',
-	    icon: ''
+	    provider: 'svg',
+	    icon: 'webpack',
+	    strength: 5
 	  }],
 	  networks: [{
 	    name: 'Linkedin',
 	    url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
-	    // OR 'linkedin square'
+	    provider: 'semantic',
+	    // Semantic UI: OR 'linkedin square'
 	    icon: 'linkedin'
 	  }, {
 	    name: 'GitHub',
 	    url: 'https://github.com/DdZ-Fred',
-	    // OR 'github alternate' OR 'github square'
+	    provider: 'semantic',
+	    // Semantic UI: OR 'github alternate' OR 'github square'
 	    icon: 'github'
 	  }, {
 	    name: 'BitBucket',
 	    url: 'https://bitbucket.org/DdZ-Fred',
-	    // OR 'bitbucket square'
+	    provider: 'semantic',
+	    // Semantic UI: OR 'bitbucket square'
 	    icon: 'bitbucket'
 	  }, {
 	    name: 'Facebook',
 	    url: 'https://www.facebook.com/Fred.REY.DdZ',
-	    // OR 'facebook square'
+	    provider: 'semantic',
+	    // Semantic UI: OR 'facebook square'
 	    icon: 'facebook'
 	  }, {
 	    name: 'Twitter',
 	    url: 'https://bitbucket.org/DdZ-Fred',
-	    // OR 'twitter square'
+	    provider: 'semantic',
+	    // Semantic UI: OR 'twitter square'
 	    icon: 'twitter'
 	  }]
 	};
 
 /***/ },
-/* 15 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 16 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 17 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

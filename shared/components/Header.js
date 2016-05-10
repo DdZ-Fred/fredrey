@@ -12,7 +12,7 @@ function Header(props) {
       </div>
 
       <div className="nine wide column">
-        <div className="ui centered teal card">
+        <div className="ui centered blue card">
           <div className="image">
             <img src="https://avatars.githubusercontent.com/u/6842608?v=3" alt=""/>
           </div>
@@ -27,7 +27,7 @@ function Header(props) {
             </div>
           </div>
           <div className="extra content">
-            <a data-scroll href="#friends">20+ Tech-Friends</a>
+            <a data-scroll href="#superpowers">7 Superpowers</a>
           </div>
         </div>
       </div>

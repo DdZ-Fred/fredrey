@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import Header from './Header';
 import AboutMe from './AboutMe';
-import Friends from './Friends';
+import Superpowers from './Superpowers';
+import Works from './Works';
+import Contact from './Contact';
 import Footer from './Footer';
 import appState from '../data/appState';
 
@@ -14,9 +16,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="ui centered grid">
-        <Header friends={this.state.friends} />
+        <Header superpowers={this.state.superpowers} />
         <AboutMe />
-        <Friends friends={this.state.friends}/>
+        <Superpowers superpowers={this.state.superpowers}/>
+        <Works /><Contact />
+        <div className="ui horizontal divider">
+          <i className="rocket icon"></i>
+        </div>
         <Footer />
       </div>
     );

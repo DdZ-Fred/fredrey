@@ -14,34 +14,34 @@ body {
 /* ICONS COMPONENTS */
 /********************/
 
-.friend .devicons {
+.superpower .devicons {
   font-size: 4em;
 }
-.friend .devicons-html5 {
+.superpower .devicons-html5 {
   color: rgb(210, 104, 17);
 }
 
-.friend .devicons-javascript_badge {
+.superpower .devicons-javascript_badge {
   color: rgb(214, 203, 55);
 }
 
-.friend .devicons-nodejs_small {
+.superpower .devicons-nodejs_small {
   color: rgb(118, 185, 93);
 }
 
-.friend .devicons-react {
+.superpower .devicons-react {
   color: rgb(87, 218, 251);
 }
 
-.friend .devicons-meteor {
+.superpower .devicons-meteor {
   text-shadow: 0px 0px 8px rgb(201, 52, 31), 0px 0px 10px rgb(244, 160, 17);
 }
 
-.friend .devicons-mongodb {
+.superpower .devicons-mongodb {
   color: rgb(76, 168, 74);
 }
 
-.friend .svgIcon {
+.superpower .svgIcon {
   width: 3.6em;
 }
 
@@ -74,13 +74,13 @@ body {
 /* FRIEND COMPONENT*/
 /*******************/
 
-.friend {
+.superpower {
   text-align: center;
   -webkit-filter: opacity(50%);
   filter: opacity(50%);
 }
 
-.friend:hover {
+.superpower:hover {
   -webkit-filter: opacity(100%);
   filter: opacity(100%);
 }

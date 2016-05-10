@@ -1,39 +1,46 @@
 export default {
-  friends: [
+  superpowers: [
     {
       name: 'HTML/CSS',
       provider: 'devicons',
       icon: 'html5',
+      strength: 5,
     },
     {
       name: 'JavaScript/ES6',
       provider: 'devicons',
       icon: 'javascript_badge',
+      strength: 5,
     },
     {
       name: 'NodeJS',
       provider: 'devicons',
       icon: 'nodejs_small',
+      strength: 5,
     },
     {
       name: 'React',
       provider: 'devicons',
       icon: 'react',
+      strength: 5,
     },
     {
       name: 'Meteor',
       provider: 'devicons',
       icon: 'meteor',
+      strength: 5,
     },
     {
       name: 'MongoDB',
       provider: 'devicons',
       icon: 'mongodb',
+      strength: 5,
     },
     {
       name: 'Webpack',
       provider: 'svg',
       icon: 'webpack',
+      strength: 5,
     },
 
   ],
