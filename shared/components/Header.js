@@ -19,9 +19,6 @@ function Header(props) {
           <div className="ui grid content">
             <div className="two column row">
               <HeaderContentLeft />
-              <div className="ui vertical divider">
-                <i className="random icon"></i>
-              </div>
               <HeaderContentRight />
             </div>
             <div className="description">
