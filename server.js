@@ -30,6 +30,7 @@ function renderPage(appHtml) {
       <link rel="stylesheet" href="/common.css">
       <link rel=stylesheet href=/index.css>
       <div id=app>${appHtml}</div>
+      <script src="/jquery/jquery-2.2.3.min.js"></script>
       <script src="/semantic/dist/semantic.min.js"></script>
       <script src="/bundle.js"></script>
   `;

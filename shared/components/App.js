@@ -21,7 +21,7 @@ class App extends React.Component {
         <Superpowers superpowers={this.state.superpowers}/>
         <Works /><Contact />
         <div className="ui horizontal divider">
-          <i className="rocket icon"></i>
+          <i className="circular inverted blue lightning icon"></i>
         </div>
         <Footer />
       </div>
