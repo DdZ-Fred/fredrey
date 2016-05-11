@@ -5,7 +5,7 @@ import HeaderContentRight from './HeaderContentRight';
 
 function Header(props) {
   return (
-    <div className="three column row header-main-container">
+    <div id="header" className="three column row header-main-container">
 
       <div className="three wide column">
         {/* <i className="huge chevron left icon"></i>*/}

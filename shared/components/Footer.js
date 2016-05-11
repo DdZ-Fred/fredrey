@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import FooterLinks from './FooterLinks';
 
 class Footer extends React.Component {
   render() {
     return (
-      <div className="one column row">
+      <div id="footer" className="one column row">
         <div className="column">
-          ONE LINE LINKS
+          <FooterLinks />
           <br />
             Design with <i className="heart icon"></i> with  React & Semantic-UI. by Frederic Rey
           <br />

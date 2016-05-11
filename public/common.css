@@ -45,6 +45,9 @@ body {
   width: 3.6em;
 }
 
+
+
+
 /********************/
 /* HEADER COMPONENT */
 /********************/
@@ -70,9 +73,27 @@ body {
 
 
 
-/*******************/
-/* FRIEND COMPONENT*/
-/*******************/
+
+/**********************/
+/* ABOUTME COMPONENT */
+/**********************/
+
+
+
+
+/************************/
+/* SUPERPOWERS COMPONENT*/
+/************************/
+
+#superpowers .column {
+  /*text-align: center;*/
+}
+
+
+
+/***********************/
+/* SUPERPOWER COMPONENT*/
+/***********************/
 
 .superpower {
   text-align: center;
@@ -83,4 +104,15 @@ body {
 .superpower:hover {
   -webkit-filter: opacity(100%);
   filter: opacity(100%);
+}
+
+
+
+
+/*******************/
+/* FOOTER COMPONENT*/
+/*******************/
+
+#footer .column {
+  text-align: center;
 }

@@ -35,6 +35,10 @@ function renderPage(appHtml) {
   `;
 }
 
+app.post('/contactMe', (req, res) => {
+  console.log(req.params);
+});
+
 app.get('*', (req, res) => {
   match({ routes, location: req.url }, (err, redirect, props) => {
     if (err) {
