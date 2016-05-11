@@ -81,4 +81,31 @@ export default {
       icon: 'twitter',
     },
   ],
+  footerLinks: [
+    {
+      title: 'AboutMe',
+      anchor: 'aboutMe',
+      icon: '',
+    },
+    {
+      title: 'Superpowers',
+      anchor: 'superpowers',
+      icon: '',
+    },
+    {
+      title: 'Works',
+      anchor: 'works',
+      icon: '',
+    },
+    {
+      title: 'Contact',
+      anchor: 'contact',
+      icon: '',
+    },
+    {
+      title: 'Top',
+      anchor: 'header',
+      icon: 'pointing up',
+    },
+  ],
 };

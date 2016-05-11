@@ -1,40 +1,30 @@
 import React, { PropTypes } from 'react';
 
-class FooterLinks extends React.Component {
-  render() {
-    return (
-      <div id="footerLinks" className="ui tiny horizontal divided list">
+const propTypes = {
+  footerLinks: PropTypes.array.isRequired,
+};
+
+function FooterLinks({ footerLinks }) {
+  return (
+    <div id="footerLinks" className="ui tiny horizontal divided list">
+    {
+      footerLinks.map((link) => (
         <div className="item">
           <div className="content">
-            <a data-scroll href="#aboutMe" className="header">AboutMe</a>
-          </div>
-        </div>
-        <div className="item">
-          <div className="content">
-            <a data-scroll href="#superpowers" className="header">Superpowers</a>
-          </div>
-        </div>
-        <div className="item">
-          <div className="content">
-            <a data-scroll href="#works" className="header">Works</a>
-          </div>
-        </div>
-        <div className="item">
-          <div className="content">
-            <a data-scroll href="#contact" className="header">Contact</a>
-          </div>
-        </div>
-        <div className="item">
-          <div className="content">
-            <a data-scroll href="#header" className="header">
-              Top
-              <i className="pointing up icon"></i>
+            <a data-scroll href={`#${link.anchor}`} className="header">
+              {link.title}
+              {link.icon &&
+                <i className={`${link.icon} icon`}></i>
+              }
             </a>
           </div>
         </div>
-      </div>
-    );
-  }
+      ))
+    }
+    </div>
+  );
 }
+
+FooterLinks.propTypes = propTypes;
 
 export default FooterLinks;

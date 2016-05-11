@@ -9,10 +9,12 @@ function Superpowers({ superpowers }) {
   return (
     <div id="superpowers" className="one column row">
       <div className="column">
-        <div className="ui segment">
-          <a className="ui blue right ribbon label">
-            <h3>Super-Powers</h3>
-          </a>
+        <div className="ui center aligned raised padded segment">
+          <h3 className="ui icon header">
+            <i className="headerIcon circular inverted blue lightning icon"></i>
+            <p className="headerText">Super Powers</p>
+          </h3>
+          <br />
           <div className="ui large horizontal divided list">
             {superpowers.map((superpower, idx) => (
               <Superpower

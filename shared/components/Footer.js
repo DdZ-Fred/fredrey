@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 import FooterLinks from './FooterLinks';
 
+
+const propTypes = {
+  footerLinks: PropTypes.array.isRequired,
+};
+
 class Footer extends React.Component {
 
   handleMouseOver(e) {
@@ -11,13 +16,13 @@ class Footer extends React.Component {
     return (
       <div id="footer" className="one column row">
         <div className="column">
-          <FooterLinks />
+          <FooterLinks footerLinks={this.props.footerLinks} />
           <br />
           Built with <i className="red heart icon" onMouseOver={this.handleMouseOver}></i>
           <br />
           with  React & Semantic-UI
           <br />
-           &copy; Frederic Rey
+           &copy; 2016 Frederic Rey
           <br />
             <a
               id="sourceCode"
@@ -29,5 +34,7 @@ class Footer extends React.Component {
     );
   }
 }
+
+Footer.propTypes = propTypes;
 
 export default Footer;

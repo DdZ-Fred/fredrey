@@ -23,7 +23,7 @@ class App extends React.Component {
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>
-        <Footer />
+        <Footer footerLinks={this.state.footerLinks}/>
       </div>
     );
   }
