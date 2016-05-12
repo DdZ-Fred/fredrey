@@ -60,9 +60,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(21);
-	var path = __webpack_require__(22);
-	var compression = __webpack_require__(23);
+	var express = __webpack_require__(22);
+	var path = __webpack_require__(23);
+	var compression = __webpack_require__(24);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -78,8 +78,16 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>My First React Router App</title>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <div id=app>' + appHtml + '</div>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
+
+	app.post('/contactMe', function (req, res) {
+	  req.accepts('application/json');
+	  console.log(req.params);
+	  res.send({
+	    message: 'OK'
+	  });
+	});
 
 	app.get('*', function (req, res) {
 	  (0, _reactRouter.match)({ routes: _routes2.default, location: req.url }, function (err, redirect, props) {
@@ -199,7 +207,7 @@
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(20);
+	var _appState = __webpack_require__(21);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -237,9 +245,9 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui horizontal divider' },
-	          _react2.default.createElement('i', { className: 'rocket icon' })
+	          _react2.default.createElement('i', { className: 'circular inverted blue lightning icon' })
 	        ),
-	        _react2.default.createElement(_Footer2.default, null)
+	        _react2.default.createElement(_Footer2.default, { footerLinks: this.state.footerLinks })
 	      );
 	    }
 	  }]);
@@ -278,7 +286,7 @@
 	function Header(props) {
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'three column row header-main-container' },
+	    { id: 'header', className: 'three column row header-main-container' },
 	    _react2.default.createElement('div', { className: 'three wide column' }),
 	    _react2.default.createElement(
 	      'div',
@@ -516,16 +524,18 @@
 	      { className: 'column' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'ui segment' },
+	        { className: 'ui center aligned raised padded segment' },
 	        _react2.default.createElement(
-	          'a',
-	          { className: 'ui blue right ribbon label' },
+	          'h3',
+	          { className: 'ui icon header' },
+	          _react2.default.createElement('i', { className: 'headerIcon circular inverted blue lightning icon' }),
 	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            'Super-Powers'
+	            'p',
+	            { className: 'headerText' },
+	            'Super Powers'
 	          )
 	        ),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui large horizontal divided list' },
@@ -534,7 +544,8 @@
 	              key: idx,
 	              name: superpower.name,
 	              provider: superpower.provider,
-	              icon: superpower.icon });
+	              icon: superpower.icon,
+	              strength: superpower.strength });
 	          })
 	        )
 	      )
@@ -567,7 +578,8 @@
 	var propTypes = {
 	  name: _react.PropTypes.string.isRequired,
 	  provider: _react.PropTypes.string,
-	  icon: _react.PropTypes.string
+	  icon: _react.PropTypes.string,
+	  strength: _react.PropTypes.number.isRequired
 	};
 
 	function Superpower(_ref) {
@@ -832,7 +844,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -844,6 +856,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _FooterLinks = __webpack_require__(20);
+
+	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -851,6 +867,10 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var propTypes = {
+	  footerLinks: _react.PropTypes.array.isRequired
+	};
 
 	var Footer = function (_React$Component) {
 	  _inherits(Footer, _React$Component);
@@ -862,24 +882,36 @@
 	  }
 
 	  _createClass(Footer, [{
-	    key: "render",
+	    key: 'handleMouseOver',
+	    value: function handleMouseOver(e) {
+	      $(e.target).transition('jiggle');
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "one column row" },
+	        'div',
+	        { id: 'footer', className: 'one column row' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "column" },
-	          "ONE LINE LINKS",
-	          _react2.default.createElement("br", null),
-	          "Design with ",
-	          _react2.default.createElement("i", { className: "heart icon" }),
-	          " with  React & Semantic-UI. by Frederi Rey",
-	          _react2.default.createElement("br", null),
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_FooterLinks2.default, { footerLinks: this.props.footerLinks }),
+	          _react2.default.createElement('br', null),
+	          'Built with ',
+	          _react2.default.createElement('i', { className: 'red heart icon', onMouseOver: this.handleMouseOver }),
+	          _react2.default.createElement('br', null),
+	          'with  React & Semantic-UI',
+	          _react2.default.createElement('br', null),
+	          '© 2016 Frederic Rey',
+	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
-	            "a",
-	            { href: "https://github.com/DdZ-Fred/fredrey" },
-	            "Source Code"
+	            'a',
+	            {
+	              id: 'sourceCode',
+	              className: 'ui tiny pointing blue label',
+	              href: 'https://github.com/DdZ-Fred/fredrey',
+	              target: '_blank' },
+	            'Source Code'
 	          )
 	        )
 	      );
@@ -889,10 +921,61 @@
 	  return Footer;
 	}(_react2.default.Component);
 
+	Footer.propTypes = propTypes;
+
 	exports.default = Footer;
 
 /***/ },
 /* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var propTypes = {
+	  footerLinks: _react.PropTypes.array.isRequired
+	};
+
+	function FooterLinks(_ref) {
+	  var footerLinks = _ref.footerLinks;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { id: "footerLinks", className: "ui tiny horizontal divided list" },
+	    footerLinks.map(function (link) {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "item" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "content" },
+	          _react2.default.createElement(
+	            "a",
+	            { "data-scroll": true, href: "#" + link.anchor, className: "header" },
+	            link.title,
+	            link.icon && _react2.default.createElement("i", { className: link.icon + " icon" })
+	          )
+	        )
+	      );
+	    })
+	  );
+	}
+
+	FooterLinks.propTypes = propTypes;
+
+	exports.default = FooterLinks;
+
+/***/ },
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -967,23 +1050,44 @@
 	    provider: 'semantic',
 	    // Semantic UI: OR 'twitter square'
 	    icon: 'twitter'
+	  }],
+	  footerLinks: [{
+	    title: 'AboutMe',
+	    anchor: 'aboutMe',
+	    icon: ''
+	  }, {
+	    title: 'Superpowers',
+	    anchor: 'superpowers',
+	    icon: ''
+	  }, {
+	    title: 'Works',
+	    anchor: 'works',
+	    icon: ''
+	  }, {
+	    title: 'Contact',
+	    anchor: 'contact',
+	    icon: ''
+	  }, {
+	    title: 'Top',
+	    anchor: 'header',
+	    icon: 'pointing up'
 	  }]
 	};
-
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	module.exports = require("express");
 
 /***/ },
 /* 22 */
 /***/ function(module, exports) {
 
-	module.exports = require("path");
+	module.exports = require("express");
 
 /***/ },
 /* 23 */
+/***/ function(module, exports) {
+
+	module.exports = require("path");
+
+/***/ },
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

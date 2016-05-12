@@ -8,8 +8,8 @@ function FooterLinks({ footerLinks }) {
   return (
     <div id="footerLinks" className="ui tiny horizontal divided list">
     {
-      footerLinks.map((link) => (
-        <div className="item">
+      footerLinks.map((link, idx) => (
+        <div key={idx} className="item">
           <div className="content">
             <a data-scroll href={`#${link.anchor}`} className="header">
               {link.title}

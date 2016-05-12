@@ -38,7 +38,11 @@ function renderPage(appHtml) {
 }
 
 app.post('/contactMe', (req, res) => {
-  console.log(req.params);
+  // req.accepts('application/json');
+  // console.log(req.params);
+  res.send({
+    message: 'OK',
+  });
 });
 
 app.get('*', (req, res) => {

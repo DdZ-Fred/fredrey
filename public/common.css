@@ -102,10 +102,11 @@ body {
 #superpowers .headerText {
   font-size: 1.8em;
   color: white;
-  text-shadow: 2px 3px 5px rgb(23, 57, 102),
-  2px 3px 10px rgb(35, 86, 156),
-  2px 3px 15px rgb(51, 118, 208);
+  text-shadow: 2px 3px 5px rgb(30, 113, 175),
+  2px 3px 10px rgb(33, 133, 208),
+  2px 3px 25px rgb(97, 173, 249);
 }
+
 
 
 

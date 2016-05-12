@@ -6,20 +6,29 @@ const propTypes = {
   provider: PropTypes.string,
   icon: PropTypes.string,
   strength: PropTypes.number.isRequired,
+  comment: PropTypes.string.isRequired,
 };
 
-function Superpower({ name, provider, icon }) {
-  return (
-    <div className="item superpower">
-      {provider ?
-        generateIcon(provider, icon)
-        : ''
-      }
-      <div className="content">
-        <div className="header">{name}</div>
+class Superpower extends React.Component {
+
+  render() {
+    return (
+      <div className="item superpower"
+        data-html={this.props.comment}>
+        {this.props.provider ?
+          generateIcon(this.props.provider, this.props.icon)
+          : ''
+        }
+        <div className="content">
+          <div className="header">{this.props.name}</div>
+          <div className="ui star rating"
+            data-rating={this.props.strength}
+            data-max-rating="5"></div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
 }
 
 Superpower.propTypes = propTypes;
