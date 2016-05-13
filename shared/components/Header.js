@@ -3,7 +3,12 @@ import { Link } from 'react-router';
 import HeaderContentLeft from './HeaderContentLeft';
 import HeaderContentRight from './HeaderContentRight';
 
-function Header(props) {
+
+const propTypes = {
+  superpowers: PropTypes.array.isRequired,
+};
+
+function Header({ superpowers }) {
   return (
     <div id="header" className="three column row header-main-container">
 
@@ -27,7 +32,7 @@ function Header(props) {
             </div>
           </div>
           <div className="extra content">
-            <a data-scroll href="#superpowers">7 Superpowers</a>
+            <a data-scroll href="#superpowers">{superpowers.length} Superpowers</a>
           </div>
         </div>
       </div>
@@ -39,5 +44,7 @@ function Header(props) {
     </div>
   );
 }
+
+Header.propTypes = propTypes;
 
 export default Header;

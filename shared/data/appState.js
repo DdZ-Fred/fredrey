@@ -5,23 +5,35 @@ export default {
       provider: 'devicons',
       icon: 'html5',
       strength: 4,
-      comment: 'HTML is OK, that being said, not an expert in CSS even if I usually get the job done anyway',
+      comment: 'HTML is fine, that being said, I\'m not an expert ' +
+        'in CSS even though I usually get the job done anyway',
     },
     {
       name: 'JavaScript/ES6',
       provider: 'devicons',
       icon: 'javascript_badge',
       strength: 3,
-      comment: 'ES6 is so magic!!',
+      comment: 'Trying as much as I can to write ' +
+        '<a href="https://github.com/airbnb/javascript/" target="_blank">Airbnb-style</a> code',
+    },
+    {
+      name: 'ESLint',
+      provider: 'svg',
+      icon: 'eslint',
+      strength: 4,
+      comment: 'Because writing good and consistent code is important. ' +
+      'I use the <a href="https://www.npmjs.com/package/eslint-config-airbnb-base">airbnb-base</a> config',
     },
     {
       name: 'NodeJS',
       provider: 'devicons',
       icon: 'nodejs_small',
       strength: 3,
-      comment: `Experience is mostly with the NPM packaging system,
-                <br/>the globals and module locals otherwise the node internals
-                are mysteries to me as I've never had to use them so far`,
+      comment: 'Experience with:<br />' +
+                '<strong>npm</strong> / ' +
+                '<strong>globals</strong> / ' +
+                '<strong>module locals</strong><br />' +
+                'Small experience with native modules',
     },
     {
       name: 'React',
@@ -51,7 +63,7 @@ export default {
       icon: 'webpack',
       strength: 3,
       comment: `Its use is quite new to me but I know the most common config properties.
-                <br />Has always een used with Babel so far.`,
+                <br />Has always been used with Babel so far.`,
     },
 
   ],

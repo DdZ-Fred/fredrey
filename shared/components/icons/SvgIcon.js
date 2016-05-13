@@ -6,9 +6,10 @@ const propTypes = {
 
 function SvgIcon({ icon }) {
   const iconSrc = `/svg/${icon}.svg`;
+  const iconClass = `${icon} svgIcon`;
   return (
     <img
-      className="svgIcon"
+      className={iconClass}
       src={iconSrc}
       alt={icon}
       />

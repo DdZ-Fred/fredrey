@@ -41,8 +41,12 @@ body {
   color: rgb(76, 168, 74);
 }
 
-.superpower .svgIcon {
-  width: 3.6em;
+.superpower .eslint.svgIcon {
+  width: 4.2em;
+}
+
+.superpower .webpack.svgIcon {
+  width: 3.5em;
 }
 
 
@@ -125,7 +129,18 @@ body {
   filter: opacity(100%);
 }
 
+.ui.popup {
+  font-size: 0.8em;
+}
 
+
+
+#contactFormModal {
+  background: rgb(97, 173, 249);
+  background: -webkit-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
+  background: -o-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
+  background: linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
+}
 
 
 /*******************/
