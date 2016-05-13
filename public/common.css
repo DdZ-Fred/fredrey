@@ -120,8 +120,8 @@ body {
 
 .superpower {
   text-align: center;
-  -webkit-filter: opacity(50%);
-  filter: opacity(50%);
+  -webkit-filter: opacity(50%) blur(2px);
+  filter: opacity(50%) blur(2px);
 }
 
 .superpower:hover {

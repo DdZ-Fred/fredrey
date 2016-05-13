@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 class ContactFormModal extends React.Component {
   constructor() {
     super();
-    // Put bindings here
+    // Put bindings here if necessary
   }
 
   handleCancel(e) {
