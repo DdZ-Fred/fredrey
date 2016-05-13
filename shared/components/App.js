@@ -15,7 +15,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui centered grid">
+      <div className="ui centered stackable grid container">
         <Header superpowers={this.state.superpowers} />
         <AboutMe />
         <Superpowers superpowers={this.state.superpowers}/>

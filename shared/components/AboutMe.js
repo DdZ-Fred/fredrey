@@ -6,7 +6,7 @@ function AboutMe(props) {
       <div className="column">
         <div className="ui segment">
           <a className="ui blue ribbon label"><h3>About me</h3></a>
-          <p>
+          <p className="content">
             This is about me youhouuuuu
             <br />
             Patati et patata

@@ -20,7 +20,7 @@ class Contact extends React.Component {
           <a className="ui blue right ribbon label">
             <h3>Contact</h3>
           </a>
-          <div>
+          <div className="content">
             Click <button
                     className="ui mini basic blue button"
                     onClick={this.handleClick}>

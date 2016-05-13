@@ -82,7 +82,11 @@ body {
 /* ABOUTME COMPONENT */
 /**********************/
 
-
+#aboutMe .content{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  /*text-align: center;*/
+}
 
 
 /************************/
@@ -104,11 +108,31 @@ body {
 }
 
 #superpowers .headerText {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  bottom: 0;
+  left: 0;
   font-size: 1.8em;
   color: white;
   text-shadow: 2px 3px 5px rgb(30, 113, 175),
   2px 3px 10px rgb(33, 133, 208),
   2px 3px 25px rgb(97, 173, 249);
+  animation-name: levitate;
+  animation-duration: 1.4s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+
+}
+
+@keyframes levitate {
+  to {
+    position: absolute;
+    top: 72px;
+    text-shadow: 0px 0px 5px rgb(30, 113, 175),
+    0px 0px 10px rgb(33, 133, 208),
+    0px 0px 25px rgb(97, 173, 249);
+  }
 }
 
 
@@ -146,9 +170,36 @@ body {
 
 
 
+/******************/
+/* WORKS COMPONENT*/
+/******************/
+
+
+#works .content {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+
+
 /********************/
 /* CONTACT COMPONENT*/
 /********************/
+
+#contact .content {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+#contact .icons {
+  padding: 5px 0px;
+}
+
+#contact .icons a {
+  padding: 0px 5px;
+}
 
 #contactFormModal {
   background: rgb(97, 173, 249);
