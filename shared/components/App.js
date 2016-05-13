@@ -19,7 +19,8 @@ class App extends React.Component {
         <Header superpowers={this.state.superpowers} />
         <AboutMe />
         <Superpowers superpowers={this.state.superpowers}/>
-        <Works /><Contact />
+        <Works />
+        <Contact socialProfiles={this.state.socialProfiles} />
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>

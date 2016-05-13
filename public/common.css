@@ -125,8 +125,18 @@ body {
 }
 
 .superpower:hover {
-  -webkit-filter: opacity(100%);
-  filter: opacity(100%);
+  /*-webkit-filter: opacity(100%);
+  filter: opacity(100%);*/
+  animation-duration: 500ms;
+  animation-name: unblur;
+  animation-fill-mode: both;
+}
+
+@keyframes unblur {
+  to {
+    -webkit-filter: opacity(100%);
+    filter: opacity(100%);
+  }
 }
 
 .ui.popup {
@@ -135,12 +145,19 @@ body {
 
 
 
+
+/********************/
+/* CONTACT COMPONENT*/
+/********************/
+
 #contactFormModal {
   background: rgb(97, 173, 249);
   background: -webkit-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
   background: -o-linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
   background: linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
 }
+
+
 
 
 /*******************/

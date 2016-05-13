@@ -27,7 +27,7 @@ class ContactFormModal extends React.Component {
           <form className="ui form" onSubmit={this.handleSubmit}>
             <div className="field">
               <label htmlFor="email">Email</label>
-              <input id="email" type="text" name="email" placeholder="Enter your email"/>
+              <input id="email" type="email" name="email" placeholder="Enter your email"/>
             </div>
             <div className="field">
               <label htmlFor="fullname">Full name</label>

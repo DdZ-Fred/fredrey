@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 function Works(props) {
   return (
-      <div className="eight wide column">
+      <div id="works" className="eight wide column">
         <div className="ui segment">
           <a className="ui blue left ribbon label">
             <h3>Works</h3>

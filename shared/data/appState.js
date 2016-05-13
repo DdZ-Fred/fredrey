@@ -67,7 +67,7 @@ export default {
     },
 
   ],
-  networks: [
+  socialProfiles: [
     {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',

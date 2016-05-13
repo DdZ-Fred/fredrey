@@ -1,5 +1,10 @@
 import React, { PropTypes } from 'react';
 import ContactFormModal from './ContactFormModal';
+import SemanticIcon from './icons/SemanticIcon';
+
+const propTypes = {
+  socialProfiles: PropTypes.array.isRequired,
+};
 
 class Contact extends React.Component {
 
@@ -10,15 +15,28 @@ class Contact extends React.Component {
 
   render() {
     return (
-      <div className="eight wide column">
+      <div id="contact" className="eight wide column">
         <div className="ui segment">
           <a className="ui blue right ribbon label">
             <h3>Contact</h3>
           </a>
           <div>
-            Click <a onClick={this.handleClick}
-                    className="ui mini blue basic label">here</a> to contact me.
-
+            Click <button
+                    className="ui mini basic blue button"
+                    onClick={this.handleClick}>
+                      here
+                  </button> to contact me.
+            <br /><br />
+            Or we can get in touch on:
+            <br />
+            <i className="big icons">
+              {this.props.socialProfiles.map((profile) => (
+                <a href={profile.url}
+                  target="_blank">
+                  <SemanticIcon icon={profile.icon} />
+                </a>
+              ))}
+            </i>
             <ContactFormModal />
           </div>
         </div>
@@ -26,5 +44,7 @@ class Contact extends React.Component {
     );
   }
 }
+
+Contact.propTypes = propTypes;
 
 export default Contact;
