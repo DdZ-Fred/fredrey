@@ -30,8 +30,10 @@ class Contact extends React.Component {
             Or we can get in touch on:
             <br />
             <i className="big icons">
-              {this.props.socialProfiles.map((profile) => (
-                <a href={profile.url}
+              {this.props.socialProfiles.map((profile, idx) => (
+                <a
+                  key={idx}
+                  href={profile.url}
                   target="_blank">
                   <SemanticIcon icon={profile.icon} />
                 </a>

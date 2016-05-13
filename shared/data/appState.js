@@ -90,13 +90,6 @@ export default {
       icon: 'bitbucket',
     },
     {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/Fred.REY.DdZ',
-      provider: 'semantic',
-      // Semantic UI: OR 'facebook square'
-      icon: 'facebook',
-    },
-    {
       name: 'Twitter',
       url: 'https://bitbucket.org/DdZ-Fred',
       provider: 'semantic',
