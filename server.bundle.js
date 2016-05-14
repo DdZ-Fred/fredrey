@@ -236,7 +236,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ui centered grid' },
+	        { className: 'ui centered stackable grid container' },
 	        _react2.default.createElement(_Header2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_AboutMe2.default, null),
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
@@ -484,7 +484,7 @@
 	        ),
 	        _react2.default.createElement(
 	          "p",
-	          null,
+	          { className: "content" },
 	          "This is about me youhouuuuu",
 	          _react2.default.createElement("br", null),
 	          "Patati et patata",
@@ -854,14 +854,18 @@
 	        )
 	      ),
 	      _react2.default.createElement(
-	        "p",
-	        null,
-	        "Please! check my works on:"
-	      ),
-	      _react2.default.createElement(
-	        "p",
-	        null,
-	        "The source code of this website is even available at the bottom of the page."
+	        "div",
+	        { className: "content" },
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "Please! check my works on:"
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "The source code of this website is even available at the bottom of the page."
+	        )
 	      )
 	    )
 	  );
@@ -940,7 +944,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            null,
+	            { className: 'content' },
 	            'Click ',
 	            _react2.default.createElement(
 	              'button',
@@ -1320,7 +1324,7 @@
 	    icon: 'bitbucket'
 	  }, {
 	    name: 'Twitter',
-	    url: 'https://bitbucket.org/DdZ-Fred',
+	    url: 'https://twitter.com/rey_fr7154a',
 	    provider: 'semantic',
 	    // Semantic UI: OR 'twitter square'
 	    icon: 'twitter'

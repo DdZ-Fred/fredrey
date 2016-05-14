@@ -91,7 +91,7 @@ export default {
     },
     {
       name: 'Twitter',
-      url: 'https://bitbucket.org/DdZ-Fred',
+      url: 'https://twitter.com/rey_fr7154a',
       provider: 'semantic',
       // Semantic UI: OR 'twitter square'
       icon: 'twitter',
