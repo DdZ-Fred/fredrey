@@ -688,6 +688,7 @@
 	  value: true
 	});
 	exports.generateIcon = generateIcon;
+	exports.copyToClipboard = copyToClipboard;
 
 	var _react = __webpack_require__(1);
 
@@ -707,6 +708,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/**
+	 * [Generates the appropriate icon React component]
+	 * @param  {String} provider   [devicons/semantic/svg]
+	 * @param  {String} icon       [For devicons & semantic, it should be the className of the according icon
+	 *                             Otherwise, the filename of the svg file should be here]
+	 * @return {React Component}   [The appropriate React Component]
+	 */
 	function generateIcon(provider, icon) {
 	  switch (provider) {
 	    case 'devicons':
@@ -721,6 +729,43 @@
 	    default:
 	      return _DeviconsIcon2.default;
 	  }
+	}
+
+	/**
+	 * Copy param to clipboard.
+	 * Works with:
+	 * - Firefox 41+
+	 * - Chrome 42+
+	 * - IE 9+ & Edge
+	 * - Opera 29+
+	 * - Safari: Apparently not
+	 * @param  {String}  text [Text to copy to clipboard]
+	 */
+	function copyToClipboard(text) {
+	  // Doesn't work if 'hidden' or 'display-none'
+	  var tempTxtInput = document.createElement('input');
+	  tempTxtInput.id = 'textToCopy';
+	  tempTxtInput.type = 'text';
+	  tempTxtInput.readOnly = true;
+	  // IMPORTANT: Only one dimension should be 0px
+	  // otherwise Chrome won't select anything.
+	  tempTxtInput.style.height = '0px';
+	  tempTxtInput.defaultValue = text;
+
+	  // Append to body the tempTxtInput with needed text
+	  document.querySelector('body').appendChild(tempTxtInput);
+
+	  // Select Input text
+	  // Only works on text-type Input and textarea
+	  // document.getElementById(tempTxtInput.id).select();
+	  tempTxtInput.select();
+
+	  // Copy selection to clipboard
+	  document.execCommand('copy');
+
+	  // remove tempTxtInput from DOM Document
+	  // tempTxtInput.remove() doesn't work with IE
+	  document.querySelector('body').removeChild(tempTxtInput);
 	}
 
 /***/ },
@@ -897,6 +942,8 @@
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
+	var _utils = __webpack_require__(13);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -919,8 +966,17 @@
 	  }
 
 	  _createClass(Contact, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
+	    key: 'handleCopyEmailToClipboard',
+	    value: function handleCopyEmailToClipboard() {
+	      console.log('Email icon pushed');
+	      var num = Math.random() * 100000 % 50;
+	      (0, _utils.copyToClipboard)('Poinrf ' + num);
+	      // show message telling the copy was made
+	      //
+	    }
+	  }, {
+	    key: 'handleOpenFormModal',
+	    value: function handleOpenFormModal() {
 	      // It is the ContactFormModal component
 	      $('.ui.modal').modal('show');
 	    }
@@ -944,13 +1000,43 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'content' },
+	            { className: 'mainContent' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'ui centered list' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item' },
+	                _react2.default.createElement('i', { className: 'marker icon' }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'content' },
+	                  'London, UK'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item' },
+	                _react2.default.createElement('i', { className: 'mail link icon',
+	                  onClick: this.handleCopyEmailToClipboard }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'content' },
+	                  'Frederic.Rey.Pro@gmail.com'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'ui horizontal divider' },
+	              'OR'
+	            ),
 	            'Click ',
 	            _react2.default.createElement(
 	              'button',
 	              {
 	                className: 'ui mini basic blue button',
-	                onClick: this.handleClick },
+	                onClick: this.handleOpenFormModal },
 	              'here'
 	            ),
 	            ' to contact me.',
@@ -1170,8 +1256,7 @@
 	          _react2.default.createElement('br', null),
 	          'Built with ',
 	          _react2.default.createElement('i', { className: 'red heart icon', onMouseOver: this.handleMouseOver }),
-	          _react2.default.createElement('br', null),
-	          'with  React & Semantic-UI',
+	          'with  React',
 	          _react2.default.createElement('br', null),
 	          '© 2016 Frederic Rey',
 	          _react2.default.createElement('br', null),

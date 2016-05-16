@@ -1,3 +1,13 @@
+/***************
+ *  MY PALETTE *
+ * *************
+ * rgb(97, 174, 249)
+ * rgb(85, 249, 191)
+ * rgb(117, 109, 250)
+ * **************/
+
+
+
 body {
   /*background-color: rgb(116, 201, 242);*/
   background: rgb(97, 173, 249);
@@ -187,11 +197,19 @@ body {
 /* CONTACT COMPONENT*/
 /********************/
 
-#contact .content {
+#contact .mainContent {
   padding-top: 8px;
   padding-bottom: 8px;
   text-align: center;
 }
+
+#contact .mainContent .email.item .popup {
+  background-color: rgb(97, 174, 249);
+  color: white;
+}
+/*rgb(97, 174, 249)
+rgb(85, 249, 191)
+rgb(117, 109, 250)*/
 
 #contact .icons {
   padding: 5px 0px;

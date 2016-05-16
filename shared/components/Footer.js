@@ -19,8 +19,7 @@ class Footer extends React.Component {
           <FooterLinks footerLinks={this.props.footerLinks} />
           <br />
           Built with <i className="red heart icon" onMouseOver={this.handleMouseOver}></i>
-          <br />
-          with  React & Semantic-UI
+          with  React
           <br />
            &copy; 2016 Frederic Rey
           <br />
