@@ -184,12 +184,12 @@ body {
 /* WORKS COMPONENT*/
 /******************/
 
-
 #works .content {
   padding-top: 8px;
   padding-bottom: 8px;
   text-align: center;
 }
+
 
 
 
@@ -203,21 +203,27 @@ body {
   text-align: center;
 }
 
-#contact .mainContent .email.item .popup {
-  background-color: rgb(97, 174, 249);
-  color: white;
+#contactTop .mail.link.icon {
+
 }
+
+#contactEmail {
+  padding-left: 4px;
+}
+
+#contactEmail:hover {
+  text-decoration: underline;
+}
+
+#contactTop span a {
+  padding-left: 4px;
+}
+
+
 /*rgb(97, 174, 249)
 rgb(85, 249, 191)
 rgb(117, 109, 250)*/
 
-#contact .icons {
-  padding: 5px 0px;
-}
-
-#contact .icons a {
-  padding: 0px 5px;
-}
 
 #contactFormModal {
   background: rgb(97, 173, 249);

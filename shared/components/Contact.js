@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react';
-import ContactFormModal from './ContactFormModal';
 import SemanticIcon from './icons/SemanticIcon';
+import ContactFormModal from './ContactFormModal';
 import { copyToClipboard } from '../utils';
 
-const propTypes = {
-  socialProfiles: PropTypes.array.isRequired,
-};
 
 class Contact extends React.Component {
 
@@ -24,8 +21,12 @@ class Contact extends React.Component {
   }
 
   handleOpenFormModal() {
-    // It is the ContactFormModal component
     $('.ui.modal').modal('show');
+  }
+
+  handleCloseFormModal() {
+    $('.ui.modal').modal('hide');
+    // document.querySelector('.ui.modal form').reset();
   }
 
   render() {
@@ -37,44 +38,38 @@ class Contact extends React.Component {
           </a>
           <div className="mainContent">
 
-            <div className="ui centered list">
-              <div className="city item">
-                <i className="marker icon"></i>
-                <div className="content">London, UK</div>
-              </div>
-              <div className="email item">
-                <i title="Click to copy to clipboard!"
-                  className="mail link icon"
-                  onClick={this.handleCopyEmailToClipboard}></i>
-                <div id="contactEmail"
-                  className="content">Frederic.Rey.Pro@gmail.com</div>
-              </div>
+            <div id="contactTop">
+              <p>We can get in touch by:</p>
+              <i title="Click to copy to clipboard!"
+                className="mail link icon"
+                onClick={this.handleCopyEmailToClipboard}></i>
+              <span id="contactEmail">Frederic.Rey.Pro@gmail.com</span>
+              <br />
+              <span>
+                or directly on
+                <a
+                  href="https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299"
+                  target="_blank">
+                  <SemanticIcon icon="linkedin" />
+                </a>
+              </span>
             </div>
 
-            <div className="ui horizontal divider">OR</div>
+            <h5 className="ui horizontal divider header">
+              <i className="small send icon"></i>
+              Quick form
+            </h5>
 
-            Click <button
-                    className="ui mini basic blue button"
-                    onClick={this.handleOpenFormModal}>
-                      here
-                  </button> to contact me.
-            <br />
-            <br />
-            Or we can get in touch on:
-            <br />
-            <i className="big icons">
-              {this.props.socialProfiles.map((profile, idx) => (
-                <a
-                  key={idx}
-                  href={profile.url}
-                  target="_blank">
-                  <SemanticIcon icon={profile.icon} />
-                </a>
-              ))}
-            </i>
-            <ContactFormModal />
+            <span id="contactBottom">
+              Click <button
+                      className="ui mini basic blue button"
+                      onClick={this.handleOpenFormModal}>
+              here
+              </button> to contact me.
+            </span>
           </div>
         </div>
+        <ContactFormModal closeModal={this.handleCloseFormModal} />
       </div>
     );
   }
@@ -87,8 +82,7 @@ class Contact extends React.Component {
         content: 'Click the icon to copy the Email!',
       });
   }
-}
 
-Contact.propTypes = propTypes;
+}
 
 export default Contact;

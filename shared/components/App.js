@@ -20,7 +20,7 @@ class App extends React.Component {
         <AboutMe />
         <Superpowers superpowers={this.state.superpowers}/>
         <Works />
-        <Contact socialProfiles={this.state.socialProfiles} />
+        <Contact />
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>
