@@ -1,7 +1,13 @@
+/*
+  global grecaptcha
+ */
 import React, { PropTypes } from 'react';
+import axios from 'axios';
 
 
 const propTypes = {
+  hasOpened: PropTypes.bool.isRequired,
+  updateState: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 
@@ -12,12 +18,15 @@ class ContactFormModal extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log('ContactBackSide.js: handleSubmit()');
     e.preventDefault();
+    console.log('ContactBackSide.js: handleSubmit()');
+
     const email = e.target.elements[0].value;
     const fullname = e.target.elements[1].value;
     const message = e.target.elements[2].value;
-    console.log(`Email: ${email}\n Fullname: ${fullname}\n Message: ${message}`);
+    const captchaRes = e.target.elements['g-recaptcha-response'].value;
+    // console.log(`Email: ${email}\n Fullname: ${fullname}\n Message: ${message}\n reCaptchaRes: ${captchaRes}`);
+
   }
 
   render() {
@@ -32,7 +41,7 @@ class ContactFormModal extends React.Component {
 
             <br />
 
-            <form className="ui form" onSubmit={this.handleSubmit}>
+            <form method="POST" className="ui form" onSubmit={this.handleSubmit}>
               <div className="field">
                 <label htmlFor="email">Email</label>
                 <input
@@ -57,7 +66,13 @@ class ContactFormModal extends React.Component {
                   cols="30"
                   rows="4"></textarea>
               </div>
-              ADD reCAPTCHA HERE
+
+              {/* <div class="g-recaptcha" data-sitekey="6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu">
+              </div>*/}
+              <div id="myRecaptcha" className="field">
+
+              </div>
+
               <br />
               <div className="ui buttons">
                 <button className="ui button"
@@ -70,6 +85,28 @@ class ContactFormModal extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    $('.ui.modal')
+      .modal({
+        onShow: () => {
+          if (!this.props.hasOpened) {
+            console.log('ContactFormModal is showing for the first time!');
+            grecaptcha.render('myRecaptcha', {
+              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
+            });
+            this.props.updateState();
+            console.log('ContactFormModal state updated!');
+          } else {
+            console.log('ContactFormModal is showing again!');
+            grecaptcha.reset();
+          }
+        },
+        onHide: () => {
+          console.log('ContactFormModal is now hiding');
+        },
+      });
   }
 
 }
