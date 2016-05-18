@@ -31,7 +31,6 @@ class Contact extends React.Component {
   handleCloseFormModal(e) {
     e.preventDefault();
     $('.ui.modal').modal('hide');
-    document.querySelector('.ui.modal form').reset();
   }
 
   handleRenderRecaptcha() {

@@ -2,6 +2,7 @@
   global grecaptcha
  */
 import React, { PropTypes } from 'react';
+import { resetSemanticInvalidForm } from '../utils';
 import axios from 'axios';
 
 
@@ -114,6 +115,11 @@ class ContactFormModal extends React.Component {
       },
       onHide: () => {
         console.log('ContactFormModal is now hiding');
+        document.querySelector('.ui.modal form').reset();
+        const isValidForm = $('.ui.form').form('is valid');
+        if (!isValidForm) {
+          resetSemanticInvalidForm('.ui.form');
+        }
       },
     });
 

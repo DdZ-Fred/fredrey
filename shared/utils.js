@@ -3,6 +3,7 @@ import DeviconsIcon from './components/icons/DeviconsIcon';
 import SemanticIcon from './components/icons/SemanticIcon';
 import SvgIcon from './components/icons/SvgIcon';
 
+
 /**
  * [Generates the appropriate icon React component]
  * @param  {String} provider   [devicons/semantic/svg]
@@ -26,6 +27,7 @@ export function generateIcon(provider, icon) {
       return DeviconsIcon;
   }
 }
+
 
 /**
  * Copy param to clipboard.
@@ -62,4 +64,28 @@ export function copyToClipboard(text) {
   // Remove tempTxtInput from DOM-Doc
   document.querySelector('body').removeChild(tempTxtInput);
   return copyBool;
+}
+
+
+/**
+ * Allows to reset the state of the form. It cleans up all the errors
+ * that can appear after validation.
+ * @param {String} formSelector [CSS-style selector that targets the form]
+ */
+export function resetSemanticInvalidForm(formSelector) {
+  const aForm = document.querySelector(formSelector);
+  // Remove error class from form
+  aForm.classList.remove('error');
+
+  // Remove error class from fields
+  const invalidFields = aForm.querySelectorAll('.field.error');
+  for (let i = 0; i < invalidFields.length; i++) {
+    invalidFields[i].classList.remove('error');
+  }
+
+  // Empty the .ui.error.message div
+  const errorMessagesContainer = aForm.querySelector('.ui.error.message');
+  if (errorMessagesContainer.firstChild) {
+    errorMessagesContainer.removeChild(errorMessagesContainer.firstChild);
+  }
 }
