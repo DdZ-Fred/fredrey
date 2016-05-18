@@ -78,7 +78,7 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <script src=\'https://www.google.com/recaptcha/api.js\'></script>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
 
 	app.post('/contactMe', function (req, res) {
@@ -241,7 +241,7 @@
 	        _react2.default.createElement(_AboutMe2.default, null),
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_Works2.default, null),
-	        _react2.default.createElement(_Contact2.default, { socialProfiles: this.state.socialProfiles }),
+	        _react2.default.createElement(_Contact2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui horizontal divider' },
@@ -711,8 +711,9 @@
 	/**
 	 * [Generates the appropriate icon React component]
 	 * @param  {String} provider   [devicons/semantic/svg]
-	 * @param  {String} icon       [For devicons & semantic, it should be the className of the according icon
-	 *                             Otherwise, the filename of the svg file should be here]
+	 * @param  {String} icon       [For devicons & semantic, it should be the className
+	 *                             of the according icon. Otherwise, the filename of
+	 *                             the svg file should be here]
 	 * @return {React Component}   [The appropriate React Component]
 	 */
 	function generateIcon(provider, icon) {
@@ -738,7 +739,7 @@
 	 * - Chrome 42+
 	 * - IE 9+ & Edge
 	 * - Opera 29+
-	 * - Safari: Apparently not
+	 * - Safari: NOT YET
 	 * @param  {String}  text [Text to copy to clipboard]
 	 */
 	function copyToClipboard(text) {
@@ -757,15 +758,15 @@
 
 	  // Select Input text
 	  // Only works on text-type Input and textarea
-	  // document.getElementById(tempTxtInput.id).select();
 	  tempTxtInput.select();
+	  // document.getElementById(tempTxtInput.id).select();
 
-	  // Copy selection to clipboard
-	  document.execCommand('copy');
+	  // Copy selection
+	  var copyBool = document.execCommand('copy');
 
-	  // remove tempTxtInput from DOM Document
-	  // tempTxtInput.remove() doesn't work with IE
+	  // Remove tempTxtInput from DOM-Doc
 	  document.querySelector('body').removeChild(tempTxtInput);
+	  return copyBool;
 	}
 
 /***/ },
@@ -934,13 +935,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactFormModal = __webpack_require__(19);
-
-	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
-
 	var _SemanticIcon = __webpack_require__(15);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
+
+	var _ContactFormModal = __webpack_require__(19);
+
+	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
 	var _utils = __webpack_require__(13);
 
@@ -951,10 +952,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var propTypes = {
-	  socialProfiles: _react.PropTypes.array.isRequired
-	};
 
 	var Contact = function (_React$Component) {
 	  _inherits(Contact, _React$Component);
@@ -968,17 +965,28 @@
 	  _createClass(Contact, [{
 	    key: 'handleCopyEmailToClipboard',
 	    value: function handleCopyEmailToClipboard() {
-	      console.log('Email icon pushed');
-	      var num = Math.random() * 100000 % 50;
-	      (0, _utils.copyToClipboard)('Poinrf ' + num);
-	      // show message telling the copy was made
-	      //
+	      console.log('Contact.js: handleCopyEmailToClipboard - Email icon pushed');
+	      var num = Math.floor(Math.random() * 100000 % 50);
+
+	      if ((0, _utils.copyToClipboard)('COPY-TEST-' + num)) {
+	        // Show copy success message
+	        console.log('Copy to cliplard Succeeded');
+	      } else {
+	        console.log('Copy to clipboard Failed');
+	        // Copy to clipboard not compatible
+	        // Show alternative message
+	      }
 	    }
 	  }, {
 	    key: 'handleOpenFormModal',
 	    value: function handleOpenFormModal() {
-	      // It is the ContactFormModal component
 	      $('.ui.modal').modal('show');
+	    }
+	  }, {
+	    key: 'handleCloseFormModal',
+	    value: function handleCloseFormModal() {
+	      $('.ui.modal').modal('hide');
+	      // document.querySelector('.ui.modal form').reset();
 	    }
 	  }, {
 	    key: 'render',
@@ -1003,72 +1011,71 @@
 	            { className: 'mainContent' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'ui centered list' },
+	              { id: 'contactTop' },
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'item' },
-	                _react2.default.createElement('i', { className: 'marker icon' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'content' },
-	                  'London, UK'
-	                )
+	                'p',
+	                null,
+	                'We can get in touch by:'
 	              ),
+	              _react2.default.createElement('i', { title: 'Click to copy to clipboard!',
+	                className: 'mail link icon',
+	                onClick: this.handleCopyEmailToClipboard }),
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'item' },
-	                _react2.default.createElement('i', { className: 'mail link icon',
-	                  onClick: this.handleCopyEmailToClipboard }),
+	                'span',
+	                { id: 'contactEmail' },
+	                'Frederic.Rey.Pro@gmail.com'
+	              ),
+	              _react2.default.createElement('br', null),
+	              _react2.default.createElement(
+	                'span',
+	                null,
+	                'or directly on',
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'content' },
-	                  'Frederic.Rey.Pro@gmail.com'
+	                  'a',
+	                  {
+	                    href: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
+	                    target: '_blank' },
+	                  _react2.default.createElement(_SemanticIcon2.default, { icon: 'linkedin' })
 	                )
 	              )
 	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'ui horizontal divider' },
-	              'OR'
+	              'h5',
+	              { className: 'ui horizontal divider header' },
+	              _react2.default.createElement('i', { className: 'small send icon' }),
+	              'Quick form'
 	            ),
-	            'Click ',
 	            _react2.default.createElement(
-	              'button',
-	              {
-	                className: 'ui mini basic blue button',
-	                onClick: this.handleOpenFormModal },
-	              'here'
-	            ),
-	            ' to contact me.',
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement('br', null),
-	            'Or we can get in touch on:',
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'big icons' },
-	              this.props.socialProfiles.map(function (profile, idx) {
-	                return _react2.default.createElement(
-	                  'a',
-	                  {
-	                    key: idx,
-	                    href: profile.url,
-	                    target: '_blank' },
-	                  _react2.default.createElement(_SemanticIcon2.default, { icon: profile.icon })
-	                );
-	              })
-	            ),
-	            _react2.default.createElement(_ContactFormModal2.default, null)
+	              'span',
+	              { id: 'contactBottom' },
+	              'Click ',
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'ui mini basic blue button',
+	                  onClick: this.handleOpenFormModal },
+	                'here'
+	              ),
+	              ' to contact me.'
+	            )
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(_ContactFormModal2.default, { closeModal: this.handleCloseFormModal })
 	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('#contactEmail').popup({
+	        inline: true,
+	        target: '.mail.link.icon',
+	        content: 'Click the icon to copy the Email!'
+	      });
 	    }
 	  }]);
 
 	  return Contact;
 	}(_react2.default.Component);
-
-	Contact.propTypes = propTypes;
 
 	exports.default = Contact;
 
@@ -1096,25 +1103,24 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var propTypes = {
+	  closeModal: _react.PropTypes.func.isRequired
+	};
+
 	var ContactFormModal = function (_React$Component) {
 	  _inherits(ContactFormModal, _React$Component);
 
-	  function ContactFormModal() {
+	  function ContactFormModal(props) {
 	    _classCallCheck(this, ContactFormModal);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactFormModal).call(this));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactFormModal).call(this, props));
 	    // Put bindings here if necessary
 	  }
 
 	  _createClass(ContactFormModal, [{
-	    key: 'handleCancel',
-	    value: function handleCancel(e) {
-	      e.preventDefault();
-	      $('.ui.modal').modal('hide');
-	    }
-	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      console.log('ContactBackSide.js: handleSubmit()');
 	      e.preventDefault();
 	      var email = e.target.elements[0].value;
 	      var fullname = e.target.elements[1].value;
@@ -1129,61 +1135,83 @@
 	        { id: 'contactFormModal', className: 'ui modal' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'header' },
-	          'Contact me'
-	        ),
-	        _react2.default.createElement(
-	          'div',
 	          { className: 'content' },
 	          _react2.default.createElement(
-	            'form',
-	            { className: 'ui form', onSubmit: this.handleSubmit },
+	            'div',
+	            { className: 'ui center aligned raised padded segment' },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'field' },
+	              'h3',
+	              { className: 'ui icon header' },
+	              _react2.default.createElement('i', { className: 'headerIcon circular inverted blue send icon' }),
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'email' },
-	                'Email'
-	              ),
-	              _react2.default.createElement('input', { id: 'email', type: 'email', name: 'email', placeholder: 'Enter your email' })
+	                'p',
+	                { className: 'headerText' },
+	                'Quick Form'
+	              )
 	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'field' },
-	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'fullname' },
-	                'Full name'
-	              ),
-	              _react2.default.createElement('input', { type: 'text', id: 'fullname', name: 'fullname', placeholder: 'Enter your full name' })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'field' },
-	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'message' },
-	                'Message'
-	              ),
-	              _react2.default.createElement('textarea', { id: 'message', name: 'message', cols: '30', rows: '4' })
-	            ),
-	            'ADD reCAPTCHA HERE',
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'ui buttons' },
+	              'form',
+	              { method: 'POST', className: 'ui form', onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
-	                'button',
-	                { className: 'ui button',
-	                  onClick: this.handleCancel },
-	                'Cancel'
+	                'div',
+	                { className: 'field' },
+	                _react2.default.createElement(
+	                  'label',
+	                  { htmlFor: 'email' },
+	                  'Email'
+	                ),
+	                _react2.default.createElement('input', {
+	                  id: 'email',
+	                  type: 'email',
+	                  name: 'email',
+	                  placeholder: 'Enter your email' })
 	              ),
-	              _react2.default.createElement('div', { className: 'or' }),
 	              _react2.default.createElement(
-	                'button',
-	                { className: 'ui blue button', type: 'submit' },
-	                'Submit'
+	                'div',
+	                { className: 'field' },
+	                _react2.default.createElement(
+	                  'label',
+	                  { htmlFor: 'fullname' },
+	                  'Full name'
+	                ),
+	                _react2.default.createElement('input', {
+	                  id: 'fullname',
+	                  type: 'text',
+	                  name: 'fullname',
+	                  placeholder: 'Enter your full name' })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'field' },
+	                _react2.default.createElement(
+	                  'label',
+	                  { htmlFor: 'message' },
+	                  'Message'
+	                ),
+	                _react2.default.createElement('textarea', {
+	                  id: 'message',
+	                  name: 'message',
+	                  cols: '30',
+	                  rows: '4' })
+	              ),
+	              _react2.default.createElement('div', { 'class': 'g-recaptcha', 'data-sitekey': '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu' }),
+	              _react2.default.createElement('br', null),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'ui buttons' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'ui button',
+	                    onClick: this.props.closeModal },
+	                  'Cancel'
+	                ),
+	                _react2.default.createElement('div', { className: 'or' }),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'ui blue button', type: 'submit' },
+	                  'Submit'
+	                )
 	              )
 	            )
 	          )
@@ -1194,6 +1222,8 @@
 
 	  return ContactFormModal;
 	}(_react2.default.Component);
+
+	ContactFormModal.propTypes = propTypes;
 
 	exports.default = ContactFormModal;
 

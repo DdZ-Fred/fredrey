@@ -6,6 +6,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 // Alows to match the url to route and then render
 import { match, RouterContext } from 'react-router';
+import axios from 'axios';
 import routes from './shared/routes';
 
 
@@ -30,6 +31,7 @@ function renderPage(appHtml) {
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
       <link rel=stylesheet href=/index.css>
+      <script src='https://www.google.com/recaptcha/api.js'></script>
       <div id=app>${appHtml}</div>
       <script src="/jquery/jquery-2.2.3.min.js"></script>
       <script src="/semantic/dist/semantic.min.js"></script>

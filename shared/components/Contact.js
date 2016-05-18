@@ -3,6 +3,10 @@ import SemanticIcon from './icons/SemanticIcon';
 import ContactFormModal from './ContactFormModal';
 import { copyToClipboard } from '../utils';
 
+const propTypes = {
+  contactFormModalOpened: PropTypes.bool.isRequired,
+  updateContactFormModalState: PropTypes.func.isRequired,
+};
 
 class Contact extends React.Component {
 
@@ -24,9 +28,14 @@ class Contact extends React.Component {
     $('.ui.modal').modal('show');
   }
 
-  handleCloseFormModal() {
+  handleCloseFormModal(e) {
+    e.preventDefault();
     $('.ui.modal').modal('hide');
-    // document.querySelector('.ui.modal form').reset();
+    document.querySelector('.ui.modal form').reset();
+  }
+
+  handleRenderRecaptcha() {
+
   }
 
   render() {
@@ -69,7 +78,10 @@ class Contact extends React.Component {
             </span>
           </div>
         </div>
-        <ContactFormModal closeModal={this.handleCloseFormModal} />
+        <ContactFormModal
+          hasOpened={this.props.contactFormModalOpened}
+          updateState={this.props.updateContactFormModalState}
+          closeModal={this.handleCloseFormModal} />
       </div>
     );
   }
@@ -84,5 +96,7 @@ class Contact extends React.Component {
   }
 
 }
+
+Contact.propTypes = propTypes;
 
 export default Contact;

@@ -67,14 +67,7 @@ export default {
     },
 
   ],
-  socialProfiles: [
-    {
-      name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
-      provider: 'semantic',
-      // Semantic UI: OR 'linkedin square'
-      icon: 'linkedin',
-    },
+  gitProfiles: [
     {
       name: 'GitHub',
       url: 'https://github.com/DdZ-Fred',
@@ -89,14 +82,8 @@ export default {
       // Semantic UI: OR 'bitbucket square'
       icon: 'bitbucket',
     },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/rey_fr7154a',
-      provider: 'semantic',
-      // Semantic UI: OR 'twitter square'
-      icon: 'twitter',
-    },
   ],
+  contactFormModalOpened: false,
   footerLinks: [
     {
       title: 'AboutMe',

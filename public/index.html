@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="/devicons/css/devicons.min.css">
     <link rel="stylesheet" href="/common.css">
     <link rel=stylesheet href=/index.css>
+    <script type="text/javascript">
+      var onloadCallback = function() {
+        console.log('reCAPTCHA IS ready!');
+      }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'
+        async defer></script>
   </head>
   <body>
     <div id="app"></div>

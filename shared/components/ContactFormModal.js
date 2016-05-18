@@ -21,12 +21,17 @@ class ContactFormModal extends React.Component {
     e.preventDefault();
     console.log('ContactBackSide.js: handleSubmit()');
 
-    const email = e.target.elements[0].value;
-    const fullname = e.target.elements[1].value;
-    const message = e.target.elements[2].value;
+    const isValidForm = $('.ui.form').form('is valid');
     const captchaRes = e.target.elements['g-recaptcha-response'].value;
-    // console.log(`Email: ${email}\n Fullname: ${fullname}\n Message: ${message}\n reCaptchaRes: ${captchaRes}`);
 
+    if (isValidForm && captchaRes) {
+      alert('Form inputs and Captcha are valid!');
+    } else {
+      let tempStr = '';
+      tempStr += isValidForm ? 'Form is valid!\n' : 'Form is invalid\n';
+      tempStr += captchaRes ? 'Captcha ok' : 'Captcha failed';
+      alert(tempStr);
+    }
   }
 
   render() {
@@ -35,45 +40,49 @@ class ContactFormModal extends React.Component {
         <div className="content">
           <div className="ui center aligned raised padded segment">
             <h3 className="ui icon header">
-              <i className="headerIcon circular inverted blue send icon"></i>
+              <i className="headerIcon circular inverted blue lightning icon"></i>
               <p className="headerText">Quick Form</p>
             </h3>
 
             <br />
 
-            <form method="POST" className="ui form" onSubmit={this.handleSubmit}>
-              <div className="field">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"/>
+            <form className="ui form"
+                onSubmit={this.handleSubmit}>
+
+              <div className="fields">
+                <div className="eight wide field">
+                  <input
+                    id="fullname"
+                    type="text"
+                    name="fullname"
+                    placeholder="Full name"/>
+                </div>
+                <div className="eight wide field">
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"/>
+                </div>
               </div>
-              <div className="field">
-                <label htmlFor="fullname">Full name</label>
-                <input
-                  id="fullname"
-                  type="text"
-                  name="fullname"
-                  placeholder="Enter your full name"/>
-              </div>
-              <div className="field">
-                <label htmlFor="message">Message</label>
+
+              <div className="sixteen wide field">
                 <textarea
                   id="message"
                   name="message"
+                  placeholder="Message"
                   cols="30"
-                  rows="4"></textarea>
+                  rows="3"></textarea>
               </div>
 
-              {/* <div class="g-recaptcha" data-sitekey="6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu">
-              </div>*/}
-              <div id="myRecaptcha" className="field">
+              <div className="ui success message"></div>
+              <div className="ui error message"></div>
 
+              <div id="myRecaptcha" className="field">
               </div>
 
               <br />
+
               <div className="ui buttons">
                 <button className="ui button"
                   onClick={this.props.closeModal}>Cancel</button>
@@ -88,25 +97,63 @@ class ContactFormModal extends React.Component {
   }
 
   componentDidMount() {
-    $('.ui.modal')
-      .modal({
-        onShow: () => {
-          if (!this.props.hasOpened) {
-            console.log('ContactFormModal is showing for the first time!');
-            grecaptcha.render('myRecaptcha', {
-              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
-            });
-            this.props.updateState();
-            console.log('ContactFormModal state updated!');
-          } else {
-            console.log('ContactFormModal is showing again!');
-            grecaptcha.reset();
-          }
+    // Contact form modal initialization
+    $('.ui.modal').modal({
+      onShow: () => {
+        if (!this.props.hasOpened) {
+          console.log('ContactFormModal is showing for the first time!');
+          grecaptcha.render('myRecaptcha', {
+            sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
+          });
+          this.props.updateState();
+          console.log('ContactFormModal state just updated!');
+        } else {
+          console.log('ContactFormModal is showing again!');
+          grecaptcha.reset();
+        }
+      },
+      onHide: () => {
+        console.log('ContactFormModal is now hiding');
+      },
+    });
+
+    // Form validation initialization
+    $('.ui.form').form({
+      revalidate: true,
+      fields: {
+        fullname: {
+          identifier: 'fullname',
+          rules: [
+            {
+              type: 'empty',
+              prompt: 'Please enter your full name',
+            },
+          ],
         },
-        onHide: () => {
-          console.log('ContactFormModal is now hiding');
+        email: {
+          identifier: 'email',
+          rules: [
+            {
+              type: 'empty',
+              prompt: 'Please enter your email',
+            },
+            {
+              type: 'email',
+              prompt: 'Please enter a valid email',
+            },
+          ],
         },
-      });
+        message: {
+          identifier: 'message',
+          rules: [
+            {
+              type: 'empty',
+              prompt: 'Please enter a message',
+            },
+          ],
+        },
+      },
+    });
   }
 
 }

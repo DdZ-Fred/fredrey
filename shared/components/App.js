@@ -11,6 +11,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = appState;
+    this.updateContactFormModalState = this.updateContactFormModalState.bind(this);
+  }
+
+  updateContactFormModalState() {
+    this.setState({
+      contactFormModalOpened: true,
+    });
   }
 
   render() {
@@ -20,7 +27,9 @@ class App extends React.Component {
         <AboutMe />
         <Superpowers superpowers={this.state.superpowers}/>
         <Works />
-        <Contact />
+        <Contact
+          contactFormModalOpened={this.state.contactFormModalOpened}
+          updateContactFormModalState={this.updateContactFormModalState} />
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>
