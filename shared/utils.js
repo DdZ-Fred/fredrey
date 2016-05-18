@@ -70,17 +70,23 @@ export function copyToClipboard(text) {
 /**
  * Allows to reset the state of the form. It cleans up all the errors
  * that can appear after validation.
- * @param {String} formSelector [CSS-style selector that targets the form]
+ * @param {String} formSelector   CSS-style selector that targets the form
+ *                                Default: '.ui.form'
  */
-export function resetSemanticInvalidForm(formSelector) {
+export function resetSemanticInvalidForm(formSelector = '.ui.form') {
   const aForm = document.querySelector(formSelector);
   // Remove error class from form
   aForm.classList.remove('error');
 
   // Remove error class from fields
+  // unless the element has the message class.
+  // The error messages container has the 3 classes, field/error/message
+  // and the error class is needed for the errors to render appropriately.
   const invalidFields = aForm.querySelectorAll('.field.error');
   for (let i = 0; i < invalidFields.length; i++) {
-    invalidFields[i].classList.remove('error');
+    if (!invalidFields[i].classList.contains('message')) {
+      invalidFields[i].classList.remove('error');
+    }
   }
 
   // Empty the .ui.error.message div

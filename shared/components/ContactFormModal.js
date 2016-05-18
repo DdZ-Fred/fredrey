@@ -27,11 +27,6 @@ class ContactFormModal extends React.Component {
 
     if (isValidForm && captchaRes) {
       alert('Form inputs and Captcha are valid!');
-    } else {
-      let tempStr = '';
-      tempStr += isValidForm ? 'Form is valid!\n' : 'Form is invalid\n';
-      tempStr += captchaRes ? 'Captcha ok' : 'Captcha failed';
-      alert(tempStr);
     }
   }
 
@@ -76,10 +71,11 @@ class ContactFormModal extends React.Component {
                   rows="3"></textarea>
               </div>
 
-              <div className="ui success message"></div>
-              <div className="ui error message"></div>
-
-              <div id="myRecaptcha" className="field">
+              <div className="fields">
+                <div id="myRecaptcha" className="eight wide field">
+                </div>
+                <div className="ui error message eight wide field">
+                </div>
               </div>
 
               <br />
@@ -102,23 +98,22 @@ class ContactFormModal extends React.Component {
     $('.ui.modal').modal({
       onShow: () => {
         if (!this.props.hasOpened) {
-          console.log('ContactFormModal is showing for the first time!');
+          // Modal is showing for the first time
           grecaptcha.render('myRecaptcha', {
             sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
           });
           this.props.updateState();
-          console.log('ContactFormModal state just updated!');
         } else {
-          console.log('ContactFormModal is showing again!');
+          // Modal is re-opening
           grecaptcha.reset();
         }
       },
       onHide: () => {
-        console.log('ContactFormModal is now hiding');
-        document.querySelector('.ui.modal form').reset();
+        // Modal is hiding. Clean the form
+        document.querySelector('.ui.form').reset();
         const isValidForm = $('.ui.form').form('is valid');
         if (!isValidForm) {
-          resetSemanticInvalidForm('.ui.form');
+          resetSemanticInvalidForm();
         }
       },
     });
