@@ -3,12 +3,13 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var axios = require('axios');
-
+// var nodemailer = require('nodemailer');
 import React from 'react';
 // Allows to render our app to an html string
 import { renderToString } from 'react-dom/server';
 // Alows to match the url to route and then render
 import { match, RouterContext } from 'react-router';
+import { createFormattedMessage } from './server/utils';
 import routes from './shared/routes';
 
 
@@ -45,6 +46,7 @@ function renderPage(appHtml) {
   `;
 }
 
+
 app.post('/contactMe', (req, res) => {
   const { fullname,
     email,
@@ -74,9 +76,51 @@ app.post('/contactMe', (req, res) => {
           case 200:
 
             if (data.success) {
-              console.log('reCaptcha check Successful!');
+              console.log('reCaptcha check Successful! Now sending the email!');
               // Send Email with MailGun here
+              const newMail = createFormattedMessage(
+                req.body.fullname,
+                req.body.email,
+                req.body.message
+              );
+              const mailgunReqConf = {
+                method: 'post',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+                baseURL: process.env.FREDREY_MAILGUN_BASEURL,
+                url: '/messages',
+                auth: {
+                  api: process.env.FREDREY_MAILGUN_KEY,
+                },
+                params: newMail,
+              };
+              axios(mailgunReqConf)
+                .then((mgRes) => {
+                  switch (mgRes.status) {
+                    // Req successful
+                    case 200:
+                      console.log(`Mailgun: ${mgRes.data.message}.\nMessageID: ${mgRes.data.id}`);
+                      break;
+                    // Bad Req: Required param missing
+                    case 400:
+                      console.log('Mailgun: Bad request: A parameter was missing');
+                      break;
+                    // Unauthorized: No valid api key
+                    case 401:
+                      console.log('Mailgun: Unauthorized: Api key not valid!');
+                      break;
+                    case 402:
+                      console.log('Mailgun: Request failed');
+                      break;
+                    case 404:
+                      console.log('Mailgun: Not found');
+                      break;
+                    default:
+                      console.log('Mailgun: default block triggered!');
+                      break;
+                  }
+                });
 
+              console.log(newMail);
 
               // Send response to Client
               res.send({

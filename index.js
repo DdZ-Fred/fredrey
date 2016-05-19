@@ -15,8 +15,4 @@ smoothScroll.init({
   speed: 700,
   easing: 'easeInQuad',
   updateURL: true,
-  callback(anchor, toggle) {
-    // Post-scroll callback
-    //
-  },
 });
