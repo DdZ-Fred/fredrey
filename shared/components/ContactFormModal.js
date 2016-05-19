@@ -23,10 +23,38 @@ class ContactFormModal extends React.Component {
     console.log('ContactBackSide.js: handleSubmit()');
 
     const isValidForm = $('.ui.form').form('is valid');
-    const captchaRes = e.target.elements['g-recaptcha-response'].value;
+    // const captchaResponse = grecaptcha.getResponse();
+    const recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
-    if (isValidForm && captchaRes) {
-      alert('Form inputs and Captcha are valid!');
+    if (isValidForm && recaptchaResponse) {
+      // console.log('Form inputs and Captcha are valid!');
+
+      const fullname = e.target.elements['fullname'].value;
+      const email = e.target.elements['email'].value;
+      const message = e.target.elements['message'].value;
+
+      console.log(`Fullname: ${fullname}\nEmail: ${email}\n
+        Message: ${message}\nreCaptchaResponse: ${recaptchaResponse}`);
+
+      axios.post('/contactMe', {
+        fullname,
+        email,
+        message,
+        recaptchaResponse,
+      })
+      .then(({ data, status }) => {
+        switch (status) {
+          case 200:
+            if (data.success) {
+              alert(data.message);
+            } else {
+              alert(`Error type: ${data.type}\nMessage: ${data.message}`);
+            }
+            break;
+          default:
+
+        }
+      });
     }
   }
 

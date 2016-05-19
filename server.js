@@ -1,16 +1,22 @@
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 var compression = require('compression');
+var axios = require('axios');
+
 import React from 'react';
 // Allows to render our app to an html string
 import { renderToString } from 'react-dom/server';
 // Alows to match the url to route and then render
 import { match, RouterContext } from 'react-router';
-import axios from 'axios';
 import routes from './shared/routes';
 
 
 var app = express();
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
+app.use(bodyParser.json());
 app.use(compression());
 
 // express.static: Allows to specify the directory from which the static assets are to be served.
@@ -31,7 +37,7 @@ function renderPage(appHtml) {
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
       <link rel=stylesheet href=/index.css>
-      <script src='https://www.google.com/recaptcha/api.js'></script>
+      <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>
       <div id=app>${appHtml}</div>
       <script src="/jquery/jquery-2.2.3.min.js"></script>
       <script src="/semantic/dist/semantic.min.js"></script>
@@ -40,11 +46,71 @@ function renderPage(appHtml) {
 }
 
 app.post('/contactMe', (req, res) => {
-  // req.accepts('application/json');
-  // console.log(req.params);
-  res.send({
-    message: 'OK',
-  });
+  const { fullname,
+    email,
+    message,
+    recaptchaResponse,
+  } = req.body;
+
+  const areDepsOk = fullname && email && message && recaptchaResponse;
+
+  if (areDepsOk) {
+    const recaptchaReqConf = {
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+      url: 'https://www.google.com/recaptcha/api/siteverify',
+      params: {
+        secret: process.env.RECAPTCHA_SECRET,
+        response: req.body.recaptchaResponse,
+        remoteip: req.ip,
+      },
+    };
+
+    axios(recaptchaReqConf)
+      .then(({ data, status }) => {
+        // Response Status check
+        console.log(`reCaptcha response: ${status}`);
+        switch (status) {
+          case 200:
+
+            if (data.success) {
+              console.log('reCaptcha check Successful!');
+              // Send Email with MailGun here
+
+
+              // Send response to Client
+              res.send({
+                success: true,
+                type: 'email_sent',
+                message: 'Your message has been sent! thank you! I will answer as soon as I can!',
+              });
+            } else {
+              console.log('reCaptcha check Failed!');
+              console.log(data['error-codes']);
+              // Don't send email with Mailgun
+              res.send({
+                success: false,
+                type: 'recaptcha_check_failed',
+                message: 'The recaptcha check was unsuccessful, the message canot be sent!',
+              });
+            }
+            break;
+
+          case 400:
+            break;
+
+          default:
+            break;
+        }
+      });
+  } else {
+    res.send({
+      success: false,
+      type: 'missing_data',
+      message: 'We couldn\'t receive all your information' +
+      ', please reload the page and try again!',
+    });
+  }
 });
 
 app.get('*', (req, res) => {

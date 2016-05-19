@@ -60,14 +60,21 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(23);
-	var path = __webpack_require__(24);
-	var compression = __webpack_require__(25);
+	var express = __webpack_require__(24);
+	var path = __webpack_require__(25);
+	var bodyParser = __webpack_require__(26);
+	var compression = __webpack_require__(27);
+	var axios = __webpack_require__(20);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
 
+
 	var app = express();
+	app.use(bodyParser.urlencoded({
+	  extended: true
+	}));
+	app.use(bodyParser.json());
 	app.use(compression());
 
 	// express.static: Allows to specify the directory from which the static assets are to be served.
@@ -78,15 +85,76 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <script src=\'https://www.google.com/recaptcha/api.js\'></script>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <script src=\'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\' async defer></script>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
 
 	app.post('/contactMe', function (req, res) {
-	  // req.accepts('application/json');
-	  // console.log(req.params);
-	  res.send({
-	    message: 'OK'
-	  });
+	  var _req$body = req.body;
+	  var fullname = _req$body.fullname;
+	  var email = _req$body.email;
+	  var message = _req$body.message;
+	  var recaptchaResponse = _req$body.recaptchaResponse;
+
+
+	  var areDepsOk = fullname && email && message && recaptchaResponse;
+
+	  if (areDepsOk) {
+	    var recaptchaReqConf = {
+	      method: 'post',
+	      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+	      url: 'https://www.google.com/recaptcha/api/siteverify',
+	      params: {
+	        secret: process.env.RECAPTCHA_SECRET,
+	        response: req.body.recaptchaResponse,
+	        remoteip: req.ip
+	      }
+	    };
+
+	    axios(recaptchaReqConf).then(function (_ref) {
+	      var data = _ref.data;
+	      var status = _ref.status;
+
+	      // Response Status check
+	      console.log('reCaptcha response: ' + status);
+	      switch (status) {
+	        case 200:
+
+	          if (data.success) {
+	            console.log('reCaptcha check Successful!');
+	            // Send Email with MailGun here
+
+	            // Send response to Client
+	            res.send({
+	              success: true,
+	              type: 'email_sent',
+	              message: 'Your message has been sent! thank you! I will answer as soon as I can!'
+	            });
+	          } else {
+	            console.log('reCaptcha check Failed!');
+	            console.log(data['error-codes']);
+	            // Don't send email with Mailgun
+	            res.send({
+	              success: false,
+	              type: 'recaptcha_check_failed',
+	              message: 'The recaptcha check was unsuccessful, the message canot be sent!'
+	            });
+	          }
+	          break;
+
+	        case 400:
+	          break;
+
+	        default:
+	          break;
+	      }
+	    });
+	  } else {
+	    res.send({
+	      success: false,
+	      type: 'missing_data',
+	      message: 'We couldn\'t receive all your information' + ', please reload the page and try again!'
+	    });
+	  }
 	});
 
 	app.get('*', function (req, res) {
@@ -203,11 +271,11 @@
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(20);
+	var _Footer = __webpack_require__(21);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(22);
+	var _appState = __webpack_require__(23);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -228,10 +296,18 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
 	    _this.state = _appState2.default;
+	    _this.updateContactFormModalState = _this.updateContactFormModalState.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: 'updateContactFormModalState',
+	    value: function updateContactFormModalState() {
+	      this.setState({
+	        contactFormModalOpened: true
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -241,7 +317,9 @@
 	        _react2.default.createElement(_AboutMe2.default, null),
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_Works2.default, null),
-	        _react2.default.createElement(_Contact2.default, null),
+	        _react2.default.createElement(_Contact2.default, {
+	          contactFormModalOpened: this.state.contactFormModalOpened,
+	          updateContactFormModalState: this.updateContactFormModalState }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui horizontal divider' },
@@ -689,6 +767,7 @@
 	});
 	exports.generateIcon = generateIcon;
 	exports.copyToClipboard = copyToClipboard;
+	exports.resetSemanticInvalidForm = resetSemanticInvalidForm;
 
 	var _react = __webpack_require__(1);
 
@@ -767,6 +846,37 @@
 	  // Remove tempTxtInput from DOM-Doc
 	  document.querySelector('body').removeChild(tempTxtInput);
 	  return copyBool;
+	}
+
+	/**
+	 * Allows to reset the state of the form. It cleans up all the errors
+	 * that can appear after validation.
+	 * @param {String} formSelector   CSS-style selector that targets the form
+	 *                                Default: '.ui.form'
+	 */
+	function resetSemanticInvalidForm() {
+	  var formSelector = arguments.length <= 0 || arguments[0] === undefined ? '.ui.form' : arguments[0];
+
+	  var aForm = document.querySelector(formSelector);
+	  // Remove error class from form
+	  aForm.classList.remove('error');
+
+	  // Remove error class from fields
+	  // unless the element has the message class.
+	  // The error messages container has the 3 classes, field/error/message
+	  // and the error class is needed for the errors to render appropriately.
+	  var invalidFields = aForm.querySelectorAll('.field.error');
+	  for (var i = 0; i < invalidFields.length; i++) {
+	    if (!invalidFields[i].classList.contains('message')) {
+	      invalidFields[i].classList.remove('error');
+	    }
+	  }
+
+	  // Empty the .ui.error.message div
+	  var errorMessagesContainer = aForm.querySelector('.ui.error.message');
+	  if (errorMessagesContainer.firstChild) {
+	    errorMessagesContainer.removeChild(errorMessagesContainer.firstChild);
+	  }
 	}
 
 /***/ },
@@ -953,6 +1063,11 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var propTypes = {
+	  contactFormModalOpened: _react.PropTypes.bool.isRequired,
+	  updateContactFormModalState: _react.PropTypes.func.isRequired
+	};
+
 	var Contact = function (_React$Component) {
 	  _inherits(Contact, _React$Component);
 
@@ -984,10 +1099,13 @@
 	    }
 	  }, {
 	    key: 'handleCloseFormModal',
-	    value: function handleCloseFormModal() {
+	    value: function handleCloseFormModal(e) {
+	      e.preventDefault();
 	      $('.ui.modal').modal('hide');
-	      // document.querySelector('.ui.modal form').reset();
 	    }
+	  }, {
+	    key: 'handleRenderRecaptcha',
+	    value: function handleRenderRecaptcha() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -1060,7 +1178,10 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(_ContactFormModal2.default, { closeModal: this.handleCloseFormModal })
+	        _react2.default.createElement(_ContactFormModal2.default, {
+	          hasOpened: this.props.contactFormModalOpened,
+	          updateState: this.props.updateContactFormModalState,
+	          closeModal: this.handleCloseFormModal })
 	      );
 	    }
 	  }, {
@@ -1076,6 +1197,8 @@
 
 	  return Contact;
 	}(_react2.default.Component);
+
+	Contact.propTypes = propTypes;
 
 	exports.default = Contact;
 
@@ -1095,15 +1218,26 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _utils = __webpack_require__(13);
+
+	var _axios = __webpack_require__(20);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 global grecaptcha
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
 
 	var propTypes = {
+	  hasOpened: _react.PropTypes.bool.isRequired,
+	  updateState: _react.PropTypes.func.isRequired,
 	  closeModal: _react.PropTypes.func.isRequired
 	};
 
@@ -1120,12 +1254,44 @@
 	  _createClass(ContactFormModal, [{
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
-	      console.log('ContactBackSide.js: handleSubmit()');
 	      e.preventDefault();
-	      var email = e.target.elements[0].value;
-	      var fullname = e.target.elements[1].value;
-	      var message = e.target.elements[2].value;
-	      console.log('Email: ' + email + '\n Fullname: ' + fullname + '\n Message: ' + message);
+	      console.log('ContactBackSide.js: handleSubmit()');
+
+	      var isValidForm = $('.ui.form').form('is valid');
+	      // const captchaResponse = grecaptcha.getResponse();
+	      var recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
+
+	      if (isValidForm && recaptchaResponse) {
+	        // console.log('Form inputs and Captcha are valid!');
+
+	        var fullname = e.target.elements['fullname'].value;
+	        var email = e.target.elements['email'].value;
+	        var message = e.target.elements['message'].value;
+
+	        console.log('Fullname: ' + fullname + '\nEmail: ' + email + '\n\n        Message: ' + message + '\nreCaptchaResponse: ' + recaptchaResponse);
+
+	        _axios2.default.post('/contactMe', {
+	          fullname: fullname,
+	          email: email,
+	          message: message,
+	          recaptchaResponse: recaptchaResponse
+	        }).then(function (_ref) {
+	          var data = _ref.data;
+	          var status = _ref.status;
+
+	          switch (status) {
+	            case 200:
+	              if (data.success) {
+	                alert(data.message);
+	              } else {
+	                alert('Error type: ' + data.type + '\nMessage: ' + data.message);
+	              }
+	              break;
+	            default:
+
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -1142,7 +1308,7 @@
 	            _react2.default.createElement(
 	              'h3',
 	              { className: 'ui icon header' },
-	              _react2.default.createElement('i', { className: 'headerIcon circular inverted blue send icon' }),
+	              _react2.default.createElement('i', { className: 'headerIcon circular inverted blue lightning icon' }),
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'headerText' },
@@ -1152,50 +1318,46 @@
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'form',
-	              { method: 'POST', className: 'ui form', onSubmit: this.handleSubmit },
+	              { className: 'ui form',
+	                onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'field' },
+	                { className: 'fields' },
 	                _react2.default.createElement(
-	                  'label',
-	                  { htmlFor: 'email' },
-	                  'Email'
+	                  'div',
+	                  { className: 'eight wide field' },
+	                  _react2.default.createElement('input', {
+	                    id: 'fullname',
+	                    type: 'text',
+	                    name: 'fullname',
+	                    placeholder: 'Full name' })
 	                ),
-	                _react2.default.createElement('input', {
-	                  id: 'email',
-	                  type: 'email',
-	                  name: 'email',
-	                  placeholder: 'Enter your email' })
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'eight wide field' },
+	                  _react2.default.createElement('input', {
+	                    id: 'email',
+	                    type: 'email',
+	                    name: 'email',
+	                    placeholder: 'Email' })
+	                )
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'field' },
-	                _react2.default.createElement(
-	                  'label',
-	                  { htmlFor: 'fullname' },
-	                  'Full name'
-	                ),
-	                _react2.default.createElement('input', {
-	                  id: 'fullname',
-	                  type: 'text',
-	                  name: 'fullname',
-	                  placeholder: 'Enter your full name' })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'field' },
-	                _react2.default.createElement(
-	                  'label',
-	                  { htmlFor: 'message' },
-	                  'Message'
-	                ),
+	                { className: 'sixteen wide field' },
 	                _react2.default.createElement('textarea', {
 	                  id: 'message',
 	                  name: 'message',
+	                  placeholder: 'Message',
 	                  cols: '30',
-	                  rows: '4' })
+	                  rows: '3' })
 	              ),
-	              _react2.default.createElement('div', { 'class': 'g-recaptcha', 'data-sitekey': '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'fields' },
+	                _react2.default.createElement('div', { id: 'myRecaptcha', className: 'eight wide field' }),
+	                _react2.default.createElement('div', { className: 'ui error message eight wide field' })
+	              ),
 	              _react2.default.createElement('br', null),
 	              _react2.default.createElement(
 	                'div',
@@ -1218,6 +1380,66 @@
 	        )
 	      );
 	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      // Contact form modal initialization
+	      $('.ui.modal').modal({
+	        onShow: function onShow() {
+	          if (!_this2.props.hasOpened) {
+	            // Modal is showing for the first time
+	            grecaptcha.render('myRecaptcha', {
+	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu'
+	            });
+	            _this2.props.updateState();
+	          } else {
+	            // Modal is re-opening
+	            grecaptcha.reset();
+	          }
+	        },
+	        onHide: function onHide() {
+	          // Modal is hiding. Clean the form
+	          document.querySelector('.ui.form').reset();
+	          var isValidForm = $('.ui.form').form('is valid');
+	          if (!isValidForm) {
+	            (0, _utils.resetSemanticInvalidForm)();
+	          }
+	        }
+	      });
+
+	      // Form validation initialization
+	      $('.ui.form').form({
+	        revalidate: true,
+	        fields: {
+	          fullname: {
+	            identifier: 'fullname',
+	            rules: [{
+	              type: 'empty',
+	              prompt: 'Please enter your full name'
+	            }]
+	          },
+	          email: {
+	            identifier: 'email',
+	            rules: [{
+	              type: 'empty',
+	              prompt: 'Please enter your email'
+	            }, {
+	              type: 'email',
+	              prompt: 'Please enter a valid email'
+	            }]
+	          },
+	          message: {
+	            identifier: 'message',
+	            rules: [{
+	              type: 'empty',
+	              prompt: 'Please enter a message'
+	            }]
+	          }
+	        }
+	      });
+	    }
 	  }]);
 
 	  return ContactFormModal;
@@ -1229,6 +1451,12 @@
 
 /***/ },
 /* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("axios");
+
+/***/ },
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1243,7 +1471,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(21);
+	var _FooterLinks = __webpack_require__(22);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -1312,7 +1540,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1361,7 +1589,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1419,13 +1647,7 @@
 	    strength: 3,
 	    comment: 'Its use is quite new to me but I know the most common config properties.\n                <br />Has always been used with Babel so far.'
 	  }],
-	  socialProfiles: [{
-	    name: 'Linkedin',
-	    url: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
-	    provider: 'semantic',
-	    // Semantic UI: OR 'linkedin square'
-	    icon: 'linkedin'
-	  }, {
+	  gitProfiles: [{
 	    name: 'GitHub',
 	    url: 'https://github.com/DdZ-Fred',
 	    provider: 'semantic',
@@ -1437,13 +1659,8 @@
 	    provider: 'semantic',
 	    // Semantic UI: OR 'bitbucket square'
 	    icon: 'bitbucket'
-	  }, {
-	    name: 'Twitter',
-	    url: 'https://twitter.com/rey_fr7154a',
-	    provider: 'semantic',
-	    // Semantic UI: OR 'twitter square'
-	    icon: 'twitter'
 	  }],
+	  contactFormModalOpened: false,
 	  footerLinks: [{
 	    title: 'AboutMe',
 	    anchor: 'aboutMe',
@@ -1468,19 +1685,25 @@
 	};
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 25 */
+/* 26 */
+/***/ function(module, exports) {
+
+	module.exports = require("body-parser");
+
+/***/ },
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");
