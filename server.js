@@ -3,13 +3,14 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var axios = require('axios');
-// var nodemailer = require('nodemailer');
+
 import React from 'react';
 // Allows to render our app to an html string
 import { renderToString } from 'react-dom/server';
 // Alows to match the url to route and then render
 import { match, RouterContext } from 'react-router';
 import { createFormattedMessage } from './server/utils';
+import { getRecaptchaApiConf, getMailgunApiConf } from './server/apiConfigs';
 import routes from './shared/routes';
 
 
@@ -57,49 +58,37 @@ app.post('/contactMe', (req, res) => {
   const areDepsOk = fullname && email && message && recaptchaResponse;
 
   if (areDepsOk) {
-    const recaptchaReqConf = {
-      method: 'post',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
-      url: 'https://www.google.com/recaptcha/api/siteverify',
-      params: {
-        secret: process.env.RECAPTCHA_SECRET,
-        response: req.body.recaptchaResponse,
-        remoteip: req.ip,
-      },
-    };
-
-    axios(recaptchaReqConf)
+    const recaptchaInstance = axios.create();
+    recaptchaInstance.request(getRecaptchaApiConf(req))
       .then(({ data, status }) => {
         // Response Status check
-        console.log(`reCaptcha response: ${status}`);
+        console.log(`\nreCaptcha response: ${status}`);
         switch (status) {
           case 200:
 
             if (data.success) {
               console.log('reCaptcha check Successful! Now sending the email!');
-              // Send Email with MailGun here
+              // Send Email with Mailgun here
               const newMail = createFormattedMessage(
                 req.body.fullname,
                 req.body.email,
                 req.body.message
               );
-              const mailgunReqConf = {
-                method: 'post',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
-                baseURL: process.env.FREDREY_MAILGUN_BASEURL,
-                url: '/messages',
-                auth: {
-                  api: process.env.FREDREY_MAILGUN_KEY,
-                },
-                params: newMail,
-              };
-              axios(mailgunReqConf)
-                .then((mgRes) => {
-                  switch (mgRes.status) {
-                    // Req successful
-                    case 200:
-                      console.log(`Mailgun: ${mgRes.data.message}.\nMessageID: ${mgRes.data.id}`);
-                      break;
+              const mailgunInstance = axios.create();
+              mailgunInstance.request(getMailgunApiConf(newMail))
+                .then(({ data }) => {
+                  console.log(`Mailgun: ${data.message}.\nMailgun: MessageID = ${data.id}`);
+
+                  res.send({
+                    success: true,
+                    type: 'email_sent',
+                    message: 'Your message has been sent! thank you!' +
+                      ' I will answer as soon as I can!',
+                  });
+                })
+                .catch(({ status }) => {
+                  // console.log(response);
+                  switch (status) {
                     // Bad Req: Required param missing
                     case 400:
                       console.log('Mailgun: Bad request: A parameter was missing');
@@ -119,15 +108,6 @@ app.post('/contactMe', (req, res) => {
                       break;
                   }
                 });
-
-              console.log(newMail);
-
-              // Send response to Client
-              res.send({
-                success: true,
-                type: 'email_sent',
-                message: 'Your message has been sent! thank you! I will answer as soon as I can!',
-              });
             } else {
               console.log('reCaptcha check Failed!');
               console.log(data['error-codes']);
