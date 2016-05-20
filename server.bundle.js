@@ -76,6 +76,9 @@
 	// Alows to match the url to route and then render
 
 
+	// Polyfill global environment (IE9+...)
+	// require('es6-promise').polyfill();
+
 	var app = express();
 	app.use(bodyParser.urlencoded({
 	  extended: true
@@ -431,6 +434,15 @@
 	function handleMailgunErrors(res, mailgunRequestResponse) {
 	  var status = mailgunRequestResponse.status;
 	  var statusText = mailgunRequestResponse.statusText;
+
+
+	  switch (status) {
+	    case expression:
+
+	      break;
+	    default:
+
+	  }
 	}
 
 /***/ },

@@ -21,7 +21,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
     case 500: {
       res.send({
         success: false,
-        type: 'server_error',
+        type: 'recaptcha_server_error',
         message: 'The Google reCatpcha servers coudn\'t answer, sorry!' +
         '<br />You\'ll have to contact me the old (and boring) way!',
       });
@@ -32,7 +32,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
     case 404: {
       res.send({
         success: false,
-        type: 'not_found',
+        type: 'recaptcha_not_found',
         message: 'An error occured trying to contact the Google reCaptcha servers.' +
         '<br />The error has been sent to me and will be resolved soon.' +
         '<br />You\'ll have to contact me the old (and boring) way! sorry!',
@@ -58,7 +58,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
     case 400: {
       res.send({
         success: false,
-        type: 'bad_request',
+        type: 'recaptcha_bad_request',
         message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' +
         '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' +
         'have to contact me the old way!',
@@ -69,7 +69,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
     default: {
       res.send({
         success: false,
-        type: 'other_error',
+        type: 'recaptcha_other_error',
         message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' +
         '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' +
         'have to contact me the old way!',
@@ -90,7 +90,64 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
   const {
     status,
     statusText,
+    config,
   } = mailgunRequestResponse;
 
+  switch (status) {
+    // Bad Req: Required param missing
+    case 400: {
+      console.log('\nMailgun Error: Bad request: A parameter was missing.' +
+        'See request config below:');
+      res.send({
+        success: false,
+        type: 'mailgun_bad_request',
+        message: '',
+      });
+      break;
+    }
 
+    // Unauthorized: No valid api key
+    case 401: {
+      console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
+      res.send({
+        success: false,
+        type: 'mailgun_unauthorized',
+        message: '',
+      });
+      break;
+    }
+
+    case 402: {
+      console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
+      res.send({
+        success: false,
+        type: 'mailgun_unauthorized',
+        message: '',
+      });
+      break;
+    }
+
+    // Not Found
+    case 404: {
+      console.log('\nMailgun Error: Not found. See request config below:');
+      res.send({
+        success: false,
+        type: 'mailgun_not_found',
+        message: '',
+      });
+      break;
+    }
+    default: {
+      console.log(`\nMailgun Error: Server error #${status}, ${statusText}!.`);
+      res.send({
+        success: false,
+        type: 'mailgun_server_error',
+        message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' +
+          'Their service will probably be back soon online but better to contact me the old way!',
+      });
+      break;
+    }
+
+  }
+  console.log(config);
 }

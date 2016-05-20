@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import smoothScroll from 'smooth-scroll';
 import routes from './shared/routes';
+require('es6-promise').polyfill();
 
 render(
   <Router

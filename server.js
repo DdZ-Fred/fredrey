@@ -15,7 +15,7 @@ import { handleRecaptchaErrors, handleMailgunErrors } from './server/errorHandle
 import routes from './shared/routes';
 
 
-var app = express();
+const app = express();
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
@@ -83,27 +83,8 @@ app.post('/contactMe', (req, res) => {
                   ' I will answer as soon as I can!',
               });
             })
-            .catch(({ status }) => {
-              // console.log(response);
-              switch (status) {
-                // Bad Req: Required param missing
-                case 400:
-                  console.log('Mailgun: Bad request: A parameter was missing');
-                  break;
-                // Unauthorized: No valid api key
-                case 401:
-                  console.log('Mailgun: Unauthorized: Api key not valid!');
-                  break;
-                case 402:
-                  console.log('Mailgun: Request failed');
-                  break;
-                case 404:
-                  console.log('Mailgun: Not found');
-                  break;
-                default:
-                  console.log('Mailgun: default block triggered!');
-                  break;
-              }
+            .catch((mailgunRequestResponse) => {
+              handleMailgunErrors(res, mailgunRequestResponse);
             });
         } else {
           console.log('reCaptcha check Failed!');
