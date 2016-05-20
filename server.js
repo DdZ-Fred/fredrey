@@ -11,6 +11,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { createFormattedMessage } from './server/utils';
 import { getRecaptchaApiConf, getMailgunApiConf } from './server/apiConfigs';
+import { handleRecaptchaErrors, handleMailgunErrors } from './server/errorHandlers.js';
 import routes from './shared/routes';
 
 
@@ -60,72 +61,63 @@ app.post('/contactMe', (req, res) => {
   if (areDepsOk) {
     const recaptchaInstance = axios.create();
     recaptchaInstance.request(getRecaptchaApiConf(req))
-      .then(({ data, status }) => {
+      .then(({ data }) => {
         // Response Status check
-        console.log(`\nreCaptcha response: ${status}`);
-        switch (status) {
-          case 200:
+        if (data.success) {
+          console.log('reCaptcha check Successful! Now sending the email!');
+          // Send Email with Mailgun here
+          const newMail = createFormattedMessage('client', {
+            fullname: req.body.fullname,
+            email: req.body.email,
+            message: req.body.message,
+          });
+          const mailgunInstance = axios.create();
+          mailgunInstance.request(getMailgunApiConf(newMail))
+            .then(({ data }) => {
+              console.log(`Mailgun: ${data.message}.\nMailgun: MessageID = ${data.id}`);
 
-            if (data.success) {
-              console.log('reCaptcha check Successful! Now sending the email!');
-              // Send Email with Mailgun here
-              const newMail = createFormattedMessage(
-                req.body.fullname,
-                req.body.email,
-                req.body.message
-              );
-              const mailgunInstance = axios.create();
-              mailgunInstance.request(getMailgunApiConf(newMail))
-                .then(({ data }) => {
-                  console.log(`Mailgun: ${data.message}.\nMailgun: MessageID = ${data.id}`);
-
-                  res.send({
-                    success: true,
-                    type: 'email_sent',
-                    message: 'Your message has been sent! thank you!' +
-                      ' I will answer as soon as I can!',
-                  });
-                })
-                .catch(({ status }) => {
-                  // console.log(response);
-                  switch (status) {
-                    // Bad Req: Required param missing
-                    case 400:
-                      console.log('Mailgun: Bad request: A parameter was missing');
-                      break;
-                    // Unauthorized: No valid api key
-                    case 401:
-                      console.log('Mailgun: Unauthorized: Api key not valid!');
-                      break;
-                    case 402:
-                      console.log('Mailgun: Request failed');
-                      break;
-                    case 404:
-                      console.log('Mailgun: Not found');
-                      break;
-                    default:
-                      console.log('Mailgun: default block triggered!');
-                      break;
-                  }
-                });
-            } else {
-              console.log('reCaptcha check Failed!');
-              console.log(data['error-codes']);
-              // Don't send email with Mailgun
               res.send({
-                success: false,
-                type: 'recaptcha_check_failed',
-                message: 'The recaptcha check was unsuccessful, the message canot be sent!',
+                success: true,
+                type: 'email_sent',
+                message: 'Your message has been sent! thank you!' +
+                  ' I will answer as soon as I can!',
               });
-            }
-            break;
-
-          case 400:
-            break;
-
-          default:
-            break;
+            })
+            .catch(({ status }) => {
+              // console.log(response);
+              switch (status) {
+                // Bad Req: Required param missing
+                case 400:
+                  console.log('Mailgun: Bad request: A parameter was missing');
+                  break;
+                // Unauthorized: No valid api key
+                case 401:
+                  console.log('Mailgun: Unauthorized: Api key not valid!');
+                  break;
+                case 402:
+                  console.log('Mailgun: Request failed');
+                  break;
+                case 404:
+                  console.log('Mailgun: Not found');
+                  break;
+                default:
+                  console.log('Mailgun: default block triggered!');
+                  break;
+              }
+            });
+        } else {
+          console.log('reCaptcha check Failed!');
+          console.log(data['error-codes']);
+          // Don't send email with Mailgun
+          res.send({
+            success: false,
+            type: 'recaptcha_check_failed',
+            message: 'The recaptcha check was unsuccessful, the message canot be sent!',
+          });
         }
+      })
+      .catch((recaptchaRequestResponse) => {
+        handleRecaptchaErrors(res, recaptchaRequestResponse);
       });
   } else {
     res.send({

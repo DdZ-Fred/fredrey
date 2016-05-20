@@ -58,17 +58,19 @@
 
 	var _apiConfigs = __webpack_require__(5);
 
-	var _routes = __webpack_require__(6);
+	var _errorHandlers = __webpack_require__(6);
+
+	var _routes = __webpack_require__(8);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(26);
-	var path = __webpack_require__(27);
-	var bodyParser = __webpack_require__(28);
-	var compression = __webpack_require__(29);
-	var axios = __webpack_require__(22);
+	var express = __webpack_require__(27);
+	var path = __webpack_require__(28);
+	var bodyParser = __webpack_require__(29);
+	var compression = __webpack_require__(30);
+	var axios = __webpack_require__(7);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -106,70 +108,63 @@
 	    var recaptchaInstance = axios.create();
 	    recaptchaInstance.request((0, _apiConfigs.getRecaptchaApiConf)(req)).then(function (_ref) {
 	      var data = _ref.data;
-	      var status = _ref.status;
 
 	      // Response Status check
-	      console.log('\nreCaptcha response: ' + status);
-	      switch (status) {
-	        case 200:
+	      if (data.success) {
+	        console.log('reCaptcha check Successful! Now sending the email!');
+	        // Send Email with Mailgun here
+	        var newMail = (0, _utils.createFormattedMessage)('client', {
+	          fullname: req.body.fullname,
+	          email: req.body.email,
+	          message: req.body.message
+	        });
+	        var mailgunInstance = axios.create();
+	        mailgunInstance.request((0, _apiConfigs.getMailgunApiConf)(newMail)).then(function (_ref2) {
+	          var data = _ref2.data;
 
-	          if (data.success) {
-	            console.log('reCaptcha check Successful! Now sending the email!');
-	            // Send Email with Mailgun here
-	            var newMail = (0, _utils.createFormattedMessage)(req.body.fullname, req.body.email, req.body.message);
-	            var mailgunInstance = axios.create();
-	            mailgunInstance.request((0, _apiConfigs.getMailgunApiConf)(newMail)).then(function (_ref2) {
-	              var data = _ref2.data;
+	          console.log('Mailgun: ' + data.message + '.\nMailgun: MessageID = ' + data.id);
 
-	              console.log('Mailgun: ' + data.message + '.\nMailgun MessageID: ' + data.id);
+	          res.send({
+	            success: true,
+	            type: 'email_sent',
+	            message: 'Your message has been sent! thank you!' + ' I will answer as soon as I can!'
+	          });
+	        }).catch(function (_ref3) {
+	          var status = _ref3.status;
 
-	              res.send({
-	                success: true,
-	                type: 'email_sent',
-	                message: 'Your message has been sent! thank you!' + ' I will answer as soon as I can!'
-	              });
-	            }).catch(function (_ref3) {
-	              var status = _ref3.status;
-
-	              // console.log(response);
-	              switch (status) {
-	                // Bad Req: Required param missing
-	                case 400:
-	                  console.log('Mailgun: Bad request: A parameter was missing');
-	                  break;
-	                // Unauthorized: No valid api key
-	                case 401:
-	                  console.log('Mailgun: Unauthorized: Api key not valid!');
-	                  break;
-	                case 402:
-	                  console.log('Mailgun: Request failed');
-	                  break;
-	                case 404:
-	                  console.log('Mailgun: Not found');
-	                  break;
-	                default:
-	                  console.log('Mailgun: default block triggered!');
-	                  break;
-	              }
-	            });
-	          } else {
-	            console.log('reCaptcha check Failed!');
-	            console.log(data['error-codes']);
-	            // Don't send email with Mailgun
-	            res.send({
-	              success: false,
-	              type: 'recaptcha_check_failed',
-	              message: 'The recaptcha check was unsuccessful, the message canot be sent!'
-	            });
+	          // console.log(response);
+	          switch (status) {
+	            // Bad Req: Required param missing
+	            case 400:
+	              console.log('Mailgun: Bad request: A parameter was missing');
+	              break;
+	            // Unauthorized: No valid api key
+	            case 401:
+	              console.log('Mailgun: Unauthorized: Api key not valid!');
+	              break;
+	            case 402:
+	              console.log('Mailgun: Request failed');
+	              break;
+	            case 404:
+	              console.log('Mailgun: Not found');
+	              break;
+	            default:
+	              console.log('Mailgun: default block triggered!');
+	              break;
 	          }
-	          break;
-
-	        case 400:
-	          break;
-
-	        default:
-	          break;
+	        });
+	      } else {
+	        console.log('reCaptcha check Failed!');
+	        console.log(data['error-codes']);
+	        // Don't send email with Mailgun
+	        res.send({
+	          success: false,
+	          type: 'recaptcha_check_failed',
+	          message: 'The recaptcha check was unsuccessful, the message canot be sent!'
+	        });
 	      }
+	    }).catch(function (recaptchaRequestResponse) {
+	      (0, _errorHandlers.handleRecaptchaErrors)(res, recaptchaRequestResponse);
 	    });
 	  } else {
 	    res.send({
@@ -235,18 +230,50 @@
 	});
 	exports.createFormattedMessage = createFormattedMessage;
 	/**
-	 * Returns a simple message object.
-	 * @param  {String} fullname [Client's full name]
-	 * @param  {String} email    [Client's email]
-	 * @param  {String} message  [Client's message]
-	 * @return {Object}          [Message object to send]
+	 * Returns a simple message/email object
+	 * @param  {String} template    [client/notFound]
+	 * @param  {Object} data        [Poly-structural...]
+	 *  IF client:
+	 *     - data.fullname       {String}   [Client full name]
+	 *     - data.email          {String}   [Client email]
+	 *     - data.message        {String}   [Client message]
+	 *   IF notFound:
+	 *     - data.resourceName   {String}   [Name of the resource requested]
+	 *     - data.requestConfig  {Object}   [Represents the config used when the request was made]
+	 * @return {Object}             [The email to send]
 	 */
-	function createFormattedMessage(fullname, email, message) {
+	function createFormattedMessage(template, data) {
+	  var eFrom = 'FREDREY.COM <' + process.env.FREDREY_MAILGUN_LOGIN + '>';
+	  var eTo = 'Frederic.Rey.Pro@gmail.com';
+	  var eSubject = 'test';
+	  var eHtml = void 0;
+
+	  switch (template) {
+
+	    case 'client':
+	      {
+	        eHtml = 'Dear Frederic!<br/><br/>\n        My name is ' + data.fullname + '.' + data.message + '<br/><br />\n        You can contact me at the following address: ' + data.email;
+	        break;
+	      }
+
+	    case 'notFound':
+	      {
+	        eHtml = 'Dear mySelf!<br /><br />\n        The resource ' + data.resourceName + ' seems not to be available anymore.<br />\n        The request\'s config can be found below:<br />\n        ' + data.requestConfig.toString() + '<br /><br />\n        Cheers!';
+	        break;
+	      }
+
+	    default:
+	      {
+	        // Test Mailgun API
+	        eHtml = 'Dear myself!<br /><br />This is a Mailgun Test email!<br /><br />Fred';
+	        break;
+	      }
+	  }
 	  return {
-	    from: 'FREDREY.COM <' + process.env.FREDREY_MAILGUN_LOGIN + '>',
-	    to: 'Frederic.Rey.Pro@gmail.com',
-	    subject: 'test',
-	    html: 'Hello Frederic!<br /><br />\n      My name is ' + fullname + '.' + message + '.<br /><br />\n      Please contact me at the following address: ' + email
+	    from: eFrom,
+	    to: eTo,
+	    subject: eSubject,
+	    html: eHtml
 	  };
 	}
 
@@ -307,18 +334,132 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.handleRecaptchaErrors = handleRecaptchaErrors;
+	exports.handleMailgunErrors = handleMailgunErrors;
+
+	var _axios = __webpack_require__(7);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _apiConfigs = __webpack_require__(5);
+
+	var _utils = __webpack_require__(4);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Handles the errors that can occur when requesting the reCatpcha API
+	 * @param  {Object} res                      [HTTP response of the /contactMe resource]
+	 * @param  {Object} recaptchaRequestResponse [HTTP response received requesting the reCaptcha API]
+	 */
+	function handleRecaptchaErrors(res, recaptchaRequestResponse) {
+	  var status = recaptchaRequestResponse.status;
+	  var statusText = recaptchaRequestResponse.statusText;
+	  var config = recaptchaRequestResponse.config;
+
+
+	  console.log('reCaptcha request error: ' + statusText + ' (' + status + ')');
+	  switch (status) {
+
+	    // Internal Server error
+	    case 500:
+	      {
+	        res.send({
+	          success: false,
+	          type: 'server_error',
+	          message: 'The Google reCatpcha servers coudn\'t answer, sorry!' + '<br />You\'ll have to contact me the old (and boring) way!'
+	        });
+	        break;
+	      }
+
+	    // Not found
+	    case 404:
+	      {
+	        res.send({
+	          success: false,
+	          type: 'not_found',
+	          message: 'An error occured trying to contact the Google reCaptcha servers.' + '<br />The error has been sent to me and will be resolved soon.' + '<br />You\'ll have to contact me the old (and boring) way! sorry!'
+	        });
+	        // Send email to myself with error
+	        var notFoundEmail = (0, _utils.createFormattedMessage)('notFound', {
+	          resourceName: 'reCaptcha',
+	          requestConfig: config
+	        });
+	        var instance = _axios2.default.create();
+	        instance.request((0, _apiConfigs.getMailgunApiConf)(notFoundEmail)).then(function (_ref) {
+	          var data = _ref.data;
+
+	          console.log('\nMailgun: NotFound message sent!\n' + data.message + '\nMessageId: ' + data.id);
+	        }).catch(function (_ref2) {
+	          var status = _ref2.status;
+	          var statusText = _ref2.statusText;
+
+	          console.log('\nMailgun: Error trying to send NotFound email.\n          Status: ' + status + '\nStatusText: ' + statusText);
+	        });
+	        break;
+	      }
+
+	    // Bad request
+	    case 400:
+	      {
+	        res.send({
+	          success: false,
+	          type: 'bad_request',
+	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
+	        });
+	        break;
+	      }
+
+	    default:
+	      {
+	        res.send({
+	          success: false,
+	          type: 'other_error',
+	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
+	        });
+	        break;
+	      }
+
+	  }
+	}
+
+	/**
+	 * Handles the errors that can occur when requesting the Mailgun API
+	 * @param  {Object} res                    [HTTP response of the /contactMe resource]
+	 * @param  {Object} mailgunRequestResponse [HTTP response received requesting the Mailgun API]
+	 */
+	function handleMailgunErrors(res, mailgunRequestResponse) {
+	  var status = mailgunRequestResponse.status;
+	  var statusText = mailgunRequestResponse.statusText;
+	}
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = require("axios");
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(7);
+	var _reactDom = __webpack_require__(9);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _App = __webpack_require__(8);
+	var _App = __webpack_require__(10);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -327,13 +468,13 @@
 	exports.default = _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default });
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-dom");
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -348,31 +489,31 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(9);
+	var _Header = __webpack_require__(11);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _AboutMe = __webpack_require__(12);
+	var _AboutMe = __webpack_require__(14);
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _Superpowers = __webpack_require__(13);
+	var _Superpowers = __webpack_require__(15);
 
 	var _Superpowers2 = _interopRequireDefault(_Superpowers);
 
-	var _Works = __webpack_require__(19);
+	var _Works = __webpack_require__(21);
 
 	var _Works2 = _interopRequireDefault(_Works);
 
-	var _Contact = __webpack_require__(20);
+	var _Contact = __webpack_require__(22);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(23);
+	var _Footer = __webpack_require__(24);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(25);
+	var _appState = __webpack_require__(26);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -433,7 +574,7 @@
 	exports.default = App;
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -448,11 +589,11 @@
 
 	var _reactRouter = __webpack_require__(3);
 
-	var _HeaderContentLeft = __webpack_require__(10);
+	var _HeaderContentLeft = __webpack_require__(12);
 
 	var _HeaderContentLeft2 = _interopRequireDefault(_HeaderContentLeft);
 
-	var _HeaderContentRight = __webpack_require__(11);
+	var _HeaderContentRight = __webpack_require__(13);
 
 	var _HeaderContentRight2 = _interopRequireDefault(_HeaderContentRight);
 
@@ -521,7 +662,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -571,7 +712,7 @@
 	exports.default = HeaderContentLeft;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -623,7 +764,7 @@
 	exports.default = HeaderContentRight;
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -674,7 +815,7 @@
 	exports.default = AboutMe;
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -689,7 +830,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Superpower = __webpack_require__(14);
+	var _Superpower = __webpack_require__(16);
 
 	var _Superpower2 = _interopRequireDefault(_Superpower);
 
@@ -780,7 +921,7 @@
 	exports.default = Superpowers;
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -795,7 +936,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(15);
+	var _utils = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -854,7 +995,7 @@
 	exports.default = Superpower;
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -870,15 +1011,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DeviconsIcon = __webpack_require__(16);
+	var _DeviconsIcon = __webpack_require__(18);
 
 	var _DeviconsIcon2 = _interopRequireDefault(_DeviconsIcon);
 
-	var _SemanticIcon = __webpack_require__(17);
+	var _SemanticIcon = __webpack_require__(19);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
-	var _SvgIcon = __webpack_require__(18);
+	var _SvgIcon = __webpack_require__(20);
 
 	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
@@ -977,7 +1118,7 @@
 	}
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1008,7 +1149,7 @@
 	exports.default = DeviconsIcon;
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1039,7 +1180,7 @@
 	exports.default = SemanticIcon;
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1075,7 +1216,7 @@
 	exports.default = SvgIcon;
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1127,7 +1268,7 @@
 	exports.default = Works;
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1142,15 +1283,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SemanticIcon = __webpack_require__(17);
+	var _SemanticIcon = __webpack_require__(19);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
-	var _ContactFormModal = __webpack_require__(21);
+	var _ContactFormModal = __webpack_require__(23);
 
 	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
-	var _utils = __webpack_require__(15);
+	var _utils = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1300,7 +1441,7 @@
 	exports.default = Contact;
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1315,9 +1456,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(15);
+	var _utils = __webpack_require__(17);
 
-	var _axios = __webpack_require__(22);
+	var _axios = __webpack_require__(7);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -1547,13 +1688,7 @@
 	exports.default = ContactFormModal;
 
 /***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	module.exports = require("axios");
-
-/***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1568,7 +1703,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(24);
+	var _FooterLinks = __webpack_require__(25);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -1637,7 +1772,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1686,7 +1821,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1782,25 +1917,25 @@
 	};
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

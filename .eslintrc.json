@@ -14,5 +14,8 @@
   "plugins": [
     "import",
     "react"
-  ]
+  ],
+  "rules" : {
+    "no-console": 0
+  }
 }
