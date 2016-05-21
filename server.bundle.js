@@ -76,9 +76,6 @@
 	// Alows to match the url to route and then render
 
 
-	// Polyfill global environment (IE9+...)
-	// require('es6-promise').polyfill();
-
 	var app = express();
 	app.use(bodyParser.urlencoded({
 	  extended: true
@@ -132,29 +129,8 @@
 	            type: 'email_sent',
 	            message: 'Your message has been sent! thank you!' + ' I will answer as soon as I can!'
 	          });
-	        }).catch(function (_ref3) {
-	          var status = _ref3.status;
-
-	          // console.log(response);
-	          switch (status) {
-	            // Bad Req: Required param missing
-	            case 400:
-	              console.log('Mailgun: Bad request: A parameter was missing');
-	              break;
-	            // Unauthorized: No valid api key
-	            case 401:
-	              console.log('Mailgun: Unauthorized: Api key not valid!');
-	              break;
-	            case 402:
-	              console.log('Mailgun: Request failed');
-	              break;
-	            case 404:
-	              console.log('Mailgun: Not found');
-	              break;
-	            default:
-	              console.log('Mailgun: default block triggered!');
-	              break;
-	          }
+	        }).catch(function (mailgunRequestResponse) {
+	          (0, _errorHandlers.handleMailgunErrors)(res, mailgunRequestResponse);
 	        });
 	      } else {
 	        console.log('reCaptcha check Failed!');
@@ -369,7 +345,7 @@
 	      {
 	        res.send({
 	          success: false,
-	          type: 'server_error',
+	          type: 'recaptcha_server_error',
 	          message: 'The Google reCatpcha servers coudn\'t answer, sorry!' + '<br />You\'ll have to contact me the old (and boring) way!'
 	        });
 	        break;
@@ -380,7 +356,7 @@
 	      {
 	        res.send({
 	          success: false,
-	          type: 'not_found',
+	          type: 'recaptcha_not_found',
 	          message: 'An error occured trying to contact the Google reCaptcha servers.' + '<br />The error has been sent to me and will be resolved soon.' + '<br />You\'ll have to contact me the old (and boring) way! sorry!'
 	        });
 	        // Send email to myself with error
@@ -407,7 +383,7 @@
 	      {
 	        res.send({
 	          success: false,
-	          type: 'bad_request',
+	          type: 'recaptcha_bad_request',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
 	        });
 	        break;
@@ -417,7 +393,7 @@
 	      {
 	        res.send({
 	          success: false,
-	          type: 'other_error',
+	          type: 'recaptcha_other_error',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
 	        });
 	        break;
@@ -434,15 +410,70 @@
 	function handleMailgunErrors(res, mailgunRequestResponse) {
 	  var status = mailgunRequestResponse.status;
 	  var statusText = mailgunRequestResponse.statusText;
+	  var config = mailgunRequestResponse.config;
 
 
 	  switch (status) {
-	    case expression:
+	    // Bad Req: Required param missing
+	    case 400:
+	      {
+	        console.log('\nMailgun Error: Bad request: A parameter was missing.' + 'See request config below:');
+	        res.send({
+	          success: false,
+	          type: 'mailgun_bad_request',
+	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	        });
+	        break;
+	      }
 
-	      break;
+	    // Unauthorized: No valid api key
+	    case 401:
+	      {
+	        console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
+	        res.send({
+	          success: false,
+	          type: 'mailgun_unauthorized',
+	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	        });
+	        break;
+	      }
+
+	    // Mailgun special error(..code is supposed to be for payment errors)
+	    case 402:
+	      {
+	        console.log('\nMailgun Error: Request failed but parameters are ok!.' + 'See request config below:');
+	        res.send({
+	          success: false,
+	          type: 'mailgun_request_failed',
+	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	        });
+	        break;
+	      }
+
+	    // Not Found
+	    case 404:
+	      {
+	        console.log('\nMailgun Error: Not found. See request config below:');
+	        res.send({
+	          success: false,
+	          type: 'mailgun_not_found',
+	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	        });
+	        break;
+	      }
 	    default:
+	      {
+	        console.log('\nMailgun Error: Server error #' + status + ', ' + statusText + '!.');
+	        res.send({
+	          success: false,
+	          type: 'mailgun_server_error',
+	          message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' + 'Their service will probably be back soon online but better to contact me the old way!'
+	        });
+	        break;
+	      }
 
 	  }
+	  console.log(config);
 	}
 
 /***/ },
@@ -1497,13 +1528,17 @@
 	  function ContactFormModal(props) {
 	    _classCallCheck(this, ContactFormModal);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactFormModal).call(this, props));
-	    // Put bindings here if necessary
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContactFormModal).call(this, props));
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(ContactFormModal, [{
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      var _this2 = this;
+
 	      e.preventDefault();
 	      console.log('ContactBackSide.js: handleSubmit()');
 
@@ -1512,13 +1547,12 @@
 	      var recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
 	      if (isValidForm && recaptchaResponse) {
-	        // console.log('Form inputs and Captcha are valid!');
+	        // Disable submit button
+	        document.getElementById('submitContactFormBtn').classList.add('disabled');
 
 	        var fullname = e.target.elements['fullname'].value;
 	        var email = e.target.elements['email'].value;
 	        var message = e.target.elements['message'].value;
-
-	        console.log('Fullname: ' + fullname + '\nEmail: ' + email + '\n\n        Message: ' + message + '\nreCaptchaResponse: ' + recaptchaResponse);
 
 	        _axios2.default.post('/contactMe', {
 	          fullname: fullname,
@@ -1527,18 +1561,13 @@
 	          recaptchaResponse: recaptchaResponse
 	        }).then(function (_ref) {
 	          var data = _ref.data;
-	          var status = _ref.status;
 
-	          switch (status) {
-	            case 200:
-	              if (data.success) {
-	                alert(data.message);
-	              } else {
-	                alert('Error type: ' + data.type + '\nMessage: ' + data.message);
-	              }
-	              break;
-	            default:
-
+	          if (data.success) {
+	            // alert(data.message);
+	            document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	            _this2.props.closeModal();
+	          } else {
+	            alert('Error type: ' + data.type + '\nMessage: ' + data.message);
 	          }
 	        });
 	      }
@@ -1621,7 +1650,10 @@
 	                _react2.default.createElement('div', { className: 'or' }),
 	                _react2.default.createElement(
 	                  'button',
-	                  { className: 'ui blue button', type: 'submit' },
+	                  {
+	                    id: 'submitContactFormBtn',
+	                    className: 'ui blue button',
+	                    type: 'submit' },
 	                  'Submit'
 	                )
 	              )
@@ -1633,17 +1665,17 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      // Contact form modal initialization
 	      $('.ui.modal').modal({
 	        onShow: function onShow() {
-	          if (!_this2.props.hasOpened) {
+	          if (!_this3.props.hasOpened) {
 	            // Modal is showing for the first time
 	            grecaptcha.render('myRecaptcha', {
 	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu'
 	            });
-	            _this2.props.updateState();
+	            _this3.props.updateState();
 	          } else {
 	            // Modal is re-opening
 	            grecaptcha.reset();

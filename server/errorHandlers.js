@@ -101,7 +101,8 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
       res.send({
         success: false,
         type: 'mailgun_bad_request',
-        message: '',
+        message: 'An error occured while trying to send the email, sorry!<br/>' +
+          'I\'m afraid you\'ll have to contact me the old way &#9785;',
       });
       break;
     }
@@ -112,17 +113,21 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
       res.send({
         success: false,
         type: 'mailgun_unauthorized',
-        message: '',
+        message: 'An error occured while trying to send the email, sorry!<br/>' +
+          'I\'m afraid you\'ll have to contact me the old way &#9785;',
       });
       break;
     }
 
+    // Mailgun special error(..code is supposed to be for payment errors)
     case 402: {
-      console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
+      console.log('\nMailgun Error: Request failed but parameters are ok!.' +
+        'See request config below:');
       res.send({
         success: false,
-        type: 'mailgun_unauthorized',
-        message: '',
+        type: 'mailgun_request_failed',
+        message: 'An error occured while trying to send the email, sorry!<br/>' +
+          'I\'m afraid you\'ll have to contact me the old way &#9785;',
       });
       break;
     }
@@ -133,7 +138,8 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
       res.send({
         success: false,
         type: 'mailgun_not_found',
-        message: '',
+        message: 'An error occured while trying to send the email, sorry!<br/>' +
+          'I\'m afraid you\'ll have to contact me the old way &#9785;',
       });
       break;
     }

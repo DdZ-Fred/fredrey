@@ -15,7 +15,7 @@ const propTypes = {
 class ContactFormModal extends React.Component {
   constructor(props) {
     super(props);
-    // Put bindings here if necessary
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
@@ -27,14 +27,12 @@ class ContactFormModal extends React.Component {
     const recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
     if (isValidForm && recaptchaResponse) {
-      // console.log('Form inputs and Captcha are valid!');
+      // Disable submit button
+      document.getElementById('submitContactFormBtn').classList.add('disabled');
 
       const fullname = e.target.elements['fullname'].value;
       const email = e.target.elements['email'].value;
       const message = e.target.elements['message'].value;
-
-      console.log(`Fullname: ${fullname}\nEmail: ${email}\n
-        Message: ${message}\nreCaptchaResponse: ${recaptchaResponse}`);
 
       axios.post('/contactMe', {
         fullname,
@@ -42,17 +40,13 @@ class ContactFormModal extends React.Component {
         message,
         recaptchaResponse,
       })
-      .then(({ data, status }) => {
-        switch (status) {
-          case 200:
-            if (data.success) {
-              alert(data.message);
-            } else {
-              alert(`Error type: ${data.type}\nMessage: ${data.message}`);
-            }
-            break;
-          default:
-
+      .then(({ data }) => {
+        if (data.success) {
+          // alert(data.message);
+          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+          this.props.closeModal();
+        } else {
+          alert(`Error type: ${data.type}\nMessage: ${data.message}`);
         }
       });
     }
@@ -112,7 +106,10 @@ class ContactFormModal extends React.Component {
                 <button className="ui button"
                   onClick={this.props.closeModal}>Cancel</button>
                 <div className="or"></div>
-                <button className="ui blue button" type="submit">Submit</button>
+                <button
+                  id="submitContactFormBtn"
+                  className="ui blue button"
+                  type="submit">Submit</button>
               </div>
             </form>
           </div>
