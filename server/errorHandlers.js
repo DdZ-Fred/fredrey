@@ -19,7 +19,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
 
     // Internal Server error
     case 500: {
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'recaptcha_server_error',
         message: 'The Google reCatpcha servers coudn\'t answer, sorry!' +
@@ -30,7 +30,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
 
     // Not found
     case 404: {
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'recaptcha_not_found',
         message: 'An error occured trying to contact the Google reCaptcha servers.' +
@@ -56,7 +56,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
 
     // Bad request
     case 400: {
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'recaptcha_bad_request',
         message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' +
@@ -67,7 +67,7 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
     }
 
     default: {
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'recaptcha_other_error',
         message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' +
@@ -98,7 +98,7 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
     case 400: {
       console.log('\nMailgun Error: Bad request: A parameter was missing.' +
         'See request config below:');
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'mailgun_bad_request',
         message: 'An error occured while trying to send the email, sorry!<br/>' +
@@ -110,7 +110,7 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
     // Unauthorized: No valid api key
     case 401: {
       console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'mailgun_unauthorized',
         message: 'An error occured while trying to send the email, sorry!<br/>' +
@@ -123,7 +123,7 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
     case 402: {
       console.log('\nMailgun Error: Request failed but parameters are ok!.' +
         'See request config below:');
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'mailgun_request_failed',
         message: 'An error occured while trying to send the email, sorry!<br/>' +
@@ -135,7 +135,7 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
     // Not Found
     case 404: {
       console.log('\nMailgun Error: Not found. See request config below:');
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'mailgun_not_found',
         message: 'An error occured while trying to send the email, sorry!<br/>' +
@@ -145,7 +145,7 @@ export function handleMailgunErrors(res, mailgunRequestResponse) {
     }
     default: {
       console.log(`\nMailgun Error: Server error #${status}, ${statusText}!.`);
-      res.send({
+      res.status(400).send({
         success: false,
         type: 'mailgun_server_error',
         message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' +

@@ -5,6 +5,7 @@ import smoothScroll from 'smooth-scroll';
 import routes from './shared/routes';
 require('es6-promise').polyfill();
 
+
 render(
   <Router
     routes={routes}

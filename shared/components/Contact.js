@@ -70,7 +70,7 @@ class Contact extends React.Component {
 
             <span id="contactBottom">
               Click <button
-                      className="ui mini basic blue button"
+                      className="ui mini basic grey disabled button"
                       onClick={this.handleOpenFormModal}>
               here
               </button> to contact me.

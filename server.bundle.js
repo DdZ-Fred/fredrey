@@ -46,19 +46,23 @@
 
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
-	var _react = __webpack_require__(1);
+	var _axios = __webpack_require__(1);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _server = __webpack_require__(2);
+	var _server = __webpack_require__(3);
 
-	var _reactRouter = __webpack_require__(3);
+	var _reactRouter = __webpack_require__(4);
 
-	var _utils = __webpack_require__(4);
+	var _utils = __webpack_require__(5);
 
-	var _apiConfigs = __webpack_require__(5);
+	var _apiConfigs = __webpack_require__(6);
 
-	var _errorHandlers = __webpack_require__(6);
+	var _errorHandlers = __webpack_require__(7);
 
 	var _routes = __webpack_require__(8);
 
@@ -70,7 +74,6 @@
 	var path = __webpack_require__(28);
 	var bodyParser = __webpack_require__(29);
 	var compression = __webpack_require__(30);
-	var axios = __webpack_require__(7);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -91,7 +94,7 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <script src=\'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\' async defer></script>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset=utf-8/>\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link href=\'https://fonts.googleapis.com/css?family=Permanent+Marker\' rel=\'stylesheet\' type=\'text/css\'>\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel=stylesheet href=/index.css>\n      <script type="text/javascript">\n        var onloadCallback = function() {\n          console.log(\'reCAPTCHA IS ready!\');\n          var contactMeBtn = document.querySelector(\'#contactBottom .grey.disabled.button\');\n          contactMeBtn.classList.remove(\'grey\');\n          contactMeBtn.classList.remove(\'disabled\');\n          contactMeBtn.classList.add(\'blue\');\n        }\n      </script>\n      <script src=\'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\' async defer></script>\n      <div id=app>' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
 
 	app.post('/contactMe', function (req, res) {
@@ -105,7 +108,7 @@
 	  var areDepsOk = fullname && email && message && recaptchaResponse;
 
 	  if (areDepsOk) {
-	    var recaptchaInstance = axios.create();
+	    var recaptchaInstance = _axios2.default.create();
 	    recaptchaInstance.request((0, _apiConfigs.getRecaptchaApiConf)(req)).then(function (_ref) {
 	      var data = _ref.data;
 
@@ -118,7 +121,7 @@
 	          email: req.body.email,
 	          message: req.body.message
 	        });
-	        var mailgunInstance = axios.create();
+	        var mailgunInstance = _axios2.default.create();
 	        mailgunInstance.request((0, _apiConfigs.getMailgunApiConf)(newMail)).then(function (_ref2) {
 	          var data = _ref2.data;
 
@@ -136,7 +139,8 @@
 	        console.log('reCaptcha check Failed!');
 	        console.log(data['error-codes']);
 	        // Don't send email with Mailgun
-	        res.send({
+
+	        res.status(400).send({
 	          success: false,
 	          type: 'recaptcha_check_failed',
 	          message: 'The recaptcha check was unsuccessful, the message canot be sent!'
@@ -146,7 +150,7 @@
 	      (0, _errorHandlers.handleRecaptchaErrors)(res, recaptchaRequestResponse);
 	    });
 	  } else {
-	    res.send({
+	    res.status(400).send({
 	      success: false,
 	      type: 'missing_data',
 	      message: 'We couldn\'t receive all your information' + ', please reload the page and try again!'
@@ -184,22 +188,28 @@
 /* 1 */
 /***/ function(module, exports) {
 
-	module.exports = require("react");
+	module.exports = require("axios");
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-dom/server");
+	module.exports = require("react");
 
 /***/ },
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-router");
+	module.exports = require("react-dom/server");
 
 /***/ },
 /* 4 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-router");
+
+/***/ },
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -257,7 +267,7 @@
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -305,7 +315,7 @@
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -316,13 +326,13 @@
 	exports.handleRecaptchaErrors = handleRecaptchaErrors;
 	exports.handleMailgunErrors = handleMailgunErrors;
 
-	var _axios = __webpack_require__(7);
+	var _axios = __webpack_require__(1);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _apiConfigs = __webpack_require__(5);
+	var _apiConfigs = __webpack_require__(6);
 
-	var _utils = __webpack_require__(4);
+	var _utils = __webpack_require__(5);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -343,7 +353,7 @@
 	    // Internal Server error
 	    case 500:
 	      {
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'recaptcha_server_error',
 	          message: 'The Google reCatpcha servers coudn\'t answer, sorry!' + '<br />You\'ll have to contact me the old (and boring) way!'
@@ -354,7 +364,7 @@
 	    // Not found
 	    case 404:
 	      {
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'recaptcha_not_found',
 	          message: 'An error occured trying to contact the Google reCaptcha servers.' + '<br />The error has been sent to me and will be resolved soon.' + '<br />You\'ll have to contact me the old (and boring) way! sorry!'
@@ -381,7 +391,7 @@
 	    // Bad request
 	    case 400:
 	      {
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'recaptcha_bad_request',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
@@ -391,7 +401,7 @@
 
 	    default:
 	      {
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'recaptcha_other_error',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
@@ -418,7 +428,7 @@
 	    case 400:
 	      {
 	        console.log('\nMailgun Error: Bad request: A parameter was missing.' + 'See request config below:');
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'mailgun_bad_request',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
@@ -430,7 +440,7 @@
 	    case 401:
 	      {
 	        console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'mailgun_unauthorized',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
@@ -442,7 +452,7 @@
 	    case 402:
 	      {
 	        console.log('\nMailgun Error: Request failed but parameters are ok!.' + 'See request config below:');
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'mailgun_request_failed',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
@@ -454,7 +464,7 @@
 	    case 404:
 	      {
 	        console.log('\nMailgun Error: Not found. See request config below:');
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'mailgun_not_found',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
@@ -464,7 +474,7 @@
 	    default:
 	      {
 	        console.log('\nMailgun Error: Server error #' + status + ', ' + statusText + '!.');
-	        res.send({
+	        res.status(400).send({
 	          success: false,
 	          type: 'mailgun_server_error',
 	          message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' + 'Their service will probably be back soon online but better to contact me the old way!'
@@ -477,12 +487,6 @@
 	}
 
 /***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	module.exports = require("axios");
-
-/***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -492,7 +496,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -500,7 +504,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(3);
+	var _reactRouter = __webpack_require__(4);
 
 	var _App = __webpack_require__(10);
 
@@ -528,7 +532,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -626,11 +630,11 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(3);
+	var _reactRouter = __webpack_require__(4);
 
 	var _HeaderContentLeft = __webpack_require__(12);
 
@@ -714,7 +718,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -764,7 +768,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -816,7 +820,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -869,7 +873,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -975,7 +979,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1050,7 +1054,7 @@
 	exports.copyToClipboard = copyToClipboard;
 	exports.resetSemanticInvalidForm = resetSemanticInvalidForm;
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1170,7 +1174,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1201,7 +1205,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1232,7 +1236,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1268,7 +1272,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1322,7 +1326,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1451,7 +1455,7 @@
 	              _react2.default.createElement(
 	                'button',
 	                {
-	                  className: 'ui mini basic blue button',
+	                  className: 'ui mini basic grey disabled button',
 	                  onClick: this.handleOpenFormModal },
 	                'here'
 	              ),
@@ -1495,13 +1499,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	var _utils = __webpack_require__(17);
 
-	var _axios = __webpack_require__(7);
+	var _axios = __webpack_require__(1);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -1537,10 +1541,8 @@
 	  _createClass(ContactFormModal, [{
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
-	      var _this2 = this;
-
 	      e.preventDefault();
-	      console.log('ContactBackSide.js: handleSubmit()');
+	      // console.log('ContactBackSide.js: handleSubmit()');
 
 	      var isValidForm = $('.ui.form').form('is valid');
 	      // const captchaResponse = grecaptcha.getResponse();
@@ -1562,13 +1564,27 @@
 	        }).then(function (_ref) {
 	          var data = _ref.data;
 
-	          if (data.success) {
-	            // alert(data.message);
-	            document.getElementById('submitContactFormBtn').classList.remove('disabled');
-	            _this2.props.closeModal();
-	          } else {
-	            alert('Error type: ' + data.type + '\nMessage: ' + data.message);
-	          }
+	          alert(data.message);
+	          $('.ui.modal').modal('hide');
+	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	        }).catch(function (_ref2) {
+	          var data = _ref2.data;
+
+	          /*
+	            ERROR TYPES:
+	              - missing_data
+	                - recaptcha_check_failed
+	              - recaptcha_server_error
+	              - recaptcha_not_found
+	              - recaptcha_bad_request
+	              - recaptcha_other_error
+	                - mailgun_bad_request
+	              - mailgun_unauthorized
+	              - mailgun_request_failed
+	              - mailgun_not_found
+	              - mailgun_server_error
+	           */
+	          alert('Error type: ' + data.type + '\nMessage: ' + data.message);
 	        });
 	      }
 	    }
@@ -1665,17 +1681,17 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      // Contact form modal initialization
 	      $('.ui.modal').modal({
 	        onShow: function onShow() {
-	          if (!_this3.props.hasOpened) {
+	          if (!_this2.props.hasOpened) {
 	            // Modal is showing for the first time
 	            grecaptcha.render('myRecaptcha', {
 	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu'
 	            });
-	            _this3.props.updateState();
+	            _this2.props.updateState();
 	          } else {
 	            // Modal is re-opening
 	            grecaptcha.reset();
@@ -1743,7 +1759,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1825,7 +1841,7 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 

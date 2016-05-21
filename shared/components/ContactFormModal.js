@@ -20,7 +20,7 @@ class ContactFormModal extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('ContactBackSide.js: handleSubmit()');
+    // console.log('ContactBackSide.js: handleSubmit()');
 
     const isValidForm = $('.ui.form').form('is valid');
     // const captchaResponse = grecaptcha.getResponse();
@@ -41,13 +41,28 @@ class ContactFormModal extends React.Component {
         recaptchaResponse,
       })
       .then(({ data }) => {
-        if (data.success) {
-          // alert(data.message);
-          document.getElementById('submitContactFormBtn').classList.remove('disabled');
-          this.props.closeModal();
-        } else {
-          alert(`Error type: ${data.type}\nMessage: ${data.message}`);
-        }
+        alert(data.message);
+        $('.ui.modal').modal('hide');
+        document.getElementById('submitContactFormBtn').classList.remove('disabled');
+      })
+      .catch(({ data }) => {
+        /*
+          ERROR TYPES:
+            - missing_data
+
+            - recaptcha_check_failed
+            - recaptcha_server_error
+            - recaptcha_not_found
+            - recaptcha_bad_request
+            - recaptcha_other_error
+
+            - mailgun_bad_request
+            - mailgun_unauthorized
+            - mailgun_request_failed
+            - mailgun_not_found
+            - mailgun_server_error
+         */
+        alert(`Error type: ${data.type}\nMessage: ${data.message}`);
       });
     }
   }

@@ -1,9 +1,9 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var compression = require('compression');
-var axios = require('axios');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 
+import axios from 'axios';
 import React from 'react';
 // Allows to render our app to an html string
 import { renderToString } from 'react-dom/server';
@@ -40,6 +40,15 @@ function renderPage(appHtml) {
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
       <link rel=stylesheet href=/index.css>
+      <script type="text/javascript">
+        var onloadCallback = function() {
+          console.log('reCAPTCHA IS ready!');
+          var contactMeBtn = document.querySelector('#contactBottom .grey.disabled.button');
+          contactMeBtn.classList.remove('grey');
+          contactMeBtn.classList.remove('disabled');
+          contactMeBtn.classList.add('blue');
+        }
+      </script>
       <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>
       <div id=app>${appHtml}</div>
       <script src="/jquery/jquery-2.2.3.min.js"></script>
@@ -90,7 +99,8 @@ app.post('/contactMe', (req, res) => {
           console.log('reCaptcha check Failed!');
           console.log(data['error-codes']);
           // Don't send email with Mailgun
-          res.send({
+
+          res.status(400).send({
             success: false,
             type: 'recaptcha_check_failed',
             message: 'The recaptcha check was unsuccessful, the message canot be sent!',
@@ -101,7 +111,7 @@ app.post('/contactMe', (req, res) => {
         handleRecaptchaErrors(res, recaptchaRequestResponse);
       });
   } else {
-    res.send({
+    res.status(400).send({
       success: false,
       type: 'missing_data',
       message: 'We couldn\'t receive all your information' +
