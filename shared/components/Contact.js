@@ -86,12 +86,15 @@ class Contact extends React.Component {
   }
 
   componentDidMount() {
+    // onMouseOver Popup initialization
     $('#contactEmail')
       .popup({
         inline: true,
         target: '.mail.link.icon',
         content: 'Click the icon to copy the Email!',
       });
+
+    // Modals Initialization
   }
 
 }
