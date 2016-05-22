@@ -70,10 +70,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(27);
-	var path = __webpack_require__(28);
-	var bodyParser = __webpack_require__(29);
-	var compression = __webpack_require__(30);
+	var express = __webpack_require__(29);
+	var path = __webpack_require__(30);
+	var bodyParser = __webpack_require__(31);
+	var compression = __webpack_require__(32);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -150,10 +150,11 @@
 	      (0, _errorHandlers.handleRecaptchaErrors)(res, recaptchaRequestResponse);
 	    });
 	  } else {
+	    console.log('\nAPI[/contactMe]: Missing data. See data received below:\n' + req.body);
 	    res.status(400).send({
 	      success: false,
 	      type: 'missing_data',
-	      message: 'We couldn\'t receive all your information' + ', please reload the page and try again!'
+	      message: 'We couldn\'t receive all your information' + ', please try submitting the form again!'
 	    });
 	  }
 	});
@@ -339,13 +340,15 @@
 	/**
 	 * Handles the errors that can occur when requesting the reCatpcha API
 	 * @param  {Object} res                      [HTTP response of the /contactMe resource]
-	 * @param  {Object} recaptchaRequestResponse [HTTP response received requesting the reCaptcha API]
+	 * @param  {Object} recaptchaRequestResponse [Axios response received requesting the reCaptcha API]
+	 *         @property  {Number}  status       [Status code]
+	 *         @property  {String}  statusText   [Status message]
+	 *         @property  {Object}  config       [Original axios request config]
 	 */
-	function handleRecaptchaErrors(res, recaptchaRequestResponse) {
-	  var status = recaptchaRequestResponse.status;
-	  var statusText = recaptchaRequestResponse.statusText;
-	  var config = recaptchaRequestResponse.config;
-
+	function handleRecaptchaErrors(res, _ref) {
+	  var status = _ref.status;
+	  var statusText = _ref.statusText;
+	  var config = _ref.config;
 
 	  console.log('reCaptcha request error: ' + statusText + ' (' + status + ')');
 	  switch (status) {
@@ -375,13 +378,13 @@
 	          requestConfig: config
 	        });
 	        var instance = _axios2.default.create();
-	        instance.request((0, _apiConfigs.getMailgunApiConf)(notFoundEmail)).then(function (_ref) {
-	          var data = _ref.data;
+	        instance.request((0, _apiConfigs.getMailgunApiConf)(notFoundEmail)).then(function (_ref2) {
+	          var data = _ref2.data;
 
 	          console.log('\nMailgun: NotFound message sent!\n' + data.message + '\nMessageId: ' + data.id);
-	        }).catch(function (_ref2) {
-	          var status = _ref2.status;
-	          var statusText = _ref2.statusText;
+	        }).catch(function (_ref3) {
+	          var status = _ref3.status;
+	          var statusText = _ref3.statusText;
 
 	          console.log('\nMailgun: Error trying to send NotFound email.\n          Status: ' + status + '\nStatusText: ' + statusText);
 	        });
@@ -415,13 +418,15 @@
 	/**
 	 * Handles the errors that can occur when requesting the Mailgun API
 	 * @param  {Object} res                    [HTTP response of the /contactMe resource]
-	 * @param  {Object} mailgunRequestResponse [HTTP response received requesting the Mailgun API]
+	 * @param  {Object} mailgunRequestResponse [Axios response received requesting the Mailgun API]
+	 *         @property  {Number}  status       [Status code]
+	 *         @property  {String}  statusText   [Status message]
+	 *         @property  {Object}  config       [Original axios request config]
 	 */
-	function handleMailgunErrors(res, mailgunRequestResponse) {
-	  var status = mailgunRequestResponse.status;
-	  var statusText = mailgunRequestResponse.statusText;
-	  var config = mailgunRequestResponse.config;
-
+	function handleMailgunErrors(res, _ref4) {
+	  var status = _ref4.status;
+	  var statusText = _ref4.statusText;
+	  var config = _ref4.config;
 
 	  switch (status) {
 	    // Bad Req: Required param missing
@@ -556,11 +561,11 @@
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(24);
+	var _Footer = __webpack_require__(26);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(26);
+	var _appState = __webpack_require__(28);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -1338,6 +1343,10 @@
 
 	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
+	var _ContactInnerModal = __webpack_require__(25);
+
+	var _ContactInnerModal2 = _interopRequireDefault(_ContactInnerModal);
+
 	var _utils = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1380,17 +1389,14 @@
 	  }, {
 	    key: 'handleOpenFormModal',
 	    value: function handleOpenFormModal() {
-	      $('.ui.modal').modal('show');
+	      $('#contactFormModal').modal('show');
 	    }
 	  }, {
 	    key: 'handleCloseFormModal',
 	    value: function handleCloseFormModal(e) {
 	      e.preventDefault();
-	      $('.ui.modal').modal('hide');
+	      $('#contactFormModal').modal('hide');
 	    }
-	  }, {
-	    key: 'handleRenderRecaptcha',
-	    value: function handleRenderRecaptcha() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -1466,7 +1472,10 @@
 	        _react2.default.createElement(_ContactFormModal2.default, {
 	          hasOpened: this.props.contactFormModalOpened,
 	          updateState: this.props.updateContactFormModalState,
-	          closeModal: this.handleCloseFormModal })
+	          closeModal: this.handleCloseFormModal }),
+	        _react2.default.createElement(_ContactInnerModal2.default, {
+	          title: 'My Inner Modal',
+	          content: 'Something very bad happened!' })
 	      );
 	    }
 	  }, {
@@ -1504,6 +1513,8 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _utils = __webpack_require__(17);
+
+	var _errorHandlers = __webpack_require__(24);
 
 	var _axios = __webpack_require__(1);
 
@@ -1567,9 +1578,7 @@
 	          alert(data.message);
 	          $('.ui.modal').modal('hide');
 	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
-	        }).catch(function (_ref2) {
-	          var data = _ref2.data;
-
+	        }).catch(function (contactMeRequestResponse) {
 	          /*
 	            ERROR TYPES:
 	              - missing_data
@@ -1584,7 +1593,7 @@
 	              - mailgun_not_found
 	              - mailgun_server_error
 	           */
-	          alert('Error type: ' + data.type + '\nMessage: ' + data.message);
+	          (0, _errorHandlers.handleContactMeErrors)(contactMeRequestResponse);
 	        });
 	      }
 	    }
@@ -1593,7 +1602,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'contactFormModal', className: 'ui modal' },
+	        { id: 'contactFormModal', className: 'ui long modal' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'content' },
@@ -1672,6 +1681,13 @@
 	                    type: 'submit' },
 	                  'Submit'
 	                )
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                {
+	                  id: 'contactInnerModalTrigger',
+	                  className: 'ui button' },
+	                'Inner Modal'
 	              )
 	            )
 	          )
@@ -1684,7 +1700,8 @@
 	      var _this2 = this;
 
 	      // Contact form modal initialization
-	      $('.ui.modal').modal({
+	      $('#contactFormModal').modal({
+	        allowMultiple: true,
 	        onShow: function onShow() {
 	          if (!_this2.props.hasOpened) {
 	            // Modal is showing for the first time
@@ -1749,6 +1766,128 @@
 
 /***/ },
 /* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.handleContactMeErrors = handleContactMeErrors;
+	/**
+	 * [Handles the errors that can occur when requesting /contactMe API resource]
+	 * @param  {Object} contactMeRequestResponse [Axios response object]
+	 *         @property  {Object}  data       [Data sent with response]
+	 */
+	function handleContactMeErrors(_ref) {
+	  var data = _ref.data;
+
+	  switch (data.type) {
+	    case 'missing_data':
+	      {
+	        alert('Gibidin');
+	        // Reset reCaptcha
+	        // Enable submit button
+	        break;
+	      }
+	    default:
+	      {
+	        break;
+	      }
+
+	  }
+	}
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var propTypes = {
+	  title: _react.PropTypes.string.isRequired,
+	  content: _react.PropTypes.string.isRequired
+	};
+
+	/**
+	 * Show a modal which purpose is to announce to the user the result
+	 * of the form submition, potentially an error and how to
+	 */
+
+	var ContactInnerModal = function (_React$Component) {
+	  _inherits(ContactInnerModal, _React$Component);
+
+	  function ContactInnerModal(props) {
+	    _classCallCheck(this, ContactInnerModal);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModal).call(this, props));
+	  }
+
+	  _createClass(ContactInnerModal, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "contactInnerModal", className: "ui small modal" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "header" },
+	          this.props.title
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "content" },
+	          this.props.content
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "actions" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "ui approve button" },
+	            "Continue"
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      // ContactInnerModal initialization
+	      $('#contactInnerModal').modal({
+	        allowMultiple: true
+	      });
+	      $('#contactInnerModal').modal('attach events', '#contactInnerModalTrigger');
+	    }
+	  }]);
+
+	  return ContactInnerModal;
+	}(_react2.default.Component);
+
+	ContactInnerModal.propTypes = propTypes;
+
+	exports.default = ContactInnerModal;
+
+/***/ },
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1763,7 +1902,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(25);
+	var _FooterLinks = __webpack_require__(27);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -1832,7 +1971,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1881,7 +2020,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1977,25 +2116,25 @@
 	};
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

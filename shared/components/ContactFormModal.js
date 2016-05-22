@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import { resetSemanticInvalidForm } from '../utils';
+import { handleContactMeErrors } from '../../client/errorHandlers';
 import axios from 'axios';
 
 
@@ -45,7 +46,7 @@ class ContactFormModal extends React.Component {
         $('.ui.modal').modal('hide');
         document.getElementById('submitContactFormBtn').classList.remove('disabled');
       })
-      .catch(({ data }) => {
+      .catch((contactMeRequestResponse) => {
         /*
           ERROR TYPES:
             - missing_data
@@ -62,14 +63,14 @@ class ContactFormModal extends React.Component {
             - mailgun_not_found
             - mailgun_server_error
          */
-        alert(`Error type: ${data.type}\nMessage: ${data.message}`);
+        handleContactMeErrors(contactMeRequestResponse);
       });
     }
   }
 
   render() {
     return (
-      <div id="contactFormModal" className="ui modal">
+      <div id="contactFormModal" className="ui long modal">
         <div className="content">
           <div className="ui center aligned raised padded segment">
             <h3 className="ui icon header">
@@ -126,6 +127,14 @@ class ContactFormModal extends React.Component {
                   className="ui blue button"
                   type="submit">Submit</button>
               </div>
+
+
+              {/* ################# TO REMOVE#################*/}
+              <button
+                id="contactInnerModalTrigger"
+                className="ui button">Inner Modal</button>
+
+
             </form>
           </div>
         </div>
@@ -135,7 +144,8 @@ class ContactFormModal extends React.Component {
 
   componentDidMount() {
     // Contact form modal initialization
-    $('.ui.modal').modal({
+    $('#contactFormModal').modal({
+      allowMultiple: true,
       onShow: () => {
         if (!this.props.hasOpened) {
           // Modal is showing for the first time

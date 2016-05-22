@@ -111,11 +111,12 @@ app.post('/contactMe', (req, res) => {
         handleRecaptchaErrors(res, recaptchaRequestResponse);
       });
   } else {
+    console.log(`\nAPI[/contactMe]: Missing data. See data received below:\n${req.body}`);
     res.status(400).send({
       success: false,
       type: 'missing_data',
       message: 'We couldn\'t receive all your information' +
-      ', please reload the page and try again!',
+      ', please try submitting the form again!',
     });
   }
 });

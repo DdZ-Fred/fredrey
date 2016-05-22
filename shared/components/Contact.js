@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import SemanticIcon from './icons/SemanticIcon';
 import ContactFormModal from './ContactFormModal';
+import ContactInnerModal from './ContactInnerModal';
 import { copyToClipboard } from '../utils';
 
 const propTypes = {
@@ -25,16 +26,12 @@ class Contact extends React.Component {
   }
 
   handleOpenFormModal() {
-    $('.ui.modal').modal('show');
+    $('#contactFormModal').modal('show');
   }
 
   handleCloseFormModal(e) {
     e.preventDefault();
-    $('.ui.modal').modal('hide');
-  }
-
-  handleRenderRecaptcha() {
-
+    $('#contactFormModal').modal('hide');
   }
 
   render() {
@@ -81,6 +78,9 @@ class Contact extends React.Component {
           hasOpened={this.props.contactFormModalOpened}
           updateState={this.props.updateContactFormModalState}
           closeModal={this.handleCloseFormModal} />
+        <ContactInnerModal
+          title="My Inner Modal"
+          content="Something very bad happened!" />
       </div>
     );
   }

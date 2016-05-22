@@ -5,15 +5,12 @@ import { createFormattedMessage } from './utils';
 /**
  * Handles the errors that can occur when requesting the reCatpcha API
  * @param  {Object} res                      [HTTP response of the /contactMe resource]
- * @param  {Object} recaptchaRequestResponse [HTTP response received requesting the reCaptcha API]
+ * @param  {Object} recaptchaRequestResponse [Axios response received requesting the reCaptcha API]
+ *         @property  {Number}  status       [Status code]
+ *         @property  {String}  statusText   [Status message]
+ *         @property  {Object}  config       [Original axios request config]
  */
-export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
-  const {
-    status,
-    statusText,
-    config,
-  } = recaptchaRequestResponse;
-
+export function handleRecaptchaErrors(res, { status, statusText, config }) {
   console.log(`reCaptcha request error: ${statusText} (${status})`);
   switch (status) {
 
@@ -84,15 +81,12 @@ export function handleRecaptchaErrors(res, recaptchaRequestResponse) {
 /**
  * Handles the errors that can occur when requesting the Mailgun API
  * @param  {Object} res                    [HTTP response of the /contactMe resource]
- * @param  {Object} mailgunRequestResponse [HTTP response received requesting the Mailgun API]
+ * @param  {Object} mailgunRequestResponse [Axios response received requesting the Mailgun API]
+ *         @property  {Number}  status       [Status code]
+ *         @property  {String}  statusText   [Status message]
+ *         @property  {Object}  config       [Original axios request config]
  */
-export function handleMailgunErrors(res, mailgunRequestResponse) {
-  const {
-    status,
-    statusText,
-    config,
-  } = mailgunRequestResponse;
-
+export function handleMailgunErrors(res, { status, statusText, config }) {
   switch (status) {
     // Bad Req: Required param missing
     case 400: {
