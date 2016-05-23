@@ -6,30 +6,31 @@ import ContactInnerModalFailure from './ContactInnerModalFailure';
 
 const propTypes = {
   modalType: PropTypes.string.isRequired,
+  modalContent: PropTypes.string.isRequired,
 };
 
-function ContactInnerModalContainer({ modalType }) {
-  let toRender;
+function ContactInnerModalContainer({ modalType, modalContent }) {
+  let SelectedModal;
   switch (modalType) {
     case 'success': {
-      toRender = <ContactInnerModalSuccess />;
+      SelectedModal = ContactInnerModalSuccess;
       break;
     }
     case 'missing': {
-      toRender = <ContactInnerModalMissing />;
+      SelectedModal = ContactInnerModalMissing;
       break;
     }
     case 'failure': {
-      toRender = <ContactInnerModalFailure />;
+      SelectedModal = ContactInnerModalFailure;
       break;
     }
     default: {
-      toRender = <ContactInnerModalSuccess />;
+      SelectedModal = ContactInnerModalSuccess;
       break;
     }
   }
   return (
-      <toRender />
+    <SelectedModal content={modalContent} />
   );
 }
 

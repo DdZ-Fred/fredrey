@@ -34,7 +34,8 @@ class ContactFormModal extends React.Component {
       const fullname = e.target.elements['fullname'].value;
       const email = e.target.elements['email'].value;
       const message = e.target.elements['message'].value;
-
+      const ctx = this;
+      console.log(ctx);
       axios.post('/contactMe', {
         fullname,
         email,
@@ -42,7 +43,7 @@ class ContactFormModal extends React.Component {
         recaptchaResponse,
       })
       .then(({ data }) => {
-        alert(data.message);
+        // OPEN CONTACT_INNER_MODAL
         $('.ui.modal').modal('hide');
         document.getElementById('submitContactFormBtn').classList.remove('disabled');
       })

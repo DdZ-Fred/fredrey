@@ -88,8 +88,8 @@ app.post('/contactMe', (req, res) => {
               res.send({
                 success: true,
                 type: 'email_sent',
-                message: 'Your message has been sent! thank you!' +
-                  ' I will answer as soon as I can!',
+                message: 'Your message has been sent!\n' +
+                  'I will answer as soon as I can!',
               });
             })
             .catch((mailgunRequestResponse) => {

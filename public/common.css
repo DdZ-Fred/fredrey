@@ -99,6 +99,8 @@ body {
 }
 
 
+
+
 /************************/
 /* SUPERPOWERS COMPONENT*/
 /************************/
@@ -232,12 +234,31 @@ rgb(117, 109, 250)*/
   background: linear-gradient(rgba(97, 173, 249) 0%, rgba(97, 173, 249) 100%);
 }
 
-#contactInnerModal {
+#myRecaptcha > div > div {
+  margin: auto;
+}
+
+
+
+
+/*********************************/
+/* CONTACT INNER MODAL COMPONENTS*/
+/*********************************/
+
+.innerModal {
   
 }
 
-#myRecaptcha > div > div {
-  margin: auto;
+#contactInnerModalSuccess {
+
+}
+
+#contactInnerModalMissing {
+
+}
+
+#contactInnerModalFailure {
+
 }
 
 

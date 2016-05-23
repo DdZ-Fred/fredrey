@@ -12,11 +12,40 @@ class App extends React.Component {
     super(props);
     this.state = appState;
     this.updateContactFormModalState = this.updateContactFormModalState.bind(this);
+    // this.updateContactInnerModalType = this.updateContactInnerModalType.bind(this);
+    // this.updateContactInnerModalContent = this.updateContactInnerModalContent.bind(this);
   }
 
   updateContactFormModalState() {
+    const newContact = this.state.contact;
+    newContact.formModalOpened = true;
     this.setState({
-      contactFormModalOpened: true,
+      contact: newContact,
+    });
+  }
+
+  // updateContactInnerModalType(newModalType) {
+  //   const newContact = this.state.contact;
+  //   newContact.innerModalType = newModalType;
+  //   this.setState({
+  //     contact: newContact,
+  //   });
+  // }
+  //
+  // updateContactInnerModalContent(newModalContent) {
+  //   const newContact = this.state.contact;
+  //   newContact.innerModalContent = newModalContent;
+  //   this.setState({
+  //     contact: newContact,
+  //   });
+  // }
+  //
+  updateContactInnerModalTypeAndContent(newModalType, newModalContent) {
+    const newContact = this.state.contact;
+    newContact.innerModalType = newModalType;
+    newContact.innerModalContent = newModalContent;
+    this.setState({
+      contact: newContact,
     });
   }
 
@@ -28,8 +57,11 @@ class App extends React.Component {
         <Superpowers superpowers={this.state.superpowers}/>
         <Works />
         <Contact
-          contactFormModalOpened={this.state.contactFormModalOpened}
-          updateContactFormModalState={this.updateContactFormModalState} />
+          formModalOpened={this.state.contact.formModalOpened}
+          innerModalType={this.state.contact.innerModalType}
+          innerModalContent={this.state.contact.innerModalContent}
+          updateContactFormModalState={this.updateContactFormModalState}
+          updateContactInnerModalTypeAndContent={this.updateContactInnerModalTypeAndContent} />
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>

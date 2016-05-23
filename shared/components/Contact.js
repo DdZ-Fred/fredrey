@@ -5,8 +5,13 @@ import ContactInnerModalContainer from './ContactInnerModal/ContactInnerModalCon
 import { copyToClipboard } from '../utils';
 
 const propTypes = {
-  contactFormModalOpened: PropTypes.bool.isRequired,
+  formModalOpened: PropTypes.bool.isRequired,
+  innerModalType: PropTypes.string.isRequired,
+  innerModalContent: PropTypes.string.isRequired,
   updateContactFormModalState: PropTypes.func.isRequired,
+  updateContactInnerModalTypeAndContent: PropTypes.func.isRequired,
+  // updateContactInnerModalType: PropTypes.func.isRequired,
+  // updateContactInnerModalContent: PropTypes.func.isRequired,
 };
 
 class Contact extends React.Component {
@@ -17,7 +22,7 @@ class Contact extends React.Component {
 
     if (copyToClipboard(`COPY-TEST-${num}`)) {
       // Show copy success message
-      console.log('Copy to cliplard Succeeded');
+      console.log('Copy to clipboard Succeeded');
     } else {
       console.log('Copy to clipboard Failed');
       // Copy to clipboard not compatible
@@ -75,11 +80,12 @@ class Contact extends React.Component {
           </div>
         </div>
         <ContactFormModal
-          hasOpened={this.props.contactFormModalOpened}
+          hasOpened={this.props.formModalOpened}
           updateState={this.props.updateContactFormModalState}
           closeModal={this.handleCloseFormModal} />
         <ContactInnerModalContainer
-          modalType="success" />
+          modalType={this.props.innerModalType}
+          modalContent={this.props.innerModalContent} />
       </div>
     );
   }

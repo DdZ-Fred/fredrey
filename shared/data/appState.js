@@ -83,7 +83,12 @@ export default {
       icon: 'bitbucket',
     },
   ],
-  contactFormModalOpened: false,
+  contact: {
+    formModalOpened: false,
+    innerModalType: 'success',
+    innerModalContent: 'Your message has been sent!' +
+      'I will answer as soon as I can!',
+  },
   footerLinks: [
     {
       title: 'AboutMe',

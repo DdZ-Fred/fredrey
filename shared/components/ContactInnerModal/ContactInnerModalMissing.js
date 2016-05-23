@@ -1,7 +1,10 @@
-import React from 'react';
-import ContactInnerModal from './ContactInnerModal';
+import React, { PropTypes } from 'react';
 
-class ContactInnerModalMissing extends ContactInnerModal {
+const propTypes = {
+  content: PropTypes.string.isRequired,
+};
+
+class ContactInnerModalMissing extends React.Component {
   render() {
     return (
       <div id="contactInnerModalMissing" className="ui small modal contact innerModal">
@@ -10,11 +13,12 @@ class ContactInnerModalMissing extends ContactInnerModal {
           {this.props.content}
         </div>
         <div className="actions">
-          {/* PUT ACTIONS HERE*/}
         </div>
       </div>
     );
   }
 }
+
+ContactInnerModalMissing.propTypes = propTypes;
 
 export default ContactInnerModalMissing;
