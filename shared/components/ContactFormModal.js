@@ -70,7 +70,7 @@ class ContactFormModal extends React.Component {
 
   render() {
     return (
-      <div id="contactFormModal" className="ui long modal">
+      <div id="contactFormModal" className="ui long modal contact">
         <div className="content">
           <div className="ui center aligned raised padded segment">
             <h3 className="ui icon header">
@@ -128,13 +128,6 @@ class ContactFormModal extends React.Component {
                   type="submit">Submit</button>
               </div>
 
-
-              {/* ################# TO REMOVE#################*/}
-              <button
-                id="contactInnerModalTrigger"
-                className="ui button">Inner Modal</button>
-
-
             </form>
           </div>
         </div>
@@ -146,6 +139,7 @@ class ContactFormModal extends React.Component {
     // Contact form modal initialization
     $('#contactFormModal').modal({
       allowMultiple: true,
+      closable: false,
       onShow: () => {
         if (!this.props.hasOpened) {
           // Modal is showing for the first time

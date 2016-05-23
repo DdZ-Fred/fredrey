@@ -1487,8 +1487,6 @@
 	        target: '.mail.link.icon',
 	        content: 'Click the icon to copy the Email!'
 	      });
-
-	      // Modals Initialization
 	    }
 	  }]);
 
@@ -1605,7 +1603,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'contactFormModal', className: 'ui long modal' },
+	        { id: 'contactFormModal', className: 'ui long modal contactMod' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'content' },
@@ -1849,7 +1847,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "div",
-	        { id: "contactInnerModal", className: "ui small modal" },
+	        { id: "contactInnerModal", className: "ui small modal contactMods" },
 	        _react2.default.createElement(
 	          "div",
 	          { className: "header" },
@@ -1878,7 +1876,6 @@
 	      $('#contactInnerModal').modal({
 	        allowMultiple: true
 	      });
-	      $('#contactInnerModal').modal('attach events', '#contactInnerModalTrigger');
 	    }
 	  }]);
 

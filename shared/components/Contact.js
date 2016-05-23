@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import SemanticIcon from './icons/SemanticIcon';
 import ContactFormModal from './ContactFormModal';
-import ContactInnerModal from './ContactInnerModal';
+import ContactInnerModalContainer from './ContactInnerModal/ContactInnerModalContainer';
 import { copyToClipboard } from '../utils';
 
 const propTypes = {
@@ -78,23 +78,19 @@ class Contact extends React.Component {
           hasOpened={this.props.contactFormModalOpened}
           updateState={this.props.updateContactFormModalState}
           closeModal={this.handleCloseFormModal} />
-        <ContactInnerModal
-          title="My Inner Modal"
-          content="Something very bad happened!" />
+        <ContactInnerModalContainer
+          modalType="success" />
       </div>
     );
   }
 
   componentDidMount() {
     // onMouseOver Popup initialization
-    $('#contactEmail')
-      .popup({
-        inline: true,
-        target: '.mail.link.icon',
-        content: 'Click the icon to copy the Email!',
-      });
-
-    // Modals Initialization
+    $('#contactEmail').popup({
+      inline: true,
+      target: '.mail.link.icon',
+      content: 'Click the icon to copy the Email!',
+    });
   }
 
 }

@@ -4,11 +4,19 @@
  *         @property  {Object}  data       [Data sent with response]
  */
 export function handleContactMeErrors({ data }) {
-  switch (data.type) {
-    case 'missing_data': {
-      alert('Gibidin');
-      // Reset reCaptcha
-      // Enable submit button
+  const origin = data.type.substring(0, data.type.indexOf('_'));
+
+  switch (origin) {
+    case 'missing': {
+      // patata
+      break;
+    }
+    case 'recaptcha': {
+
+      break;
+    }
+    case 'mailgun': {
+
       break;
     }
     default: {
