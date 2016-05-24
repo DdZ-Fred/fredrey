@@ -12,8 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = appState;
     this.updateContactFormModalState = this.updateContactFormModalState.bind(this);
-    // this.updateContactInnerModalType = this.updateContactInnerModalType.bind(this);
-    // this.updateContactInnerModalContent = this.updateContactInnerModalContent.bind(this);
+    this.updateContactInnerModalState = this.updateContactInnerModalState.bind(this);
   }
 
   updateContactFormModalState() {
@@ -24,23 +23,7 @@ class App extends React.Component {
     });
   }
 
-  // updateContactInnerModalType(newModalType) {
-  //   const newContact = this.state.contact;
-  //   newContact.innerModalType = newModalType;
-  //   this.setState({
-  //     contact: newContact,
-  //   });
-  // }
-  //
-  // updateContactInnerModalContent(newModalContent) {
-  //   const newContact = this.state.contact;
-  //   newContact.innerModalContent = newModalContent;
-  //   this.setState({
-  //     contact: newContact,
-  //   });
-  // }
-  //
-  updateContactInnerModalTypeAndContent(newModalType, newModalContent) {
+  updateContactInnerModalState(newModalType, newModalContent) {
     const newContact = this.state.contact;
     newContact.innerModalType = newModalType;
     newContact.innerModalContent = newModalContent;
@@ -61,7 +44,7 @@ class App extends React.Component {
           innerModalType={this.state.contact.innerModalType}
           innerModalContent={this.state.contact.innerModalContent}
           updateContactFormModalState={this.updateContactFormModalState}
-          updateContactInnerModalTypeAndContent={this.updateContactInnerModalTypeAndContent} />
+          updateContactInnerModalState={this.updateContactInnerModalState} />
         <div className="ui horizontal divider">
           <i className="circular inverted blue lightning icon"></i>
         </div>

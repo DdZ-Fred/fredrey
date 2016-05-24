@@ -11,6 +11,7 @@ const propTypes = {
   hasOpened: PropTypes.bool.isRequired,
   updateState: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  updateInnerModalState: PropTypes.func.isRequired,
 };
 
 class ContactFormModal extends React.Component {

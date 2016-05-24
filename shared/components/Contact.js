@@ -9,9 +9,7 @@ const propTypes = {
   innerModalType: PropTypes.string.isRequired,
   innerModalContent: PropTypes.string.isRequired,
   updateContactFormModalState: PropTypes.func.isRequired,
-  updateContactInnerModalTypeAndContent: PropTypes.func.isRequired,
-  // updateContactInnerModalType: PropTypes.func.isRequired,
-  // updateContactInnerModalContent: PropTypes.func.isRequired,
+  updateContactInnerModalState: PropTypes.func.isRequired,
 };
 
 class Contact extends React.Component {
@@ -82,7 +80,8 @@ class Contact extends React.Component {
         <ContactFormModal
           hasOpened={this.props.formModalOpened}
           updateState={this.props.updateContactFormModalState}
-          closeModal={this.handleCloseFormModal} />
+          closeModal={this.handleCloseFormModal}
+          updateInnerModalState={this.props.updateContactInnerModalState} />
         <ContactInnerModalContainer
           modalType={this.props.innerModalType}
           modalContent={this.props.innerModalContent} />

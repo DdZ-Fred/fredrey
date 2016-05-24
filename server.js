@@ -88,7 +88,7 @@ app.post('/contactMe', (req, res) => {
               res.send({
                 success: true,
                 type: 'email_sent',
-                message: 'Your message has been sent!\n' +
+                message: 'Your message has been sent! ' +
                   'I will answer as soon as I can!',
               });
             })
