@@ -81,6 +81,8 @@ class Contact extends React.Component {
           hasOpened={this.props.formModalOpened}
           updateState={this.props.updateContactFormModalState}
           closeModal={this.handleCloseFormModal}
+          innerModalType={this.props.innerModalType}
+          innerModalContent={this.props.innerModalContent}
           updateInnerModalState={this.props.updateContactInnerModalState} />
         <ContactInnerModalContainer
           modalType={this.props.innerModalType}

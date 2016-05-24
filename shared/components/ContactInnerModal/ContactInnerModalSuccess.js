@@ -27,6 +27,18 @@ class ContactInnerModalSuccess extends React.Component {
     $('.innerModal').modal({
       allowMultiple: true,
       closable: false,
+      onShow: () => {
+        // Dimmer Form Modal
+      },
+      onHide: () => {
+        // Un-dimmer Form Modal
+
+        // Hide Form Modal
+        $('#contactFormModal').modal('hide');
+
+        // Re-enable submit button
+        document.getElementById('submitContactFormBtn').classList.remove('disabled');
+      },
     });
 
     console.log('ContactInnerModalSuccess Rendered!');

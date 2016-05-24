@@ -11,6 +11,8 @@ const propTypes = {
   hasOpened: PropTypes.bool.isRequired,
   updateState: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  innerModalType: PropTypes.string.isRequired,
+  innerModalContent: PropTypes.string.isRequired,
   updateInnerModalState: PropTypes.func.isRequired,
 };
 
@@ -35,8 +37,8 @@ class ContactFormModal extends React.Component {
       const fullname = e.target.elements['fullname'].value;
       const email = e.target.elements['email'].value;
       const message = e.target.elements['message'].value;
-      const ctx = this;
-      console.log(ctx);
+      // const ctx = this;
+      // console.log(ctx);
       axios.post('/contactMe', {
         fullname,
         email,
@@ -44,9 +46,11 @@ class ContactFormModal extends React.Component {
         recaptchaResponse,
       })
       .then(({ data }) => {
-        // OPEN CONTACT_INNER_MODAL
-        $('.ui.modal').modal('hide');
-        document.getElementById('submitContactFormBtn').classList.remove('disabled');
+        // console.log('Axios response ok, this=\n', this);
+        if (this.props.innerModalType !== 'success') {
+          this.props.updateInnerModalState('success', data.message);
+        }
+        $('.innerModal').modal('show');
       })
       .catch((contactMeRequestResponse) => {
         /*

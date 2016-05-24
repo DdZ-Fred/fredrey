@@ -70,10 +70,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(33);
-	var path = __webpack_require__(34);
-	var bodyParser = __webpack_require__(35);
-	var compression = __webpack_require__(36);
+	var express = __webpack_require__(32);
+	var path = __webpack_require__(33);
+	var bodyParser = __webpack_require__(34);
+	var compression = __webpack_require__(35);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -130,7 +130,7 @@
 	          res.send({
 	            success: true,
 	            type: 'email_sent',
-	            message: 'Your message has been sent! thank you!' + ' I will answer as soon as I can!'
+	            message: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	          });
 	        }).catch(function (mailgunRequestResponse) {
 	          (0, _errorHandlers.handleMailgunErrors)(res, mailgunRequestResponse);
@@ -561,11 +561,11 @@
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(30);
+	var _Footer = __webpack_require__(29);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(32);
+	var _appState = __webpack_require__(31);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -587,41 +587,29 @@
 
 	    _this.state = _appState2.default;
 	    _this.updateContactFormModalState = _this.updateContactFormModalState.bind(_this);
-	    // this.updateContactInnerModalType = this.updateContactInnerModalType.bind(this);
-	    // this.updateContactInnerModalContent = this.updateContactInnerModalContent.bind(this);
+	    _this.updateContactInnerModalState = _this.updateContactInnerModalState.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'updateContactFormModalState',
 	    value: function updateContactFormModalState() {
+	      var newContact = this.state.contact;
+	      newContact.formModalOpened = true;
 	      this.setState({
-	        contact: {
-	          contactFormModalOpened: true
-	        }
+	        contact: newContact
 	      });
 	    }
-
-	    // updateContactInnerModalType(newModalType) {
-	    //   this.setState({
-	    //     contact: {
-	    //       contactInnerModal: {
-	    //         modalType: newModalType,
-	    //       },
-	    //     },
-	    //   });
-	    // }
-	    //
-	    // updateContactInnerModalContent(newModalContent) {
-	    //   this.setState({
-	    //     contact: {
-	    //       contactInnerModal: {
-	    //         content: newModalContent,
-	    //       },
-	    //     },
-	    //   });
-	    // }
-
+	  }, {
+	    key: 'updateContactInnerModalState',
+	    value: function updateContactInnerModalState(newModalType, newModalContent) {
+	      var newContact = this.state.contact;
+	      newContact.innerModalType = newModalType;
+	      newContact.innerModalContent = newModalContent;
+	      this.setState({
+	        contact: newContact
+	      });
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -633,9 +621,11 @@
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_Works2.default, null),
 	        _react2.default.createElement(_Contact2.default, {
-	          contactFormModalOpened: this.state.contact.contactFormModalOpened,
+	          formModalOpened: this.state.contact.formModalOpened,
+	          innerModalType: this.state.contact.innerModalType,
+	          innerModalContent: this.state.contact.innerModalContent,
 	          updateContactFormModalState: this.updateContactFormModalState,
-	          contactInnerModal: this.state.contact.contactInnerModal }),
+	          updateContactInnerModalState: this.updateContactInnerModalState }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui horizontal divider' },
@@ -1384,20 +1374,20 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
-	  contactFormModalOpened: _react.PropTypes.bool.isRequired,
+	  formModalOpened: _react.PropTypes.bool.isRequired,
+	  innerModalType: _react.PropTypes.string.isRequired,
+	  innerModalContent: _react.PropTypes.string.isRequired,
 	  updateContactFormModalState: _react.PropTypes.func.isRequired,
-	  contactInnerModal: _react.PropTypes.object.isRequired,
-	  updateContactInnerModalType: _react.PropTypes.func.isRequired,
-	  updateContactInnerModalContent: _react.PropTypes.func.isRequired
+	  updateContactInnerModalState: _react.PropTypes.func.isRequired
 	};
 
 	var Contact = function (_React$Component) {
 	  _inherits(Contact, _React$Component);
 
-	  function Contact(props) {
+	  function Contact() {
 	    _classCallCheck(this, Contact);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Contact).call(this, props));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Contact).apply(this, arguments));
 	  }
 
 	  _createClass(Contact, [{
@@ -1499,12 +1489,15 @@
 	          )
 	        ),
 	        _react2.default.createElement(_ContactFormModal2.default, {
-	          hasOpened: this.props.contactFormModalOpened,
+	          hasOpened: this.props.formModalOpened,
 	          updateState: this.props.updateContactFormModalState,
-	          closeModal: this.handleCloseFormModal }),
+	          closeModal: this.handleCloseFormModal,
+	          innerModalType: this.props.innerModalType,
+	          innerModalContent: this.props.innerModalContent,
+	          updateInnerModalState: this.props.updateContactInnerModalState }),
 	        _react2.default.createElement(_ContactInnerModalContainer2.default, {
-	          modalType: this.props.contactInnerModal.modalType,
-	          content: this.props.contactInnerModal.content })
+	          modalType: this.props.innerModalType,
+	          modalContent: this.props.innerModalContent })
 	      );
 	    }
 	  }, {
@@ -1564,7 +1557,10 @@
 	var propTypes = {
 	  hasOpened: _react.PropTypes.bool.isRequired,
 	  updateState: _react.PropTypes.func.isRequired,
-	  closeModal: _react.PropTypes.func.isRequired
+	  closeModal: _react.PropTypes.func.isRequired,
+	  innerModalType: _react.PropTypes.string.isRequired,
+	  innerModalContent: _react.PropTypes.string.isRequired,
+	  updateInnerModalState: _react.PropTypes.func.isRequired
 	};
 
 	var ContactFormModal = function (_React$Component) {
@@ -1582,6 +1578,8 @@
 	  _createClass(ContactFormModal, [{
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
+	      var _this2 = this;
+
 	      e.preventDefault();
 	      // console.log('ContactBackSide.js: handleSubmit()');
 
@@ -1596,8 +1594,8 @@
 	        var fullname = e.target.elements['fullname'].value;
 	        var email = e.target.elements['email'].value;
 	        var message = e.target.elements['message'].value;
-	        var ctx = this;
-	        console.log(ctx);
+	        // const ctx = this;
+	        // console.log(ctx);
 	        _axios2.default.post('/contactMe', {
 	          fullname: fullname,
 	          email: email,
@@ -1606,9 +1604,11 @@
 	        }).then(function (_ref) {
 	          var data = _ref.data;
 
-	          // OPEN CONTACT_INNER_MODAL
-	          $('.ui.modal').modal('hide');
-	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	          // console.log('Axios response ok, this=\n', this);
+	          if (_this2.props.innerModalType !== 'success') {
+	            _this2.props.updateInnerModalState('success', data.message);
+	          }
+	          $('.innerModal').modal('show');
 	        }).catch(function (contactMeRequestResponse) {
 	          /*
 	            ERROR TYPES:
@@ -1721,19 +1721,19 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      // Contact form modal initialization
 	      $('#contactFormModal').modal({
 	        allowMultiple: true,
 	        closable: false,
 	        onShow: function onShow() {
-	          if (!_this2.props.hasOpened) {
+	          if (!_this3.props.hasOpened) {
 	            // Modal is showing for the first time
 	            grecaptcha.render('myRecaptcha', {
 	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu'
 	            });
-	            _this2.props.updateState();
+	            _this3.props.updateState();
 	          } else {
 	            // Modal is re-opening
 	            grecaptcha.reset();
@@ -1851,11 +1851,11 @@
 
 	var _ContactInnerModalSuccess2 = _interopRequireDefault(_ContactInnerModalSuccess);
 
-	var _ContactInnerModalMissing = __webpack_require__(28);
+	var _ContactInnerModalMissing = __webpack_require__(27);
 
 	var _ContactInnerModalMissing2 = _interopRequireDefault(_ContactInnerModalMissing);
 
-	var _ContactInnerModalFailure = __webpack_require__(29);
+	var _ContactInnerModalFailure = __webpack_require__(28);
 
 	var _ContactInnerModalFailure2 = _interopRequireDefault(_ContactInnerModalFailure);
 
@@ -1863,12 +1863,12 @@
 
 	var propTypes = {
 	  modalType: _react.PropTypes.string.isRequired,
-	  content: _react.PropTypes.string.isRequired
+	  modalContent: _react.PropTypes.string.isRequired
 	};
 
 	function ContactInnerModalContainer(_ref) {
 	  var modalType = _ref.modalType;
-	  var content = _ref.content;
+	  var modalContent = _ref.modalContent;
 
 	  var SelectedModal = void 0;
 	  switch (modalType) {
@@ -1893,7 +1893,7 @@
 	        break;
 	      }
 	  }
-	  return _react2.default.createElement(SelectedModal, { content: content });
+	  return _react2.default.createElement(SelectedModal, { content: modalContent });
 	}
 
 	ContactInnerModalContainer.propTypes = propTypes;
@@ -1904,78 +1904,7 @@
 /* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _ContactInnerModal2 = __webpack_require__(27);
-
-	var _ContactInnerModal3 = _interopRequireDefault(_ContactInnerModal2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ContactInnerModalSuccess = function (_ContactInnerModal) {
-	  _inherits(ContactInnerModalSuccess, _ContactInnerModal);
-
-	  function ContactInnerModalSuccess() {
-	    _classCallCheck(this, ContactInnerModalSuccess);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalSuccess).apply(this, arguments));
-	  }
-
-	  _createClass(ContactInnerModalSuccess, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { id: 'contactInnerModalSuccess', className: 'ui small modal contact innerModal' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          'Success'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          this.props.content
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'actions' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'ui approve button' },
-	            'Continue'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return ContactInnerModalSuccess;
-	}(_ContactInnerModal3.default);
-
-	exports.default = ContactInnerModalSuccess;
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -1999,43 +1928,80 @@
 	  content: _react.PropTypes.string.isRequired
 	};
 
-	/**
-	 * Show a modal which purpose is to announce to the user the result
-	 * of the form submition, potentially an error and how to
-	 */
+	var ContactInnerModalSuccess = function (_React$Component) {
+	  _inherits(ContactInnerModalSuccess, _React$Component);
 
-	var ContactInnerModal = function (_React$Component) {
-	  _inherits(ContactInnerModal, _React$Component);
+	  function ContactInnerModalSuccess() {
+	    _classCallCheck(this, ContactInnerModalSuccess);
 
-	  function ContactInnerModal() {
-	    _classCallCheck(this, ContactInnerModal);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModal).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalSuccess).apply(this, arguments));
 	  }
 
-	  _createClass(ContactInnerModal, [{
-	    key: 'componentDidMount',
+	  _createClass(ContactInnerModalSuccess, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "contactInnerModalSuccess", className: "ui small modal contact innerModal" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "ui center aligned header" },
+	          _react2.default.createElement("i", { className: "green check circle icon" }),
+	          "Thank You!"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "content" },
+	          this.props.content
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "actions" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "ui approve button" },
+	            "Return To Home Page"
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      // ContactInnerModal initialization
+	      // Modal init
 	      $('.innerModal').modal({
 	        allowMultiple: true,
-	        closable: false
+	        closable: false,
+	        onShow: function onShow() {
+	          // Dimmer Form Modal
+	        },
+	        onHide: function onHide() {
+	          // Un-dimmer Form Modal
+
+	          // Hide Form Modal
+	          $('#contactFormModal').modal('hide');
+
+	          // Re-enable submit button
+	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	        }
 	      });
+
+	      console.log('ContactInnerModalSuccess Rendered!');
 	    }
 	  }]);
 
-	  return ContactInnerModal;
+	  return ContactInnerModalSuccess;
 	}(_react2.default.Component);
 
-	ContactInnerModal.propTypes = propTypes;
+	ContactInnerModalSuccess.propTypes = propTypes;
 
-	exports.default = ContactInnerModal;
+	exports.default = ContactInnerModalSuccess;
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -2047,9 +2013,70 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactInnerModal2 = __webpack_require__(27);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _ContactInnerModal3 = _interopRequireDefault(_ContactInnerModal2);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var propTypes = {
+	  content: _react.PropTypes.string.isRequired
+	};
+
+	var ContactInnerModalMissing = function (_React$Component) {
+	  _inherits(ContactInnerModalMissing, _React$Component);
+
+	  function ContactInnerModalMissing() {
+	    _classCallCheck(this, ContactInnerModalMissing);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalMissing).apply(this, arguments));
+	  }
+
+	  _createClass(ContactInnerModalMissing, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { id: "contactInnerModalMissing", className: "ui small modal contact innerModal" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "header" },
+	          "PUT HEADER HERE"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "content" },
+	          this.props.content
+	        ),
+	        _react2.default.createElement("div", { className: "actions" })
+	      );
+	    }
+	  }]);
+
+	  return ContactInnerModalMissing;
+	}(_react2.default.Component);
+
+	ContactInnerModalMissing.propTypes = propTypes;
+
+	exports.default = ContactInnerModalMissing;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2059,40 +2086,46 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ContactInnerModalMissing = function (_ContactInnerModal) {
-	  _inherits(ContactInnerModalMissing, _ContactInnerModal);
+	var propTypes = {
+	  content: _react.PropTypes.string.isRequired
+	};
 
-	  function ContactInnerModalMissing() {
-	    _classCallCheck(this, ContactInnerModalMissing);
+	var ContactInnerModalFailure = function (_React$Component) {
+	  _inherits(ContactInnerModalFailure, _React$Component);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalMissing).apply(this, arguments));
+	  function ContactInnerModalFailure() {
+	    _classCallCheck(this, ContactInnerModalFailure);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalFailure).apply(this, arguments));
 	  }
 
-	  _createClass(ContactInnerModalMissing, [{
-	    key: 'render',
+	  _createClass(ContactInnerModalFailure, [{
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { id: 'contactInnerModalMissing', className: 'ui small modal contact innerModal' },
+	        "div",
+	        { id: "contactInnerModalFailure", className: "ui small modal contact innerModal" },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          'PUT HEADER HERE'
+	          "div",
+	          { className: "header" },
+	          "PUT HEADER HERE"
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
+	          "div",
+	          { className: "content" },
 	          this.props.content
 	        ),
-	        _react2.default.createElement('div', { className: 'actions' })
+	        _react2.default.createElement("div", { className: "actions" })
 	      );
 	    }
 	  }]);
 
-	  return ContactInnerModalMissing;
-	}(_ContactInnerModal3.default);
+	  return ContactInnerModalFailure;
+	}(_react2.default.Component);
 
-	exports.default = ContactInnerModalMissing;
+	ContactInnerModalFailure.propTypes = propTypes;
+
+	exports.default = ContactInnerModalFailure;
 
 /***/ },
 /* 29 */
@@ -2110,70 +2143,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactInnerModal2 = __webpack_require__(27);
-
-	var _ContactInnerModal3 = _interopRequireDefault(_ContactInnerModal2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ContactInnerModalFailure = function (_ContactInnerModal) {
-	  _inherits(ContactInnerModalFailure, _ContactInnerModal);
-
-	  function ContactInnerModalFailure() {
-	    _classCallCheck(this, ContactInnerModalFailure);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInnerModalFailure).apply(this, arguments));
-	  }
-
-	  _createClass(ContactInnerModalFailure, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { id: 'contactInnerModalFailure', className: 'ui small modal contact innerModal' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          'PUT HEADER HERE'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          this.props.content
-	        ),
-	        _react2.default.createElement('div', { className: 'actions' })
-	      );
-	    }
-	  }]);
-
-	  return ContactInnerModalFailure;
-	}(_ContactInnerModal3.default);
-
-	exports.default = ContactInnerModalFailure;
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _FooterLinks = __webpack_require__(31);
+	var _FooterLinks = __webpack_require__(30);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -2242,7 +2212,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2291,7 +2261,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2363,11 +2333,9 @@
 	    icon: 'bitbucket'
 	  }],
 	  contact: {
-	    contactFormModalOpened: false,
-	    contactInnerModal: {
-	      modalType: 'success',
-	      content: 'Your message has been sent! thank you! ' + 'I will answer as soon as I can!'
-	    }
+	    formModalOpened: false,
+	    innerModalType: 'success',
+	    innerModalContent: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	  },
 	  footerLinks: [{
 	    title: 'AboutMe',
@@ -2393,25 +2361,25 @@
 	};
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");
