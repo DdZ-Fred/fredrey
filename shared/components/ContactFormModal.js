@@ -37,8 +37,7 @@ class ContactFormModal extends React.Component {
       const fullname = e.target.elements['fullname'].value;
       const email = e.target.elements['email'].value;
       const message = e.target.elements['message'].value;
-      // const ctx = this;
-      // console.log(ctx);
+
       axios.post('/contactMe', {
         fullname,
         email,
@@ -46,37 +45,20 @@ class ContactFormModal extends React.Component {
         recaptchaResponse,
       })
       .then(({ data }) => {
-        // console.log('Axios response ok, this=\n', this);
         if (this.props.innerModalType !== 'success') {
           this.props.updateInnerModalState('success', data.message);
         }
         $('.innerModal').modal('show');
       })
       .catch((contactMeRequestResponse) => {
-        /*
-          ERROR TYPES:
-            - missing_data
-
-            - recaptcha_check_failed
-            - recaptcha_server_error
-            - recaptcha_not_found
-            - recaptcha_bad_request
-            - recaptcha_other_error
-
-            - mailgun_bad_request
-            - mailgun_unauthorized
-            - mailgun_request_failed
-            - mailgun_not_found
-            - mailgun_server_error
-         */
-        handleContactMeErrors(contactMeRequestResponse);
+        handleContactMeErrors(contactMeRequestResponse, this);
       });
     }
   }
 
   render() {
     return (
-      <div id="contactFormModal" className="ui long modal contact">
+      <div id="contactFormModal" className="ui long modal contact blurring dimmable">
         <div className="content">
           <div className="ui center aligned raised padded segment">
             <h3 className="ui icon header">
@@ -142,7 +124,8 @@ class ContactFormModal extends React.Component {
   }
 
   componentDidMount() {
-    // Contact form modal initialization
+
+    // Modal initialization
     $('#contactFormModal').modal({
       allowMultiple: true,
       closable: false,
@@ -165,6 +148,18 @@ class ContactFormModal extends React.Component {
         if (!isValidForm) {
           resetSemanticInvalidForm();
         }
+      },
+    });
+
+    // Dimmer initialization
+    // (hides/blur the component so that user
+    // focuses on something else)
+    $('#contactFormModal').dimmer({
+      inverted: true,
+      closable: false,
+      duration: {
+        show: 400,
+        hide: 400,
       },
     });
 

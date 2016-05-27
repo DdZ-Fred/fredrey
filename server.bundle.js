@@ -128,7 +128,6 @@
 	          console.log('Mailgun: ' + data.message + '.\nMailgun: MessageID = ' + data.id);
 
 	          res.send({
-	            success: true,
 	            type: 'email_sent',
 	            message: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	          });
@@ -141,7 +140,6 @@
 	        // Don't send email with Mailgun
 
 	        res.status(400).send({
-	          success: false,
 	          type: 'recaptcha_check_failed',
 	          message: 'The recaptcha check was unsuccessful, the message canot be sent!'
 	        });
@@ -152,7 +150,6 @@
 	  } else {
 	    console.log('\nAPI[/contactMe]: Missing data. See data received below:\n' + req.body);
 	    res.status(400).send({
-	      success: false,
 	      type: 'missing_data',
 	      message: 'We couldn\'t receive all your information' + ', please try submitting the form again!'
 	    });
@@ -357,7 +354,6 @@
 	    case 500:
 	      {
 	        res.status(400).send({
-	          success: false,
 	          type: 'recaptcha_server_error',
 	          message: 'The Google reCatpcha servers coudn\'t answer, sorry!' + '<br />You\'ll have to contact me the old (and boring) way!'
 	        });
@@ -368,7 +364,6 @@
 	    case 404:
 	      {
 	        res.status(400).send({
-	          success: false,
 	          type: 'recaptcha_not_found',
 	          message: 'An error occured trying to contact the Google reCaptcha servers.' + '<br />The error has been sent to me and will be resolved soon.' + '<br />You\'ll have to contact me the old (and boring) way! sorry!'
 	        });
@@ -395,7 +390,6 @@
 	    case 400:
 	      {
 	        res.status(400).send({
-	          success: false,
 	          type: 'recaptcha_bad_request',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
 	        });
@@ -405,7 +399,6 @@
 	    default:
 	      {
 	        res.status(400).send({
-	          success: false,
 	          type: 'recaptcha_other_error',
 	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
 	        });
@@ -434,7 +427,6 @@
 	      {
 	        console.log('\nMailgun Error: Bad request: A parameter was missing.' + 'See request config below:');
 	        res.status(400).send({
-	          success: false,
 	          type: 'mailgun_bad_request',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
 	        });
@@ -446,7 +438,6 @@
 	      {
 	        console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
 	        res.status(400).send({
-	          success: false,
 	          type: 'mailgun_unauthorized',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
 	        });
@@ -458,7 +449,6 @@
 	      {
 	        console.log('\nMailgun Error: Request failed but parameters are ok!.' + 'See request config below:');
 	        res.status(400).send({
-	          success: false,
 	          type: 'mailgun_request_failed',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
 	        });
@@ -470,7 +460,6 @@
 	      {
 	        console.log('\nMailgun Error: Not found. See request config below:');
 	        res.status(400).send({
-	          success: false,
 	          type: 'mailgun_not_found',
 	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
 	        });
@@ -480,7 +469,6 @@
 	      {
 	        console.log('\nMailgun Error: Server error #' + status + ', ' + statusText + '!.');
 	        res.status(400).send({
-	          success: false,
 	          type: 'mailgun_server_error',
 	          message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' + 'Their service will probably be back soon online but better to contact me the old way!'
 	        });
@@ -1594,8 +1582,7 @@
 	        var fullname = e.target.elements['fullname'].value;
 	        var email = e.target.elements['email'].value;
 	        var message = e.target.elements['message'].value;
-	        // const ctx = this;
-	        // console.log(ctx);
+
 	        _axios2.default.post('/contactMe', {
 	          fullname: fullname,
 	          email: email,
@@ -1604,27 +1591,12 @@
 	        }).then(function (_ref) {
 	          var data = _ref.data;
 
-	          // console.log('Axios response ok, this=\n', this);
 	          if (_this2.props.innerModalType !== 'success') {
 	            _this2.props.updateInnerModalState('success', data.message);
 	          }
 	          $('.innerModal').modal('show');
 	        }).catch(function (contactMeRequestResponse) {
-	          /*
-	            ERROR TYPES:
-	              - missing_data
-	                - recaptcha_check_failed
-	              - recaptcha_server_error
-	              - recaptcha_not_found
-	              - recaptcha_bad_request
-	              - recaptcha_other_error
-	                - mailgun_bad_request
-	              - mailgun_unauthorized
-	              - mailgun_request_failed
-	              - mailgun_not_found
-	              - mailgun_server_error
-	           */
-	          (0, _errorHandlers.handleContactMeErrors)(contactMeRequestResponse);
+	          (0, _errorHandlers.handleContactMeErrors)(contactMeRequestResponse, _this2);
 	        });
 	      }
 	    }
@@ -1802,35 +1774,35 @@
 	/**
 	 * [Handles the errors that can occur when requesting /contactMe API resource]
 	 * @param  {Object} contactMeRequestResponse [Axios response object]
-	 *         @property  {Object}  data       [Data sent with response]
+	 *         @property  {Object}  data         [Data sent with response]
+	 * @param  {Object} ctx                      [ContactFormModal component context(this)]
 	 */
-	function handleContactMeErrors(_ref) {
+	function handleContactMeErrors(_ref, ctx) {
 	  var data = _ref.data;
 
 	  var origin = data.type.substring(0, data.type.indexOf('_'));
 
+	  // Update inner modal type if necessary
 	  switch (origin) {
 	    case 'missing':
 	      {
-	        // patata
+	        if (ctx.props.innerModalType !== 'missing') {
+	          ctx.props.updateInnerModalState('missing', data.message);
+	        }
 	        break;
 	      }
-	    case 'recaptcha':
-	      {
-
-	        break;
-	      }
-	    case 'mailgun':
-	      {
-
-	        break;
-	      }
+	    // if recaptcha/mailgun/other
 	    default:
 	      {
+	        if (ctx.props.innerModalType !== 'failure') {
+	          ctx.props.updateInnerModalState('failure', data.message);
+	        }
 	        break;
 	      }
-
 	  }
+
+	  // Show inner modal
+	  $('.innerModal').modal('show');
 	}
 
 /***/ },

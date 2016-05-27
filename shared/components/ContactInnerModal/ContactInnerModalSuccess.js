@@ -28,10 +28,12 @@ class ContactInnerModalSuccess extends React.Component {
       allowMultiple: true,
       closable: false,
       onShow: () => {
-        // Dimmer Form Modal
+        // Dimmer (Outer) Form Modal
+        $('#contactFormModal').dimmer('show');
       },
       onHide: () => {
         // Un-dimmer Form Modal
+        $('#contactFormModal').dimmer('hide');
 
         // Hide Form Modal
         $('#contactFormModal').modal('hide');

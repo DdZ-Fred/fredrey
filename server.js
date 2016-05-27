@@ -86,7 +86,6 @@ app.post('/contactMe', (req, res) => {
               console.log(`Mailgun: ${data.message}.\nMailgun: MessageID = ${data.id}`);
 
               res.send({
-                success: true,
                 type: 'email_sent',
                 message: 'Your message has been sent! ' +
                   'I will answer as soon as I can!',
@@ -101,7 +100,6 @@ app.post('/contactMe', (req, res) => {
           // Don't send email with Mailgun
 
           res.status(400).send({
-            success: false,
             type: 'recaptcha_check_failed',
             message: 'The recaptcha check was unsuccessful, the message canot be sent!',
           });
@@ -113,7 +111,6 @@ app.post('/contactMe', (req, res) => {
   } else {
     console.log(`\nAPI[/contactMe]: Missing data. See data received below:\n${req.body}`);
     res.status(400).send({
-      success: false,
       type: 'missing_data',
       message: 'We couldn\'t receive all your information' +
       ', please try submitting the form again!',
