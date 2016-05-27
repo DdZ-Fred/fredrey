@@ -124,7 +124,6 @@ class ContactFormModal extends React.Component {
   }
 
   componentDidMount() {
-
     // Modal initialization
     $('#contactFormModal').modal({
       allowMultiple: true,

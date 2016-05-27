@@ -1605,7 +1605,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'contactFormModal', className: 'ui long modal contact' },
+	        { id: 'contactFormModal', className: 'ui long modal contact blurring dimmable' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'content' },
@@ -1695,7 +1695,7 @@
 	    value: function componentDidMount() {
 	      var _this3 = this;
 
-	      // Contact form modal initialization
+	      // Modal initialization
 	      $('#contactFormModal').modal({
 	        allowMultiple: true,
 	        closable: false,
@@ -1718,6 +1718,18 @@
 	          if (!isValidForm) {
 	            (0, _utils.resetSemanticInvalidForm)();
 	          }
+	        }
+	      });
+
+	      // Dimmer initialization
+	      // (hides/blur the component so that user
+	      // focuses on something else)
+	      $('#contactFormModal').dimmer({
+	        inverted: true,
+	        closable: false,
+	        duration: {
+	          show: 400,
+	          hide: 400
 	        }
 	      });
 
@@ -1918,7 +1930,7 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "ui center aligned header" },
-	          _react2.default.createElement("i", { className: "green check circle icon" }),
+	          _react2.default.createElement("i", { className: "green smile icon" }),
 	          "Thank You!"
 	        ),
 	        _react2.default.createElement(
@@ -1940,25 +1952,23 @@
 	  }, {
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      // Modal init
+	      // Modal initialization
 	      $('.innerModal').modal({
 	        allowMultiple: true,
 	        closable: false,
 	        onShow: function onShow() {
-	          // Dimmer Form Modal
+	          // Show (Outer) Form Modal dimmer
+	          $('#contactFormModal').dimmer('show');
 	        },
 	        onHide: function onHide() {
-	          // Un-dimmer Form Modal
-
-	          // Hide Form Modal
+	          // Hide (Outer) Form Modal Dimmer
+	          $('#contactFormModal').dimmer('hide');
+	          // Hide (Outer) Form Modal
 	          $('#contactFormModal').modal('hide');
-
 	          // Re-enable submit button
 	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
 	        }
 	      });
-
-	      console.log('ContactInnerModalSuccess Rendered!');
 	    }
 	  }]);
 
@@ -1991,7 +2001,8 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global grecaptcha */
+
 
 	var propTypes = {
 	  content: _react.PropTypes.string.isRequired
@@ -2014,16 +2025,46 @@
 	        { id: "contactInnerModalMissing", className: "ui small modal contact innerModal" },
 	        _react2.default.createElement(
 	          "div",
-	          { className: "header" },
-	          "PUT HEADER HERE"
+	          { className: "ui center aligned header" },
+	          _react2.default.createElement("i", { className: "orange meh icon" }),
+	          "Information missing!"
 	        ),
 	        _react2.default.createElement(
 	          "div",
 	          { className: "content" },
 	          this.props.content
 	        ),
-	        _react2.default.createElement("div", { className: "actions" })
+	        _react2.default.createElement(
+	          "div",
+	          { className: "actions" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "ui approve button" },
+	            "Continue"
+	          )
+	        )
 	      );
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      // Modal initialiaztion
+	      $('.innerModal').modal({
+	        allowMultiple: true,
+	        closable: false,
+	        onShow: function onShow() {
+	          // Show (Outer) Form Modal dimmer
+	          $('#contactFormModal').dimmer('show');
+	        },
+	        onHide: function onHide() {
+	          // Reset reCAPTCHA
+	          grecaptcha.reset();
+
+	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	          // Hide (Outer) Form Modal dimmer so that user can resubmit form or Cancel!
+	          $('#contactFormModal').dimmer('hide');
+	        }
+	      });
 	    }
 	  }]);
 
@@ -2079,16 +2120,84 @@
 	        { id: "contactInnerModalFailure", className: "ui small modal contact innerModal" },
 	        _react2.default.createElement(
 	          "div",
-	          { className: "header" },
-	          "PUT HEADER HERE"
+	          { className: "ui center aligned header" },
+	          _react2.default.createElement("i", { className: "red frown icon" }),
+	          "A bad...really bad error ocurred!"
 	        ),
 	        _react2.default.createElement(
 	          "div",
 	          { className: "content" },
-	          this.props.content
+	          this.props.content,
+	          _react2.default.createElement(
+	            "div",
+	            { id: "errorDataGatheredForm", className: "ui form" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "field" },
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "errorMyEmail" },
+	                "My Email"
+	              ),
+	              _react2.default.createElement("input", {
+	                id: "errorMyEmail",
+	                type: "text",
+	                name: "errorMyEmail",
+	                placeholder: "My email here",
+	                value: "Frederic.Rey.Pro@gmail.com",
+	                readOnly: true })
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "field" },
+	              _react2.default.createElement(
+	                "label",
+	                { htmlFor: "errorYourMessage" },
+	                "Your message"
+	              ),
+	              _react2.default.createElement("textarea", {
+	                id: "errorYourMessage",
+	                type: "text",
+	                name: "errorYourMessage",
+	                rows: "3",
+	                placeholder: "Your message here",
+	                readOnly: true })
+	            )
+	          )
 	        ),
-	        _react2.default.createElement("div", { className: "actions" })
+	        _react2.default.createElement(
+	          "div",
+	          { className: "actions" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "ui deny red button" },
+	            "Return to Home Page"
+	          )
+	        )
 	      );
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      $('.innerModal').modal({
+	        allowMultiple: true,
+	        closable: false,
+	        onShow: function onShow() {
+	          // Show (Outer) Form Modal dimmer
+	          $('#contactFormModal').dimmer('show');
+	          // Copy values into respective inputs
+	          var yourMessage = document.getElementById('message').value;
+	          document.getElementById('errorYourMessage').value = yourMessage;
+	        },
+	        onHide: function onHide() {
+	          // Hide (Outer) Form Modal Dimmer
+	          $('#contactFormModal').dimmer('hide');
+	          // Hide (Outer) Form Modal
+	          $('#contactFormModal').modal('hide');
+	          // Re-enable submit button
+	          document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	        }
+	      });
 	    }
 	  }]);
 

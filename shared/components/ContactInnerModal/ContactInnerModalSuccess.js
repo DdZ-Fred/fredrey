@@ -9,7 +9,7 @@ class ContactInnerModalSuccess extends React.Component {
     return (
       <div id="contactInnerModalSuccess" className="ui small modal contact innerModal">
         <div className="ui center aligned header">
-          <i className="green check circle icon"></i>
+          <i className="green smile icon"></i>
            Thank You!
         </div>
         <div className="content">
@@ -23,27 +23,23 @@ class ContactInnerModalSuccess extends React.Component {
   }
 
   componentDidMount() {
-    // Modal init
+    // Modal initialization
     $('.innerModal').modal({
       allowMultiple: true,
       closable: false,
       onShow: () => {
-        // Dimmer (Outer) Form Modal
+        // Show (Outer) Form Modal dimmer
         $('#contactFormModal').dimmer('show');
       },
       onHide: () => {
-        // Un-dimmer Form Modal
+        // Hide (Outer) Form Modal Dimmer
         $('#contactFormModal').dimmer('hide');
-
-        // Hide Form Modal
+        // Hide (Outer) Form Modal
         $('#contactFormModal').modal('hide');
-
         // Re-enable submit button
         document.getElementById('submitContactFormBtn').classList.remove('disabled');
       },
     });
-
-    console.log('ContactInnerModalSuccess Rendered!');
   }
 }
 

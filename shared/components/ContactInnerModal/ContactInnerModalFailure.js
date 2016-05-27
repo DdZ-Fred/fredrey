@@ -8,14 +8,62 @@ class ContactInnerModalFailure extends React.Component {
   render() {
     return (
       <div id="contactInnerModalFailure" className="ui small modal contact innerModal">
-        <div className="header">PUT HEADER HERE</div>
+        <div className="ui center aligned header">
+          <i className="red frown icon"></i>
+        A bad...really bad error ocurred!
+        </div>
         <div className="content">
           {this.props.content}
+          <div id="errorDataGatheredForm" className="ui form">
+            <div className="field">
+              <label htmlFor="errorMyEmail">My Email</label>
+              <input
+                id="errorMyEmail"
+                type="text"
+                name="errorMyEmail"
+                placeholder="My email here"
+                value="Frederic.Rey.Pro@gmail.com"
+                readOnly />
+            </div>
+            <div className="field">
+              <label htmlFor="errorYourMessage">Your message</label>
+            <textarea
+                id="errorYourMessage"
+                type="text"
+                name="errorYourMessage"
+                rows="3"
+                placeholder="Your message here"
+                readOnly></textarea>
+            </div>
+          </div>
         </div>
         <div className="actions">
+          <div className="ui deny red button">Return to Home Page</div>
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    $('.innerModal').modal({
+      allowMultiple: true,
+      closable: false,
+      onShow: () => {
+        // Show (Outer) Form Modal dimmer
+        $('#contactFormModal').dimmer('show');
+        // Copy values into respective inputs
+        const yourMessage = document.getElementById('message').value;
+        document.getElementById('errorYourMessage').value = yourMessage;
+      },
+      onHide: () => {
+        // Hide (Outer) Form Modal Dimmer
+        $('#contactFormModal').dimmer('hide');
+        // Hide (Outer) Form Modal
+        $('#contactFormModal').modal('hide');
+        // Re-enable submit button
+        document.getElementById('submitContactFormBtn').classList.remove('disabled');
+      },
+    });
   }
 }
 
