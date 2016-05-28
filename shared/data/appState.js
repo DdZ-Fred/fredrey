@@ -85,7 +85,7 @@ export default {
   ],
   contact: {
     formModalOpened: false,
-    innerModalType: 'failure',
+    innerModalType: 'success',
     innerModalContent: 'Your message has been sent! ' +
       'I will answer as soon as I can!',
   },

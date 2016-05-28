@@ -95,8 +95,8 @@ app.post('/contactMe', (req, res) => {
               handleMailgunErrors(res, mailgunRequestResponse);
             });
         } else {
-          console.log('reCaptcha check Failed!');
-          console.log(data['error-codes']);
+          console.log('\nAPI[/contactMe]: reCaptcha check Failed!');
+          console.log(`Error codes: ${data['error-codes']}`);
           // Don't send email with Mailgun
 
           res.status(400).send({
@@ -109,7 +109,8 @@ app.post('/contactMe', (req, res) => {
         handleRecaptchaErrors(res, recaptchaRequestResponse);
       });
   } else {
-    console.log(`\nAPI[/contactMe]: Missing data. See data received below:\n${req.body}`);
+    console.log('\nAPI[/contactMe]: Missing data.');
+    console.log(`See data received below:\n${JSON.stringify(req.body)}`);
     res.status(400).send({
       type: 'missing_data',
       message: 'We couldn\'t receive all your information' +

@@ -135,8 +135,8 @@
 	          (0, _errorHandlers.handleMailgunErrors)(res, mailgunRequestResponse);
 	        });
 	      } else {
-	        console.log('reCaptcha check Failed!');
-	        console.log(data['error-codes']);
+	        console.log('\nAPI[/contactMe]: reCaptcha check Failed!');
+	        console.log('Error codes: ' + data['error-codes']);
 	        // Don't send email with Mailgun
 
 	        res.status(400).send({
@@ -148,7 +148,8 @@
 	      (0, _errorHandlers.handleRecaptchaErrors)(res, recaptchaRequestResponse);
 	    });
 	  } else {
-	    console.log('\nAPI[/contactMe]: Missing data. See data received below:\n' + req.body);
+	    console.log('\nAPI[/contactMe]: Missing data.');
+	    console.log('See data received below:\n' + JSON.stringify(req.body));
 	    res.status(400).send({
 	      type: 'missing_data',
 	      message: 'We couldn\'t receive all your information' + ', please try submitting the form again!'
@@ -347,15 +348,16 @@
 	  var statusText = _ref.statusText;
 	  var config = _ref.config;
 
-	  console.log('reCaptcha request error: ' + statusText + ' (' + status + ')');
+	  console.log('\nAPI[/contactMe]: reCaptcha request error.\nStatus: ' + statusText + ' (' + status + ')');
 	  switch (status) {
 
 	    // Internal Server error
 	    case 500:
 	      {
+	        console.log('Type: Internal Server Error');
 	        res.status(400).send({
 	          type: 'recaptcha_server_error',
-	          message: 'The Google reCatpcha servers coudn\'t answer, sorry!' + '<br />You\'ll have to contact me the old (and boring) way!'
+	          message: 'The Google reCatpcha servers coudn\'t answer, sorry! ' + 'You\'ll have to contact me the old (and boring) way!'
 	        });
 	        break;
 	      }
@@ -363,9 +365,10 @@
 	    // Not found
 	    case 404:
 	      {
+	        console.log('Type: Not Found');
 	        res.status(400).send({
 	          type: 'recaptcha_not_found',
-	          message: 'An error occured trying to contact the Google reCaptcha servers.' + '<br />The error has been sent to me and will be resolved soon.' + '<br />You\'ll have to contact me the old (and boring) way! sorry!'
+	          message: 'An error occured trying to contact the Google reCaptcha servers. ' + 'The error has been sent to me and will be resolved soon. ' + 'You\'ll have to contact me the old (and boring) way! sorry!'
 	        });
 	        // Send email to myself with error
 	        var notFoundEmail = (0, _utils.createFormattedMessage)('notFound', {
@@ -389,18 +392,20 @@
 	    // Bad request
 	    case 400:
 	      {
+	        console.log('Type: Bad request');
 	        res.status(400).send({
 	          type: 'recaptcha_bad_request',
-	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
+	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry! ' + 'Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
 	        });
 	        break;
 	      }
 
 	    default:
 	      {
+	        console.log('Type: Other error');
 	        res.status(400).send({
 	          type: 'recaptcha_other_error',
-	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry!' + '<br />Please try again!. If the error is recurrent, then, I\'m afraid you\'ll ' + 'have to contact me the old way!'
+	          message: 'An error occured trying to contact the Google reCaptcha servers, sorry! ' + 'I\'m afraid you\'ll have to contact me the old way!'
 	        });
 	        break;
 	      }
@@ -421,14 +426,15 @@
 	  var statusText = _ref4.statusText;
 	  var config = _ref4.config;
 
+	  console.log('\nAPI[/contactMe]: Mailgun request error.\nStatus: ' + statusText + ' (' + status + ')');
 	  switch (status) {
 	    // Bad Req: Required param missing
 	    case 400:
 	      {
-	        console.log('\nMailgun Error: Bad request: A parameter was missing.' + 'See request config below:');
+	        console.log('Type: Bad request, a parameter was missing. See request config below:');
 	        res.status(400).send({
 	          type: 'mailgun_bad_request',
-	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	          message: 'An error occured while trying to send the email, sorry! ' + 'I\'m afraid you\'ll have to contact me the old way!'
 	        });
 	        break;
 	      }
@@ -436,10 +442,10 @@
 	    // Unauthorized: No valid api key
 	    case 401:
 	      {
-	        console.log('\nMailgun Error: Unauthorized: Api key not valid!. See request config below:');
+	        console.log('Type: Unauthorized: Api key not valid!. See request config below:');
 	        res.status(400).send({
 	          type: 'mailgun_unauthorized',
-	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	          message: 'An error occured while trying to send the email, sorry! ' + 'I\'m afraid you\'ll have to contact me the old way!'
 	        });
 	        break;
 	      }
@@ -447,10 +453,10 @@
 	    // Mailgun special error(..code is supposed to be for payment errors)
 	    case 402:
 	      {
-	        console.log('\nMailgun Error: Request failed but parameters are ok!.' + 'See request config below:');
+	        console.log('Type: Request failed but parameters are ok!.\nSee request config below:');
 	        res.status(400).send({
 	          type: 'mailgun_request_failed',
-	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	          message: 'An error occured while trying to send the email, sorry! ' + 'I\'m afraid you\'ll have to contact me the old way!'
 	        });
 	        break;
 	      }
@@ -458,25 +464,25 @@
 	    // Not Found
 	    case 404:
 	      {
-	        console.log('\nMailgun Error: Not found. See request config below:');
+	        console.log('Type: Not found. See request config below:');
 	        res.status(400).send({
 	          type: 'mailgun_not_found',
-	          message: 'An error occured while trying to send the email, sorry!<br/>' + 'I\'m afraid you\'ll have to contact me the old way &#9785;'
+	          message: 'An error occured while trying to send the email, sorry! ' + 'I\'m afraid you\'ll have to contact me the old way!'
 	        });
 	        break;
 	      }
 	    default:
 	      {
-	        console.log('\nMailgun Error: Server error #' + status + ', ' + statusText + '!.');
+	        console.log('Type: Server error #' + status + ', ' + statusText + '!.');
 	        res.status(400).send({
 	          type: 'mailgun_server_error',
-	          message: 'There\'s something wrong with the email service (Mailgun) I use, sorry!' + 'Their service will probably be back soon online but better to contact me the old way!'
+	          message: 'There\'s something wrong with the email service (Mailgun) I use, sorry! ' + 'Their service will probably be back soon online but better to contact me the old way!'
 	        });
 	        break;
 	      }
 
 	  }
-	  console.log(config);
+	  console.log(JSON.stringify(config));
 	}
 
 /***/ },
@@ -1571,7 +1577,7 @@
 	      e.preventDefault();
 	      // console.log('ContactBackSide.js: handleSubmit()');
 
-	      var isValidForm = $('#contactForm').form('is valid');
+	      var isValidForm = $('.ui.form.contactForm').form('is valid');
 	      // const captchaResponse = grecaptcha.getResponse();
 	      var recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
@@ -1625,7 +1631,7 @@
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'form',
-	              { id: 'contactForm', className: 'ui form',
+	              { className: 'ui form contactForm',
 	                onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
 	                'div',
@@ -1713,11 +1719,11 @@
 	        },
 	        onHide: function onHide() {
 	          // Modal is hiding. Clean the form
-	          document.querySelector('#contactForm').reset();
-	          var isValidForm = $('#contactForm').form('is valid');
+	          document.querySelector('.ui.form.contactForm').reset();
+	          var isValidForm = $('.ui.form.contactForm').form('is valid');
 	          if (!isValidForm) {
 	            // Default param is: '.ui.form'
-	            (0, _utils.resetSemanticInvalidForm)('#contactForm');
+	            (0, _utils.resetSemanticInvalidForm)('.ui.form.contactForm');
 	          }
 	        }
 	      });
@@ -1735,7 +1741,7 @@
 	      });
 
 	      // Form validation initialization
-	      $('#contactForm').form({
+	      $('.ui.form.contactForm').form({
 	        revalidate: true,
 	        fields: {
 	          fullname: {
@@ -1944,7 +1950,7 @@
 	          { className: "actions" },
 	          _react2.default.createElement(
 	            "div",
-	            { className: "ui approve button" },
+	            { className: "ui approve green button" },
 	            "Return To Home Page"
 	          )
 	        )
@@ -2137,7 +2143,7 @@
 	          this.props.content,
 	          _react2.default.createElement(
 	            'div',
-	            { id: 'errorDataGatheredForm', className: 'ui form' },
+	            { className: 'ui form innerModalFailureForm' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'field' },
@@ -2178,8 +2184,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            {
-	              className: 'ui red button',
-	              onClick: this.handleOnClick },
+	              className: 'ui approve red button' },
 	            'Return to Home Page'
 	          )
 	        )
@@ -2424,7 +2429,7 @@
 	  }],
 	  contact: {
 	    formModalOpened: false,
-	    innerModalType: 'failure',
+	    innerModalType: 'success',
 	    innerModalContent: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	  },
 	  footerLinks: [{

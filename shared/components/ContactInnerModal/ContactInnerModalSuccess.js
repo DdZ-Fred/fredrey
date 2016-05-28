@@ -16,7 +16,7 @@ class ContactInnerModalSuccess extends React.Component {
           {this.props.content}
         </div>
         <div className="actions">
-          <div className="ui approve button">Return To Home Page</div>
+          <div className="ui approve green button">Return To Home Page</div>
         </div>
       </div>
     );
