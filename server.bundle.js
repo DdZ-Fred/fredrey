@@ -1571,7 +1571,7 @@
 	      e.preventDefault();
 	      // console.log('ContactBackSide.js: handleSubmit()');
 
-	      var isValidForm = $('.ui.form').form('is valid');
+	      var isValidForm = $('#contactForm').form('is valid');
 	      // const captchaResponse = grecaptcha.getResponse();
 	      var recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
@@ -1625,7 +1625,7 @@
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'form',
-	              { className: 'ui form',
+	              { id: 'contactForm', className: 'ui form',
 	                onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
 	                'div',
@@ -1713,10 +1713,11 @@
 	        },
 	        onHide: function onHide() {
 	          // Modal is hiding. Clean the form
-	          document.querySelector('.ui.form').reset();
-	          var isValidForm = $('.ui.form').form('is valid');
+	          document.querySelector('#contactForm').reset();
+	          var isValidForm = $('#contactForm').form('is valid');
 	          if (!isValidForm) {
-	            (0, _utils.resetSemanticInvalidForm)();
+	            // Default param is: '.ui.form'
+	            (0, _utils.resetSemanticInvalidForm)('#contactForm');
 	          }
 	        }
 	      });
@@ -1734,7 +1735,7 @@
 	      });
 
 	      // Form validation initialization
-	      $('.ui.form').form({
+	      $('#contactForm').form({
 	        revalidate: true,
 	        fields: {
 	          fullname: {
@@ -2079,7 +2080,7 @@
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -2113,71 +2114,79 @@
 	  }
 
 	  _createClass(ContactInnerModalFailure, [{
-	    key: "render",
+	    key: 'handleOnClick',
+	    value: function handleOnClick(e) {
+	      e.preventDefault();
+	      console.log('ModalFailure button clicked!');
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { id: "contactInnerModalFailure", className: "ui small modal contact innerModal" },
+	        'div',
+	        { id: 'contactInnerModalFailure', className: 'ui small modal contact innerModal' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "ui center aligned header" },
-	          _react2.default.createElement("i", { className: "red frown icon" }),
-	          "A bad...really bad error ocurred!"
+	          'div',
+	          { className: 'ui center aligned header' },
+	          _react2.default.createElement('i', { className: 'red frown icon' }),
+	          'A bad...really bad error ocurred!'
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "content" },
+	          'div',
+	          { className: 'content' },
 	          this.props.content,
 	          _react2.default.createElement(
-	            "div",
-	            { id: "errorDataGatheredForm", className: "ui form" },
+	            'div',
+	            { id: 'errorDataGatheredForm', className: 'ui form' },
 	            _react2.default.createElement(
-	              "div",
-	              { className: "field" },
+	              'div',
+	              { className: 'field' },
 	              _react2.default.createElement(
-	                "label",
-	                { htmlFor: "errorMyEmail" },
-	                "My Email"
+	                'label',
+	                { htmlFor: 'errorMyEmail' },
+	                'My Email'
 	              ),
-	              _react2.default.createElement("input", {
-	                id: "errorMyEmail",
-	                type: "text",
-	                name: "errorMyEmail",
-	                placeholder: "My email here",
-	                value: "Frederic.Rey.Pro@gmail.com",
+	              _react2.default.createElement('input', {
+	                id: 'errorMyEmail',
+	                type: 'text',
+	                name: 'errorMyEmail',
+	                placeholder: 'My email here',
+	                value: 'Frederic.Rey.Pro@gmail.com',
 	                readOnly: true })
 	            ),
 	            _react2.default.createElement(
-	              "div",
-	              { className: "field" },
+	              'div',
+	              { className: 'field' },
 	              _react2.default.createElement(
-	                "label",
-	                { htmlFor: "errorYourMessage" },
-	                "Your message"
+	                'label',
+	                { htmlFor: 'errorYourMessage' },
+	                'Your message'
 	              ),
-	              _react2.default.createElement("textarea", {
-	                id: "errorYourMessage",
-	                type: "text",
-	                name: "errorYourMessage",
-	                rows: "3",
-	                placeholder: "Your message here",
+	              _react2.default.createElement('textarea', {
+	                id: 'errorYourMessage',
+	                type: 'text',
+	                name: 'errorYourMessage',
+	                rows: '3',
+	                placeholder: 'Your message here',
 	                readOnly: true })
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "actions" },
+	          'div',
+	          { className: 'actions' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "ui deny red button" },
-	            "Return to Home Page"
+	            'div',
+	            {
+	              className: 'ui red button',
+	              onClick: this.handleOnClick },
+	            'Return to Home Page'
 	          )
 	        )
 	      );
 	    }
 	  }, {
-	    key: "componentDidMount",
+	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      $('.innerModal').modal({
 	        allowMultiple: true,
@@ -2415,7 +2424,7 @@
 	  }],
 	  contact: {
 	    formModalOpened: false,
-	    innerModalType: 'success',
+	    innerModalType: 'failure',
 	    innerModalContent: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	  },
 	  footerLinks: [{

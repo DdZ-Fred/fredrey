@@ -5,6 +5,12 @@ const propTypes = {
 };
 
 class ContactInnerModalFailure extends React.Component {
+
+  handleOnClick(e) {
+    e.preventDefault();
+    console.log('ModalFailure button clicked!');
+  }
+
   render() {
     return (
       <div id="contactInnerModalFailure" className="ui small modal contact innerModal">
@@ -14,7 +20,7 @@ class ContactInnerModalFailure extends React.Component {
         </div>
         <div className="content">
           {this.props.content}
-          <div id="errorDataGatheredForm" className="ui form">
+          <div className="ui form innerModalFailureForm">
             <div className="field">
               <label htmlFor="errorMyEmail">My Email</label>
               <input
@@ -38,7 +44,8 @@ class ContactInnerModalFailure extends React.Component {
           </div>
         </div>
         <div className="actions">
-          <div className="ui deny red button">Return to Home Page</div>
+          <div
+            className="ui approve red button">Return to Home Page</div>
         </div>
       </div>
     );

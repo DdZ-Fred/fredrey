@@ -26,7 +26,7 @@ class ContactFormModal extends React.Component {
     e.preventDefault();
     // console.log('ContactBackSide.js: handleSubmit()');
 
-    const isValidForm = $('.ui.form').form('is valid');
+    const isValidForm = $('.ui.form.contactForm').form('is valid');
     // const captchaResponse = grecaptcha.getResponse();
     const recaptchaResponse = e.target.elements['g-recaptcha-response'].value;
 
@@ -68,7 +68,7 @@ class ContactFormModal extends React.Component {
 
             <br />
 
-            <form className="ui form"
+            <form className="ui form contactForm"
                 onSubmit={this.handleSubmit}>
 
               <div className="fields">
@@ -142,10 +142,11 @@ class ContactFormModal extends React.Component {
       },
       onHide: () => {
         // Modal is hiding. Clean the form
-        document.querySelector('.ui.form').reset();
-        const isValidForm = $('.ui.form').form('is valid');
+        document.querySelector('.ui.form.contactForm').reset();
+        const isValidForm = $('.ui.form.contactForm').form('is valid');
         if (!isValidForm) {
-          resetSemanticInvalidForm();
+          // Default param is: '.ui.form'
+          resetSemanticInvalidForm('.ui.form.contactForm');
         }
       },
     });
@@ -163,7 +164,7 @@ class ContactFormModal extends React.Component {
     });
 
     // Form validation initialization
-    $('.ui.form').form({
+    $('.ui.form.contactForm').form({
       revalidate: true,
       fields: {
         fullname: {
