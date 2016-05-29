@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import SemanticIcon from './icons/SemanticIcon';
 import ContactFormModal from './ContactFormModal';
 import ContactInnerModalContainer from './ContactInnerModal/ContactInnerModalContainer';
 import { copyToClipboard } from '../utils';
@@ -57,7 +56,7 @@ class Contact extends React.Component {
                 <a
                   href="https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299"
                   target="_blank">
-                  <SemanticIcon icon="linkedin" />
+                  <i title="Linkedin" className="linkedin icon"></i>
                 </a>
               </span>
             </div>
