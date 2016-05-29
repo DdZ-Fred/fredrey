@@ -40,14 +40,15 @@ export default {
       provider: 'devicons',
       icon: 'react',
       strength: 3,
-      comment: '...React is magic ?',
+      comment: 'Started working with React last year and now can\'t see myself working without it!',
     },
     {
       name: 'Meteor',
       provider: 'devicons',
       icon: 'meteor',
       strength: 4,
-      comment: 'Meteor is definitely the most magical!',
+      comment: 'Have been using it for a little less than a year! ' +
+        'check my cosyquiz project on Bitbucket',
     },
     {
       name: 'MongoDB',

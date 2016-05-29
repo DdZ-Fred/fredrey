@@ -38,7 +38,7 @@ class App extends React.Component {
         <Header superpowers={this.state.superpowers} />
         <AboutMe />
         <Superpowers superpowers={this.state.superpowers}/>
-        <Works />
+        <Works gitProfiles={this.state.gitProfiles}/>
         <Contact
           formModalOpened={this.state.contact.formModalOpened}
           innerModalType={this.state.contact.innerModalType}

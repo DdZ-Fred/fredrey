@@ -10,11 +10,10 @@ const propTypes = {
 };
 
 class Superpower extends React.Component {
-
   render() {
+    const selectorId = `${this.props.icon}Superpower`;
     return (
-      <div className="item superpower"
-        data-html={this.props.comment}>
+      <div id={selectorId} className="item superpower">
         {this.props.provider ?
           generateIcon(this.props.provider, this.props.icon)
           : ''
@@ -27,6 +26,20 @@ class Superpower extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    // onMouseOver/Hover popup init
+    const selector = `#${this.props.icon}Superpower`;
+    $(selector).popup({
+      inline: true,
+      delay: {
+        show: 100,
+        hide: 100,
+      },
+      hoverable: true,
+      html: this.props.comment,
+    });
   }
 
 }

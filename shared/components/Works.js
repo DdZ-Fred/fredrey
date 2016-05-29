@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 
-function Works(props) {
+const propTypes = {
+  gitProfiles: PropTypes.array.isRequired,
+};
+
+function Works({ gitProfiles }) {
   return (
       <div id="works" className="eight wide column">
         <div className="ui segment">
@@ -9,6 +13,13 @@ function Works(props) {
           </a>
           <div className="content">
             <p>Please! check my works on:</p>
+            {
+              gitProfiles.map((profile, idx) => (
+                <div key={idx} className="profile">
+
+                </div>
+              ))
+            }
             <p>
               The source code of this website is even available at the bottom of the page.
             </p>
@@ -17,5 +28,7 @@ function Works(props) {
       </div>
   );
 }
+
+Works.propTypes = propTypes;
 
 export default Works;

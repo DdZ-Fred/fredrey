@@ -36,16 +36,6 @@ class Superpowers extends React.Component {
   componentDidMount() {
     // Star ratings init
     $('.ui.rating').rating('disable');
-
-    // Superpower components - (onMouseOver/Hover)popups init
-    $('.superpower').popup({
-      inline: false,
-      delay: {
-        show: 100,
-        hide: 100,
-      },
-      hoverable: true,
-    });
   }
 }
 
