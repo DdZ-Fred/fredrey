@@ -39,7 +39,7 @@ class Superpowers extends React.Component {
 
     // Superpower components - (onMouseOver/Hover)popups init
     $('.superpower').popup({
-      inline: true,
+      inline: false,
       delay: {
         show: 100,
         hide: 100,

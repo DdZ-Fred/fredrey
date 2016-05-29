@@ -5,12 +5,6 @@ const propTypes = {
 };
 
 class ContactInnerModalFailure extends React.Component {
-
-  handleOnClick(e) {
-    e.preventDefault();
-    console.log('ModalFailure button clicked!');
-  }
-
   render() {
     return (
       <div id="contactInnerModalFailure" className="ui small modal contact innerModal">

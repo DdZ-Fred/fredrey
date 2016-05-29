@@ -161,17 +161,21 @@ body {
 }
 
 .superpower:hover {
-  /*-webkit-filter: opacity(100%);
-  filter: opacity(100%);*/
   animation-duration: 500ms;
   animation-name: unblur;
   animation-fill-mode: both;
 }
 
 @keyframes unblur {
-  to {
-    -webkit-filter: opacity(100%);
-    filter: opacity(100%);
+
+  0% {
+    -webkit-filter: opacity(50%) blur(2px);
+    filter: opacity(50%) blur(2px);
+  }
+
+  100% {
+    -webkit-filter: opacity(100%) blur(0px);
+    filter: opacity(100%) blur(0px);
   }
 }
 
@@ -246,7 +250,7 @@ rgb(117, 109, 250)*/
 /*********************************/
 
 .innerModal {
-  
+
 }
 
 #contactInnerModalSuccess {

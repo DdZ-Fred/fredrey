@@ -1388,9 +1388,8 @@
 	    key: 'handleCopyEmailToClipboard',
 	    value: function handleCopyEmailToClipboard() {
 	      console.log('Contact.js: handleCopyEmailToClipboard - Email icon pushed');
-	      var num = Math.floor(Math.random() * 100000 % 50);
 
-	      if ((0, _utils.copyToClipboard)('COPY-TEST-' + num)) {
+	      if ((0, _utils.copyToClipboard)('Frederic.Rey.Pro@gmail.com')) {
 	        // Show copy success message
 	        console.log('Copy to clipboard Succeeded');
 	      } else {
@@ -2086,7 +2085,7 @@
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -2120,78 +2119,72 @@
 	  }
 
 	  _createClass(ContactInnerModalFailure, [{
-	    key: 'handleOnClick',
-	    value: function handleOnClick(e) {
-	      e.preventDefault();
-	      console.log('ModalFailure button clicked!');
-	    }
-	  }, {
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { id: 'contactInnerModalFailure', className: 'ui small modal contact innerModal' },
+	        "div",
+	        { id: "contactInnerModalFailure", className: "ui small modal contact innerModal" },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'ui center aligned header' },
-	          _react2.default.createElement('i', { className: 'red frown icon' }),
-	          'A bad...really bad error ocurred!'
+	          "div",
+	          { className: "ui center aligned header" },
+	          _react2.default.createElement("i", { className: "red frown icon" }),
+	          "A bad...really bad error ocurred!"
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
+	          "div",
+	          { className: "content" },
 	          this.props.content,
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'ui form innerModalFailureForm' },
+	            "div",
+	            { className: "ui form innerModalFailureForm" },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'field' },
+	              "div",
+	              { className: "field" },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'errorMyEmail' },
-	                'My Email'
+	                "label",
+	                { htmlFor: "errorMyEmail" },
+	                "My Email"
 	              ),
-	              _react2.default.createElement('input', {
-	                id: 'errorMyEmail',
-	                type: 'text',
-	                name: 'errorMyEmail',
-	                placeholder: 'My email here',
-	                value: 'Frederic.Rey.Pro@gmail.com',
+	              _react2.default.createElement("input", {
+	                id: "errorMyEmail",
+	                type: "text",
+	                name: "errorMyEmail",
+	                placeholder: "My email here",
+	                value: "Frederic.Rey.Pro@gmail.com",
 	                readOnly: true })
 	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'field' },
+	              "div",
+	              { className: "field" },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'errorYourMessage' },
-	                'Your message'
+	                "label",
+	                { htmlFor: "errorYourMessage" },
+	                "Your message"
 	              ),
-	              _react2.default.createElement('textarea', {
-	                id: 'errorYourMessage',
-	                type: 'text',
-	                name: 'errorYourMessage',
-	                rows: '3',
-	                placeholder: 'Your message here',
+	              _react2.default.createElement("textarea", {
+	                id: "errorYourMessage",
+	                type: "text",
+	                name: "errorYourMessage",
+	                rows: "3",
+	                placeholder: "Your message here",
 	                readOnly: true })
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'actions' },
+	          "div",
+	          { className: "actions" },
 	          _react2.default.createElement(
-	            'div',
+	            "div",
 	            {
-	              className: 'ui approve red button' },
-	            'Return to Home Page'
+	              className: "ui approve red button" },
+	            "Return to Home Page"
 	          )
 	        )
 	      );
 	    }
 	  }, {
-	    key: 'componentDidMount',
+	    key: "componentDidMount",
 	    value: function componentDidMount() {
 	      $('.innerModal').modal({
 	        allowMultiple: true,
