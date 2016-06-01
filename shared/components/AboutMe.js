@@ -7,7 +7,7 @@ function AboutMe(props) {
         <div className="ui segment">
           <a className="ui blue ribbon label"><h3>About me</h3></a>
           <p className="content">
-            This is about me youhouuuuu
+            This is about me youhouuuuu  GIBIDIN
             <br />
             Patati et patata
             <br />

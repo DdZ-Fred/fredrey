@@ -613,7 +613,7 @@
 	        _react2.default.createElement(_Header2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_AboutMe2.default, null),
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
-	        _react2.default.createElement(_Works2.default, null),
+	        _react2.default.createElement(_Works2.default, { gitProfiles: this.state.gitProfiles }),
 	        _react2.default.createElement(_Contact2.default, {
 	          formModalOpened: this.state.contact.formModalOpened,
 	          innerModalType: this.state.contact.innerModalType,
@@ -758,12 +758,6 @@
 	      _react2.default.createElement(
 	        "span",
 	        { className: "date" },
-	        "Joined in 2016"
-	      ),
-	      _react2.default.createElement("br", null),
-	      _react2.default.createElement(
-	        "span",
-	        { className: "date" },
 	        _react2.default.createElement("i", { className: "pf flag" }),
 	        _react2.default.createElement("i", { className: "france flag" })
 	      )
@@ -863,7 +857,7 @@
 	        _react2.default.createElement(
 	          "p",
 	          { className: "content" },
-	          "This is about me youhouuuuu",
+	          "This is about me youhouuuuu  GIBIDIN",
 	          _react2.default.createElement("br", null),
 	          "Patati et patata",
 	          _react2.default.createElement("br", null),
@@ -962,16 +956,6 @@
 	    value: function componentDidMount() {
 	      // Star ratings init
 	      $('.ui.rating').rating('disable');
-
-	      // Superpower components - (onMouseOver/Hover)popups init
-	      $('.superpower').popup({
-	        inline: true,
-	        delay: {
-	          show: 100,
-	          hide: 100
-	        },
-	        hoverable: true
-	      });
 	    }
 	  }]);
 
@@ -1028,10 +1012,10 @@
 	  _createClass(Superpower, [{
 	    key: 'render',
 	    value: function render() {
+	      var selectorId = this.props.icon + 'Superpower';
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'item superpower',
-	          'data-html': this.props.comment },
+	        { id: selectorId, className: 'item superpower' },
 	        this.props.provider ? (0, _utils.generateIcon)(this.props.provider, this.props.icon) : '',
 	        _react2.default.createElement(
 	          'div',
@@ -1046,6 +1030,21 @@
 	            'data-max-rating': '5' })
 	        )
 	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // onMouseOver/Hover popup init
+	      var selector = '#' + this.props.icon + 'Superpower';
+	      $(selector).popup({
+	        inline: true,
+	        delay: {
+	          show: 100,
+	          hide: 100
+	        },
+	        hoverable: true,
+	        html: this.props.comment
+	      });
 	    }
 	  }]);
 
@@ -1293,7 +1292,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Works(props) {
+	var propTypes = {
+	  gitProfiles: _react.PropTypes.array.isRequired
+	};
+
+	function Works(_ref) {
+	  var gitProfiles = _ref.gitProfiles;
+
 	  return _react2.default.createElement(
 	    "div",
 	    { id: "works", className: "eight wide column" },
@@ -1317,6 +1322,17 @@
 	          null,
 	          "Please! check my works on:"
 	        ),
+	        gitProfiles.map(function (profile, idx) {
+	          return _react2.default.createElement(
+	            "a",
+	            {
+	              key: idx,
+	              className: "gitProfile",
+	              href: profile.url,
+	              target: "_blank" },
+	            _react2.default.createElement("i", { title: profile.name, className: "big " + profile.icon + " icon" })
+	          );
+	        }),
 	        _react2.default.createElement(
 	          "p",
 	          null,
@@ -1326,6 +1342,8 @@
 	    )
 	  );
 	}
+
+	Works.propTypes = propTypes;
 
 	exports.default = Works;
 
@@ -1344,10 +1362,6 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _SemanticIcon = __webpack_require__(19);
-
-	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
 	var _ContactFormModal = __webpack_require__(23);
 
@@ -1456,7 +1470,7 @@
 	                  {
 	                    href: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
 	                    target: '_blank' },
-	                  _react2.default.createElement(_SemanticIcon2.default, { icon: 'linkedin' })
+	                  _react2.default.createElement('i', { title: 'Linkedin', className: 'linkedin icon' })
 	                )
 	              )
 	            ),
@@ -2363,7 +2377,7 @@
 	    provider: 'devicons',
 	    icon: 'html5',
 	    strength: 4,
-	    comment: 'HTML is fine, that being said, I\'m not an expert ' + 'in CSS even though I usually get the job done anyway'
+	    comment: 'HTML is ok and I can manage CSS. Though, I often go on ' + '<a title="Mozilla Developer Network" href="https://developer.mozilla.org/en-US/" ' + 'target="_blank">MDN</a>' + ' when I need to learn about something that will help me solve a problem (...same with JS)'
 	  }, {
 	    name: 'JavaScript/ES6',
 	    provider: 'devicons',
@@ -2387,36 +2401,34 @@
 	    provider: 'devicons',
 	    icon: 'react',
 	    strength: 3,
-	    comment: '...React is magic ?'
+	    comment: 'Started working with React last year and now can\'t see myself working without it!'
 	  }, {
 	    name: 'Meteor',
 	    provider: 'devicons',
 	    icon: 'meteor',
 	    strength: 4,
-	    comment: 'Meteor is definitely the most magical!'
+	    comment: 'Have been using it for a little less than a year! ' + 'Please check my cosyquiz project on Bitbucket!'
 	  }, {
 	    name: 'MongoDB',
 	    provider: 'devicons',
 	    icon: 'mongodb',
 	    strength: 3,
-	    comment: 'Used a lot with Meteor and NodeJS/Express apps.\n                <br />Had been using Mongoose as well.'
+	    comment: 'Used a lot with Meteor and NodeJS/Express apps.' + '<br />I\'ve been using Mongoose as well.'
 	  }, {
 	    name: 'Webpack',
 	    provider: 'svg',
 	    icon: 'webpack',
 	    strength: 3,
-	    comment: 'Its use is quite new to me but I know the most common config properties.\n                <br />Has always been used with Babel so far.'
+	    comment: 'Its use is quite new to me but I know the most common config properties.\n        <br />It has always been used with Babel so far.'
 	  }],
 	  gitProfiles: [{
 	    name: 'GitHub',
 	    url: 'https://github.com/DdZ-Fred',
-	    provider: 'semantic',
 	    // Semantic UI: OR 'github alternate' OR 'github square'
 	    icon: 'github'
 	  }, {
 	    name: 'BitBucket',
 	    url: 'https://bitbucket.org/DdZ-Fred',
-	    provider: 'semantic',
 	    // Semantic UI: OR 'bitbucket square'
 	    icon: 'bitbucket'
 	  }],
