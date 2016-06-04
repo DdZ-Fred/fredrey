@@ -34,12 +34,13 @@ function renderPage(appHtml) {
     <!doctype html public="storage">
     <html>
       <meta charset=utf-8/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Frederic Rey - Front-end Web Developer</title>
-      <link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+      <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="/semantic/dist/semantic.min.css">
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
-      <link rel=stylesheet href=/index.css>
+      <link rel="stylesheet" href="/index.css">
       <script type="text/javascript">
         var onloadCallback = function() {
           console.log('reCAPTCHA IS ready!');
