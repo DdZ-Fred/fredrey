@@ -57,8 +57,7 @@ export default {
       provider: 'devicons',
       icon: 'mongodb',
       strength: 3,
-      comment: 'Used a lot with Meteor and NodeJS/Express apps.' +
-        '<br />I\'ve been using Mongoose as well.',
+      comment: 'Used a lot with Meteor and NodeJS/Express apps.',
     },
     {
       name: 'Webpack',

@@ -1,5 +1,9 @@
 const webpack = require('webpack');
 
+const babelLoader = [
+  'babel?presets[]=es2015,presets[]=react',
+];
+
 module.exports = {
   entry: './index.js',
 
@@ -13,10 +17,12 @@ module.exports = {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loaders: [
-          'react-hot',
-          'babel?presets[]=es2015,presets[]=react',
-        ],
+        loaders: process.env.NODE_ENV === 'production' ?
+          babelLoader :
+          [
+            'react-hot',
+            ...babelLoader,
+          ],
       },
       {
         test: /\.css$/,

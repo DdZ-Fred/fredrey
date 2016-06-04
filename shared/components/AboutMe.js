@@ -1,17 +1,13 @@
 import React, { PropTypes } from 'react';
 
-function AboutMe(props) {
+function AboutMe() {
   return (
     <div id="aboutMe" className="one column row">
       <div className="column">
         <div className="ui segment">
           <a className="ui blue ribbon label"><h3>About me</h3></a>
           <p className="content">
-            This is about me youhouuuuu  GIBIDIN
-            <br />
-            Patati et patata
-            <br />
-            Spiri sporinf et spati poinrf
+            This is about me youhouuuuu
           </p>
         </div>
       </div>

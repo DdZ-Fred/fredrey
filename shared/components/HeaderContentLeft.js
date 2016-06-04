@@ -1,16 +1,14 @@
 import React from 'react';
 
-function HeaderContentLeft(props) {
+function HeaderContentLeft() {
   return (
-    <div className="eight wide column">
-      <a className="header">
+    <div className="eight wide column headerContentLeftContainer">
+       <a className="header">
         <h3>Frederic Rey</h3>
       </a>
-      <div className="meta">
-        <span className="date">
-          <i className="pf flag"></i>
-          <i className="france flag"></i>
-        </span>
+      <div>
+        <i className="pf flag"></i>
+        <i className="france flag"></i>
       </div>
     </div>
   );
