@@ -36,7 +36,7 @@ function renderPage(appHtml) {
       <meta charset="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Frederic Rey - Front-end Web Developer</title>
-      <link rel="icon apple-touch-icon" href="/favicon.ico">
+      <link rel="icon shortcut apple-touch-icon" href="/favicon.ico" type="image/x-icon">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent+Marker" type="text/css">
       <link rel="stylesheet" href="/semantic/dist/semantic.min.css">
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
