@@ -138,6 +138,12 @@ class ContactFormModal extends React.Component {
         } else {
           // Modal is re-opening
           grecaptcha.reset();
+          // check if submit button is disabled
+          const isSubmitButtonDisabled = document.getElementById('submitContactFormBtn')
+            .classList.contains('disabled');
+          if (isSubmitButtonDisabled) {
+            document.getElementById('submitContactFormBtn').classList.remove('disabled');
+          }
         }
       },
       onHide: () => {

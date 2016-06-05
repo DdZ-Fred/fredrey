@@ -46,8 +46,10 @@ class Contact extends React.Component {
 
             <div id="contactTop">
               <p>We can get in touch by:</p>
-              <i title="Click to copy to clipboard!"
-                className="mail link icon"
+              <i
+                id="contactEmailIcon"
+                title="Click to copy to clipboard!"
+                className="blue mail link icon"
                 onClick={this.handleCopyEmailToClipboard}></i>
               <span id="contactEmail">Frederic.Rey.Pro@gmail.com</span>
               <br />
@@ -61,17 +63,19 @@ class Contact extends React.Component {
               </span>
             </div>
 
-            <h5 className="ui horizontal divider header">
+            <h5 className="ui blue horizontal divider header">
               <i className="small send icon"></i>
               Quick form
             </h5>
 
             <span id="contactBottom">
-              Click <button
-                      className="ui mini basic grey disabled button"
-                      onClick={this.handleOpenFormModal}>
-              here
-              </button> to contact me.
+              {'Click '}
+              <button
+                className="ui mini basic grey disabled button"
+                onClick={this.handleOpenFormModal}>
+                here
+              </button>
+              {' to contact me.'}
             </span>
           </div>
         </div>
@@ -95,6 +99,11 @@ class Contact extends React.Component {
       inline: true,
       target: '.mail.link.icon',
       content: 'Click the icon to copy the Email!',
+    });
+
+    document.getElementById('contactEmail').addEventListener('mouseenter', (e) => {
+      e.preventDefault();
+      $('#contactEmailIcon').transition('jiggle');
     });
   }
 

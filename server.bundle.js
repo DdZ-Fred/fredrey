@@ -715,8 +715,9 @@
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'description' },
+	                { className: 'centered description' },
 	                'Frederic is et patiti et patata...',
+	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
 	                  'a',
 	                  { 'data-scroll': true, href: '#aboutMe' },
@@ -1542,8 +1543,10 @@
 	                null,
 	                'We can get in touch by:'
 	              ),
-	              _react2.default.createElement('i', { title: 'Click to copy to clipboard!',
-	                className: 'mail link icon',
+	              _react2.default.createElement('i', {
+	                id: 'contactEmailIcon',
+	                title: 'Click to copy to clipboard!',
+	                className: 'blue mail link icon',
 	                onClick: this.handleCopyEmailToClipboard }),
 	              _react2.default.createElement(
 	                'span',
@@ -1566,7 +1569,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'h5',
-	              { className: 'ui horizontal divider header' },
+	              { className: 'ui blue horizontal divider header' },
 	              _react2.default.createElement('i', { className: 'small send icon' }),
 	              'Quick form'
 	            ),
@@ -1605,6 +1608,11 @@
 	        inline: true,
 	        target: '.mail.link.icon',
 	        content: 'Click the icon to copy the Email!'
+	      });
+
+	      document.getElementById('contactEmail').addEventListener('mouseenter', function (e) {
+	        e.preventDefault();
+	        $('#contactEmailIcon').transition('jiggle');
 	      });
 	    }
 	  }]);
@@ -1818,6 +1826,11 @@
 	          } else {
 	            // Modal is re-opening
 	            grecaptcha.reset();
+	            // check if submit button is disabled
+	            var isSubmitButtonDisabled = document.getElementById('submitContactFormBtn').classList.contains('disabled');
+	            if (isSubmitButtonDisabled) {
+	              document.getElementById('submitContactFormBtn').classList.remove('disabled');
+	            }
 	          }
 	        },
 	        onHide: function onHide() {
