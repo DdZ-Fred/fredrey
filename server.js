@@ -36,7 +36,8 @@ function renderPage(appHtml) {
       <meta charset=utf-8/>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Frederic Rey - Front-end Web Developer</title>
-      <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css">
+      <link rel="icon apple-touch-icon" href="/images/ddz.png">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent+Marker" type="text/css">
       <link rel="stylesheet" href="/semantic/dist/semantic.min.css">
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
@@ -50,8 +51,8 @@ function renderPage(appHtml) {
           contactMeBtn.classList.add('blue');
         }
       </script>
-      <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>
-      <div id=app>${appHtml}</div>
+      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+      <div id="app">${appHtml}</div>
       <script src="/jquery/jquery-2.2.3.min.js"></script>
       <script src="/semantic/dist/semantic.min.js"></script>
       <script src="/bundle.js"></script>
