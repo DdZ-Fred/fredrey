@@ -24,7 +24,6 @@ class ContactFormModal extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // console.log('ContactBackSide.js: handleSubmit()');
 
     const isValidForm = $('.ui.form.contactForm').form('is valid');
     // const captchaResponse = grecaptcha.getResponse();
@@ -133,6 +132,7 @@ class ContactFormModal extends React.Component {
           // Modal is showing for the first time
           grecaptcha.render('myRecaptcha', {
             sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
+            size: 'compact',
           });
           this.props.updateState();
         } else {

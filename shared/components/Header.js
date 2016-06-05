@@ -30,8 +30,9 @@ class Header extends React.Component {
                 <HeaderContentLeft />
                 <HeaderContentRight />
               </div>
-              <div className="description">
+              <div className="centered description">
                 Frederic is et patiti et patata...
+                <br />
                 <a data-scroll href="#aboutMe">find more</a>
               </div>
             </div>

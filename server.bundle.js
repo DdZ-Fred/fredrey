@@ -70,10 +70,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(32);
-	var path = __webpack_require__(33);
-	var bodyParser = __webpack_require__(34);
-	var compression = __webpack_require__(35);
+	var express = __webpack_require__(33);
+	var path = __webpack_require__(34);
+	var bodyParser = __webpack_require__(35);
+	var compression = __webpack_require__(36);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -539,27 +539,27 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _AboutMe = __webpack_require__(14);
+	var _AboutMe = __webpack_require__(15);
 
 	var _AboutMe2 = _interopRequireDefault(_AboutMe);
 
-	var _Superpowers = __webpack_require__(15);
+	var _Superpowers = __webpack_require__(16);
 
 	var _Superpowers2 = _interopRequireDefault(_Superpowers);
 
-	var _Works = __webpack_require__(21);
+	var _Works = __webpack_require__(22);
 
 	var _Works2 = _interopRequireDefault(_Works);
 
-	var _Contact = __webpack_require__(22);
+	var _Contact = __webpack_require__(23);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(29);
+	var _Footer = __webpack_require__(30);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(31);
+	var _appState = __webpack_require__(32);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -645,6 +645,8 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -659,65 +661,95 @@
 
 	var _HeaderContentRight2 = _interopRequireDefault(_HeaderContentRight);
 
+	var _animations = __webpack_require__(14);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
 	  superpowers: _react.PropTypes.array.isRequired
 	};
 
-	function Header(_ref) {
-	  var superpowers = _ref.superpowers;
+	var Header = function (_React$Component) {
+	  _inherits(Header, _React$Component);
 
-	  return _react2.default.createElement(
-	    'div',
-	    { id: 'header', className: 'three column row header-main-container' },
-	    _react2.default.createElement('div', { className: 'three wide column' }),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'nine wide column' },
-	      _react2.default.createElement(
+	  function Header() {
+	    _classCallCheck(this, Header);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+	  }
+
+	  _createClass(Header, [{
+	    key: 'render',
+	    value: function render() {
+	      var superpowers = this.props.superpowers;
+
+	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ui centered blue card' },
+	        { id: 'header', className: 'three column row header-main-container' },
+	        _react2.default.createElement('div', { className: 'three wide column' }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'image' },
-	          _react2.default.createElement('img', { src: 'https://avatars.githubusercontent.com/u/6842608?v=3', alt: '' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'ui grid content' },
+	          { className: 'nine wide column' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'two column row' },
-	            _react2.default.createElement(_HeaderContentLeft2.default, null),
-	            _react2.default.createElement(_HeaderContentRight2.default, null)
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'description' },
-	            'Frederic is et patiti et patata...',
+	            { className: 'ui centered blue card hidden' },
 	            _react2.default.createElement(
-	              'a',
-	              { 'data-scroll': true, href: '#aboutMe' },
-	              'find more'
+	              'div',
+	              { className: 'image' },
+	              _react2.default.createElement('img', { src: 'https://avatars.githubusercontent.com/u/6842608?v=3', alt: '' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'ui grid content' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'two column row' },
+	                _react2.default.createElement(_HeaderContentLeft2.default, null),
+	                _react2.default.createElement(_HeaderContentRight2.default, null)
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'description' },
+	                'Frederic is et patiti et patata...',
+	                _react2.default.createElement(
+	                  'a',
+	                  { 'data-scroll': true, href: '#aboutMe' },
+	                  'find more'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'extra content' },
+	              _react2.default.createElement(
+	                'a',
+	                { 'data-scroll': true, href: '#superpowers' },
+	                _react2.default.createElement('i', { className: 'lightning icon' }),
+	                superpowers.length + ' Superpowers'
+	              )
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'extra content' },
-	          _react2.default.createElement(
-	            'a',
-	            { 'data-scroll': true, href: '#superpowers' },
-	            superpowers.length,
-	            ' Superpowers'
-	          )
-	        )
-	      )
-	    ),
-	    _react2.default.createElement('div', { className: 'three wide column' })
-	  );
-	}
+	        _react2.default.createElement('div', { className: 'three wide column' })
+	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // $('.ui.blue.card')
+	      //   .transition('fly down in');
+	      (0, _animations.animHeader)();
+	    }
+	  }]);
+
+	  return Header;
+	}(_react2.default.Component);
 
 	Header.propTypes = propTypes;
 
@@ -739,10 +771,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function HeaderContentLeft(props) {
+	function HeaderContentLeft() {
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "eight wide column" },
+	    { className: "eight wide column headerContentLeftContainer" },
 	    _react2.default.createElement(
 	      "a",
 	      { className: "header" },
@@ -754,13 +786,9 @@
 	    ),
 	    _react2.default.createElement(
 	      "div",
-	      { className: "meta" },
-	      _react2.default.createElement(
-	        "span",
-	        { className: "date" },
-	        _react2.default.createElement("i", { className: "pf flag" }),
-	        _react2.default.createElement("i", { className: "france flag" })
-	      )
+	      null,
+	      _react2.default.createElement("i", { className: "pf flag" }),
+	      _react2.default.createElement("i", { className: "france flag" })
 	    )
 	  );
 	}
@@ -792,7 +820,7 @@
 	      { className: "row" },
 	      _react2.default.createElement(
 	        "h3",
-	        { className: "ui teal label" },
+	        { className: "ui teal label front hidden" },
 	        "FRONT"
 	      )
 	    ),
@@ -801,7 +829,7 @@
 	      { className: "row" },
 	      _react2.default.createElement(
 	        "h3",
-	        { className: "ui blue label" },
+	        { className: "ui blue label end hidden" },
 	        "END"
 	      )
 	    ),
@@ -810,7 +838,7 @@
 	      { className: "row" },
 	      _react2.default.createElement(
 	        "h3",
-	        { className: "ui teal label" },
+	        { className: "ui teal label dev hidden" },
 	        "DEV"
 	      )
 	    )
@@ -821,6 +849,72 @@
 
 /***/ },
 /* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.animHeader = animHeader;
+	function animHeaderFlagPF() {
+	  $('.headerContentLeftContainer .flag').transition({
+	    animation: 'flash',
+	    duration: 200
+	  });
+	}
+
+	function animHeaderDev() {
+	  $('.headerContentRightContainer .dev').transition({
+	    animation: 'slide right in',
+	    duration: 100,
+	    onComplete: function onComplete() {
+	      return animHeaderFlagPF();
+	    }
+	  });
+	}
+
+	function animHeaderEnd() {
+	  $('.headerContentRightContainer .end').transition({
+	    animation: 'slide right in',
+	    duration: 100,
+	    onComplete: function onComplete() {
+	      return animHeaderDev();
+	    }
+	  });
+	}
+
+	function animHeaderFront() {
+	  $('.headerContentRightContainer .front').transition({
+	    animation: 'slide right in',
+	    duration: 200,
+	    onComplete: function onComplete() {
+	      return animHeaderEnd();
+	    }
+	  });
+	}
+
+	function animHeaderFullName() {
+	  $('.headerContentLeftContainer h3').transition({
+	    animation: 'tada',
+	    duration: 500,
+	    onComplete: function onComplete() {
+	      return animHeaderFront();
+	    }
+	  });
+	}
+
+	function animHeader() {
+	  $('.ui.blue.card').transition({
+	    animation: 'fly down in',
+	    onComplete: function onComplete() {
+	      return animHeaderFullName();
+	    }
+	  });
+	}
+
+/***/ },
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -835,7 +929,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function AboutMe(props) {
+	function AboutMe() {
 	  return _react2.default.createElement(
 	    "div",
 	    { id: "aboutMe", className: "one column row" },
@@ -857,11 +951,7 @@
 	        _react2.default.createElement(
 	          "p",
 	          { className: "content" },
-	          "This is about me youhouuuuu  GIBIDIN",
-	          _react2.default.createElement("br", null),
-	          "Patati et patata",
-	          _react2.default.createElement("br", null),
-	          "Spiri sporinf et spati poinrf"
+	          "This is about me youhouuuuu"
 	        )
 	      )
 	    )
@@ -871,7 +961,7 @@
 	exports.default = AboutMe;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -886,7 +976,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Superpower = __webpack_require__(16);
+	var _Superpower = __webpack_require__(17);
 
 	var _Superpower2 = _interopRequireDefault(_Superpower);
 
@@ -967,7 +1057,7 @@
 	exports.default = Superpowers;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -982,7 +1072,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(18);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1056,7 +1146,7 @@
 	exports.default = Superpower;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1072,15 +1162,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DeviconsIcon = __webpack_require__(18);
+	var _DeviconsIcon = __webpack_require__(19);
 
 	var _DeviconsIcon2 = _interopRequireDefault(_DeviconsIcon);
 
-	var _SemanticIcon = __webpack_require__(19);
+	var _SemanticIcon = __webpack_require__(20);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
-	var _SvgIcon = __webpack_require__(20);
+	var _SvgIcon = __webpack_require__(21);
 
 	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
@@ -1179,7 +1269,7 @@
 	}
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1210,7 +1300,7 @@
 	exports.default = DeviconsIcon;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1241,7 +1331,7 @@
 	exports.default = SemanticIcon;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1277,7 +1367,7 @@
 	exports.default = SvgIcon;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1348,7 +1438,7 @@
 	exports.default = Works;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1363,15 +1453,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactFormModal = __webpack_require__(23);
+	var _ContactFormModal = __webpack_require__(24);
 
 	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
-	var _ContactInnerModalContainer = __webpack_require__(25);
+	var _ContactInnerModalContainer = __webpack_require__(26);
 
 	var _ContactInnerModalContainer2 = _interopRequireDefault(_ContactInnerModalContainer);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(18);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1527,7 +1617,7 @@
 	exports.default = Contact;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1542,9 +1632,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(18);
 
-	var _errorHandlers = __webpack_require__(24);
+	var _errorHandlers = __webpack_require__(25);
 
 	var _axios = __webpack_require__(1);
 
@@ -1588,7 +1678,6 @@
 	      var _this2 = this;
 
 	      e.preventDefault();
-	      // console.log('ContactBackSide.js: handleSubmit()');
 
 	      var isValidForm = $('.ui.form.contactForm').form('is valid');
 	      // const captchaResponse = grecaptcha.getResponse();
@@ -1722,7 +1811,8 @@
 	          if (!_this3.props.hasOpened) {
 	            // Modal is showing for the first time
 	            grecaptcha.render('myRecaptcha', {
-	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu'
+	              sitekey: '6LcVnx8TAAAAAH9NmpieueQZWJF-rpjMBlBfOpKu',
+	              size: 'compact'
 	            });
 	            _this3.props.updateState();
 	          } else {
@@ -1794,7 +1884,7 @@
 	exports.default = ContactFormModal;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1838,7 +1928,7 @@
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1851,15 +1941,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactInnerModalSuccess = __webpack_require__(26);
+	var _ContactInnerModalSuccess = __webpack_require__(27);
 
 	var _ContactInnerModalSuccess2 = _interopRequireDefault(_ContactInnerModalSuccess);
 
-	var _ContactInnerModalMissing = __webpack_require__(27);
+	var _ContactInnerModalMissing = __webpack_require__(28);
 
 	var _ContactInnerModalMissing2 = _interopRequireDefault(_ContactInnerModalMissing);
 
-	var _ContactInnerModalFailure = __webpack_require__(28);
+	var _ContactInnerModalFailure = __webpack_require__(29);
 
 	var _ContactInnerModalFailure2 = _interopRequireDefault(_ContactInnerModalFailure);
 
@@ -1905,7 +1995,7 @@
 	exports.default = ContactInnerModalContainer;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2000,7 +2090,7 @@
 	exports.default = ContactInnerModalSuccess;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2096,7 +2186,7 @@
 	exports.default = ContactInnerModalMissing;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2230,7 +2320,7 @@
 	exports.default = ContactInnerModalFailure;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2245,7 +2335,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(30);
+	var _FooterLinks = __webpack_require__(31);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -2314,7 +2404,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2363,7 +2453,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2413,7 +2503,7 @@
 	    provider: 'devicons',
 	    icon: 'mongodb',
 	    strength: 3,
-	    comment: 'Used a lot with Meteor and NodeJS/Express apps.' + '<br />I\'ve been using Mongoose as well.'
+	    comment: 'Used a lot with Meteor and NodeJS/Express apps.'
 	  }, {
 	    name: 'Webpack',
 	    provider: 'svg',
@@ -2461,25 +2551,25 @@
 	};
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");
