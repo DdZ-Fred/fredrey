@@ -228,6 +228,15 @@ body {
   padding-left: 4px;
 }
 
+#linkedinLine {
+  /*padding-bottom: 10px;*/
+}
+
+#linkedinIcon {
+  margin: 5px 5px 5px 5px;
+  vertical-align: middle;
+  min-height: 21px;
+}
 
 /*rgb(97, 174, 249)
 rgb(85, 249, 191)

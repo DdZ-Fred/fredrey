@@ -14,17 +14,18 @@ import SvgIcon from './components/icons/SvgIcon';
  */
 export function generateIcon(provider, icon) {
   switch (provider) {
-    case 'devicons':
+    case 'devicons': {
       return <DeviconsIcon icon={icon} />;
-
-    case 'semantic':
+    }
+    case 'semantic': {
       return <SemanticIcon icon={icon} />;
-
-    case 'svg':
+    }
+    case 'svg': {
       return <SvgIcon icon={icon} />;
-
-    default:
+    }
+    default: {
       return DeviconsIcon;
+    }
   }
 }
 

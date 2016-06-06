@@ -17,7 +17,6 @@ class Header extends React.Component {
       <div id="header" className="three column row header-main-container">
 
         <div className="three wide column">
-          {/* <i className="huge chevron left icon"></i>*/}
         </div>
 
         <div className="nine wide column">
@@ -30,11 +29,11 @@ class Header extends React.Component {
                 <HeaderContentLeft />
                 <HeaderContentRight />
               </div>
-              <div className="centered description">
+              {/* <div className="description">
                 Frederic is et patiti et patata...
                 <br />
                 <a data-scroll href="#aboutMe">find more</a>
-              </div>
+              </div>*/}
             </div>
             <div className="extra content">
               <a data-scroll href="#superpowers">
@@ -46,7 +45,6 @@ class Header extends React.Component {
         </div>
 
         <div className="three wide column">
-          {/* <i className="huge chevron right icon"></i>*/}
         </div>
 
       </div>

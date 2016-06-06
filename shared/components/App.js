@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Header from './Header';
-import AboutMe from './AboutMe';
+// import AboutMe from './AboutMe';
 import Superpowers from './Superpowers';
 import Works from './Works';
 import Contact from './Contact';
@@ -32,11 +32,13 @@ class App extends React.Component {
     });
   }
 
+// TODO:0 Prepare AboutMe component text
+// TODO:10 Re-Add AboutMe component
   render() {
     return (
       <div className="ui centered stackable grid container">
         <Header superpowers={this.state.superpowers} />
-        <AboutMe />
+        {/* <AboutMe />*/}
         <Superpowers superpowers={this.state.superpowers}/>
         <Works gitProfiles={this.state.gitProfiles}/>
         <Contact

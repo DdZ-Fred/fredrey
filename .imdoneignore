@@ -1,0 +1,7 @@
+node_modules
+public/devicons
+public/jquery
+public/semantic
+public/svg
+public/bundle.js
+server.bundle.js

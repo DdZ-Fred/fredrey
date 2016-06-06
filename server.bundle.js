@@ -70,10 +70,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(33);
-	var path = __webpack_require__(34);
-	var bodyParser = __webpack_require__(35);
-	var compression = __webpack_require__(36);
+	var express = __webpack_require__(32);
+	var path = __webpack_require__(33);
+	var bodyParser = __webpack_require__(34);
+	var compression = __webpack_require__(35);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -539,27 +539,23 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _AboutMe = __webpack_require__(15);
-
-	var _AboutMe2 = _interopRequireDefault(_AboutMe);
-
-	var _Superpowers = __webpack_require__(16);
+	var _Superpowers = __webpack_require__(15);
 
 	var _Superpowers2 = _interopRequireDefault(_Superpowers);
 
-	var _Works = __webpack_require__(22);
+	var _Works = __webpack_require__(21);
 
 	var _Works2 = _interopRequireDefault(_Works);
 
-	var _Contact = __webpack_require__(23);
+	var _Contact = __webpack_require__(22);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(30);
+	var _Footer = __webpack_require__(29);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(32);
+	var _appState = __webpack_require__(31);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -570,6 +566,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import AboutMe from './AboutMe';
+
 
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -604,6 +602,10 @@
 	        contact: newContact
 	      });
 	    }
+
+	    // TODO:0 Prepare AboutMe component text
+	    // TODO:10 Re-Add AboutMe component
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -611,7 +613,6 @@
 	        'div',
 	        { className: 'ui centered stackable grid container' },
 	        _react2.default.createElement(_Header2.default, { superpowers: this.state.superpowers }),
-	        _react2.default.createElement(_AboutMe2.default, null),
 	        _react2.default.createElement(_Superpowers2.default, { superpowers: this.state.superpowers }),
 	        _react2.default.createElement(_Works2.default, { gitProfiles: this.state.gitProfiles }),
 	        _react2.default.createElement(_Contact2.default, {
@@ -918,53 +919,6 @@
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function AboutMe() {
-	  return _react2.default.createElement(
-	    "div",
-	    { id: "aboutMe", className: "one column row" },
-	    _react2.default.createElement(
-	      "div",
-	      { className: "column" },
-	      _react2.default.createElement(
-	        "div",
-	        { className: "ui segment" },
-	        _react2.default.createElement(
-	          "a",
-	          { className: "ui blue ribbon label" },
-	          _react2.default.createElement(
-	            "h3",
-	            null,
-	            "About me"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          { className: "content" },
-	          "This is about me youhouuuuu"
-	        )
-	      )
-	    )
-	  );
-	}
-
-	exports.default = AboutMe;
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -977,7 +931,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Superpower = __webpack_require__(17);
+	var _Superpower = __webpack_require__(16);
 
 	var _Superpower2 = _interopRequireDefault(_Superpower);
 
@@ -1058,7 +1012,7 @@
 	exports.default = Superpowers;
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1073,7 +1027,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(18);
+	var _utils = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1147,7 +1101,7 @@
 	exports.default = Superpower;
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1163,15 +1117,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DeviconsIcon = __webpack_require__(19);
+	var _DeviconsIcon = __webpack_require__(18);
 
 	var _DeviconsIcon2 = _interopRequireDefault(_DeviconsIcon);
 
-	var _SemanticIcon = __webpack_require__(20);
+	var _SemanticIcon = __webpack_require__(19);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
-	var _SvgIcon = __webpack_require__(21);
+	var _SvgIcon = __webpack_require__(20);
 
 	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
@@ -1270,7 +1224,7 @@
 	}
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1301,7 +1255,7 @@
 	exports.default = DeviconsIcon;
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1332,7 +1286,7 @@
 	exports.default = SemanticIcon;
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1368,7 +1322,7 @@
 	exports.default = SvgIcon;
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1439,7 +1393,7 @@
 	exports.default = Works;
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1454,15 +1408,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactFormModal = __webpack_require__(24);
+	var _ContactFormModal = __webpack_require__(23);
 
 	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
-	var _ContactInnerModalContainer = __webpack_require__(26);
+	var _ContactInnerModalContainer = __webpack_require__(25);
 
 	var _ContactInnerModalContainer2 = _interopRequireDefault(_ContactInnerModalContainer);
 
-	var _utils = __webpack_require__(18);
+	var _utils = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1625,7 +1579,7 @@
 	exports.default = Contact;
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1640,9 +1594,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(18);
+	var _utils = __webpack_require__(17);
 
-	var _errorHandlers = __webpack_require__(25);
+	var _errorHandlers = __webpack_require__(24);
 
 	var _axios = __webpack_require__(1);
 
@@ -1897,7 +1851,7 @@
 	exports.default = ContactFormModal;
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1941,7 +1895,7 @@
 	}
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1954,15 +1908,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactInnerModalSuccess = __webpack_require__(27);
+	var _ContactInnerModalSuccess = __webpack_require__(26);
 
 	var _ContactInnerModalSuccess2 = _interopRequireDefault(_ContactInnerModalSuccess);
 
-	var _ContactInnerModalMissing = __webpack_require__(28);
+	var _ContactInnerModalMissing = __webpack_require__(27);
 
 	var _ContactInnerModalMissing2 = _interopRequireDefault(_ContactInnerModalMissing);
 
-	var _ContactInnerModalFailure = __webpack_require__(29);
+	var _ContactInnerModalFailure = __webpack_require__(28);
 
 	var _ContactInnerModalFailure2 = _interopRequireDefault(_ContactInnerModalFailure);
 
@@ -2008,7 +1962,7 @@
 	exports.default = ContactInnerModalContainer;
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2103,7 +2057,7 @@
 	exports.default = ContactInnerModalSuccess;
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2199,7 +2153,7 @@
 	exports.default = ContactInnerModalMissing;
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2333,7 +2287,7 @@
 	exports.default = ContactInnerModalFailure;
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2348,7 +2302,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(31);
+	var _FooterLinks = __webpack_require__(30);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -2417,7 +2371,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2466,7 +2420,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2564,25 +2518,25 @@
 	};
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

@@ -5,7 +5,7 @@ import smoothScroll from 'smooth-scroll';
 import routes from './shared/routes';
 require('es6-promise').polyfill();
 
-
+// TODO:20 Do a custom Semantic-UI build to lighten the App
 render(
   <Router
     routes={routes}
