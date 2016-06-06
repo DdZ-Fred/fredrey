@@ -14,12 +14,9 @@ class Header extends React.Component {
   render() {
     const { superpowers } = this.props;
     return (
-      <div id="header" className="three column row header-main-container">
+      <div id="header" className="row header-main-container">
 
-        <div className="three wide column">
-        </div>
-
-        <div className="nine wide column">
+        <div className="column">
           <div className="ui centered blue card hidden">
             <div className="image">
               <img src="https://avatars.githubusercontent.com/u/6842608?v=3" alt=""/>
@@ -42,9 +39,6 @@ class Header extends React.Component {
               </a>
             </div>
           </div>
-        </div>
-
-        <div className="three wide column">
         </div>
 
       </div>

@@ -70,7 +70,19 @@ body {
   position: relative;
 }
 
+.header-main-container .ui.grid.content .two.column.row {
+  padding-bottom: 0px;
+}
+
 .headerContentLeftContainer {
+
+}
+
+.headerContentLeftContainer .meta {
+  margin-top: 8px;
+}
+
+#myFlags {
 
 }
 
