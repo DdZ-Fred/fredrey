@@ -1,4 +1,4 @@
-// TODO:40 Re-Add AboutMe data in footerLinks state
+// TODO:60 Re-Add AboutMe data in footerLinks state
 export default {
   superpowers: [
     {

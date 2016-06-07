@@ -32,8 +32,8 @@ class App extends React.Component {
     });
   }
 
-// TODO:30 Prepare AboutMe component text
-// TODO:50 Re-Add AboutMe component
+// TODO:50 Prepare AboutMe component text
+// TODO:70 Re-Add AboutMe component
   render() {
     return (
       <div className="ui centered stackable grid container">

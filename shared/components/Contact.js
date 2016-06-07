@@ -16,6 +16,7 @@ class Contact extends React.Component {
   handleCopyEmailToClipboard() {
     console.log('Contact.js: handleCopyEmailToClipboard - Email icon pushed');
 
+    // #TODO:30 Add alternative code for when the copy doesn't work
     if (copyToClipboard('Frederic.Rey.Pro@gmail.com')) {
       // Show copy success message
       console.log('Copy to clipboard Succeeded');
