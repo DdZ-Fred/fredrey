@@ -692,11 +692,10 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'header', className: 'three column row header-main-container' },
-	        _react2.default.createElement('div', { className: 'three wide column' }),
+	        { id: 'header', className: 'row header-main-container' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'nine wide column' },
+	          { className: 'column' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'ui centered blue card hidden' },
@@ -713,17 +712,6 @@
 	                { className: 'two column row' },
 	                _react2.default.createElement(_HeaderContentLeft2.default, null),
 	                _react2.default.createElement(_HeaderContentRight2.default, null)
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'centered description' },
-	                'Frederic is et patiti et patata...',
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement(
-	                  'a',
-	                  { 'data-scroll': true, href: '#aboutMe' },
-	                  'find more'
-	                )
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -737,8 +725,7 @@
 	              )
 	            )
 	          )
-	        ),
-	        _react2.default.createElement('div', { className: 'three wide column' })
+	        )
 	      );
 	    }
 	  }, {
@@ -788,9 +775,24 @@
 	    ),
 	    _react2.default.createElement(
 	      "div",
-	      null,
-	      _react2.default.createElement("i", { className: "pf flag" }),
-	      _react2.default.createElement("i", { className: "france flag" })
+	      { className: "meta" },
+	      _react2.default.createElement("i", { className: "marker icon" }),
+	      _react2.default.createElement(
+	        "span",
+	        { className: "sub header" },
+	        _react2.default.createElement(
+	          "small",
+	          null,
+	          "London, UK"
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "pre",
+	      { id: "myFlags" },
+	      ' ',
+	      _react2.default.createElement("i", { title: "Born and raised in Tahiti - French Polynesia", className: "pf flag" }),
+	      _react2.default.createElement("i", { title: "Yep! I speak French! comment ca va ?", className: "fr flag" })
 	    )
 	  );
 	}
@@ -1142,16 +1144,21 @@
 	function generateIcon(provider, icon) {
 	  switch (provider) {
 	    case 'devicons':
-	      return _react2.default.createElement(_DeviconsIcon2.default, { icon: icon });
-
+	      {
+	        return _react2.default.createElement(_DeviconsIcon2.default, { icon: icon });
+	      }
 	    case 'semantic':
-	      return _react2.default.createElement(_SemanticIcon2.default, { icon: icon });
-
+	      {
+	        return _react2.default.createElement(_SemanticIcon2.default, { icon: icon });
+	      }
 	    case 'svg':
-	      return _react2.default.createElement(_SvgIcon2.default, { icon: icon });
-
+	      {
+	        return _react2.default.createElement(_SvgIcon2.default, { icon: icon });
+	      }
 	    default:
-	      return _DeviconsIcon2.default;
+	      {
+	        return _DeviconsIcon2.default;
+	      }
 	  }
 	}
 
@@ -1308,7 +1315,7 @@
 	function SvgIcon(_ref) {
 	  var icon = _ref.icon;
 
-	  var iconSrc = '/svg/' + icon + '.svg';
+	  var iconSrc = '/img/svg/' + icon + '.svg';
 	  var iconClass = icon + ' svgIcon';
 	  return _react2.default.createElement('img', {
 	    className: iconClass,
@@ -1468,6 +1475,9 @@
 	      e.preventDefault();
 	      $('#contactFormModal').modal('hide');
 	    }
+
+	    // DONE:0 Update LinkedIn icon (Rendering issue on Chrome)
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -1510,15 +1520,16 @@
 	              _react2.default.createElement('br', null),
 	              _react2.default.createElement(
 	                'span',
-	                null,
-	                'or directly on',
+	                { id: 'linkedinLine' },
+	                'or via my',
 	                _react2.default.createElement(
 	                  'a',
 	                  {
 	                    href: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
 	                    target: '_blank' },
-	                  _react2.default.createElement('i', { title: 'Linkedin', className: 'linkedin icon' })
-	                )
+	                  _react2.default.createElement('img', { id: 'linkedinIcon', src: '/img/png/linkedin.png', alt: 'LinkedIn' })
+	                ),
+	                ' profile'
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -2494,11 +2505,13 @@
 	    innerModalType: 'success',
 	    innerModalContent: 'Your message has been sent! ' + 'I will answer as soon as I can!'
 	  },
-	  footerLinks: [{
-	    title: 'AboutMe',
-	    anchor: 'aboutMe',
-	    icon: ''
-	  }, {
+	  footerLinks: [
+	  // {
+	  //   title: 'AboutMe',
+	  //   anchor: 'aboutMe',
+	  //   icon: '',
+	  // },
+	  {
 	    title: 'Superpowers',
 	    anchor: 'superpowers',
 	    icon: ''

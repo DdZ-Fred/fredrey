@@ -1,3 +1,4 @@
+// TODO:40 Re-Add AboutMe data in footerLinks state
 export default {
   superpowers: [
     {
@@ -90,11 +91,11 @@ export default {
       'I will answer as soon as I can!',
   },
   footerLinks: [
-    {
-      title: 'AboutMe',
-      anchor: 'aboutMe',
-      icon: '',
-    },
+    // {
+    //   title: 'AboutMe',
+    //   anchor: 'aboutMe',
+    //   icon: '',
+    // },
     {
       title: 'Superpowers',
       anchor: 'superpowers',

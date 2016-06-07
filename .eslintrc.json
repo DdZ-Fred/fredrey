@@ -18,5 +18,8 @@
   "rules" : {
     "no-console": 0,
     "dot-notation": 1
+  },
+  "globals": {
+    "grecaptcha": true
   }
 }

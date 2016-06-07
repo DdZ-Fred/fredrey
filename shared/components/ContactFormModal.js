@@ -1,6 +1,3 @@
-/*
-  global grecaptcha
- */
 import React, { PropTypes } from 'react';
 import { resetSemanticInvalidForm } from '../utils';
 import { handleContactMeErrors } from '../../client/errorHandlers';
@@ -16,6 +13,9 @@ const propTypes = {
   updateInnerModalState: PropTypes.func.isRequired,
 };
 
+// TODO:10 Override the height of the Modal so that the potentially hidden content can be seen by scrolling.
+// OS and browsers sometimes profide features that hide partly
+// the content (Ex: Chrome URL bar, iOS bottom bar...) */
 class ContactFormModal extends React.Component {
   constructor(props) {
     super(props);
