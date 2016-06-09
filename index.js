@@ -6,6 +6,7 @@ import routes from './shared/routes';
 require('es6-promise').polyfill();
 
 // TODO:0 Do a custom Semantic-UI build to lighten the App
+// DONE:0 Replace LinkedIn image alt-property by something else. AdBlock(Plus) block images with alt equal to LinkedIn
 render(
   <Router
     routes={routes}

@@ -70,6 +70,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// #TODO:20 Test Heroku Free SSL Beta
+	// https://blog.heroku.com/archives/2016/5/18/announcing_heroku_free_ssl_beta_and_flexible_dyno_hours
 	var express = __webpack_require__(32);
 	var path = __webpack_require__(33);
 	var bodyParser = __webpack_require__(34);
@@ -603,8 +605,8 @@
 	      });
 	    }
 
-	    // TODO:0 Prepare AboutMe component text
-	    // TODO:10 Re-Add AboutMe component
+	    // TODO:50 Prepare AboutMe component text
+	    // TODO:70 Re-Add AboutMe component
 
 	  }, {
 	    key: 'render',
@@ -1455,6 +1457,7 @@
 	    value: function handleCopyEmailToClipboard() {
 	      console.log('Contact.js: handleCopyEmailToClipboard - Email icon pushed');
 
+	      // #TODO:30 Add alternative code for when the copy doesn't work
 	      if ((0, _utils.copyToClipboard)('Frederic.Rey.Pro@gmail.com')) {
 	        // Show copy success message
 	        console.log('Copy to clipboard Succeeded');
@@ -1527,7 +1530,7 @@
 	                  {
 	                    href: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
 	                    target: '_blank' },
-	                  _react2.default.createElement('img', { id: 'linkedinIcon', src: '/img/png/linkedin.png', alt: 'LinkedIn' })
+	                  _react2.default.createElement('img', { id: 'linkedinIcon', src: '/img/png/link-edin.png', alt: 'LinkedIn' })
 	                ),
 	                ' profile'
 	              )
@@ -1619,10 +1622,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 global grecaptcha
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
 	  hasOpened: _react.PropTypes.bool.isRequired,
@@ -1632,6 +1632,10 @@
 	  innerModalContent: _react.PropTypes.string.isRequired,
 	  updateInnerModalState: _react.PropTypes.func.isRequired
 	};
+
+	// TODO:10 Override the height of the Modal so that the potentially hidden content can be seen by scrolling.
+	// OS and browsers sometimes profide features that hide partly
+	// the content (Ex: Chrome URL bar, iOS bottom bar...) */
 
 	var ContactFormModal = function (_React$Component) {
 	  _inherits(ContactFormModal, _React$Component);
@@ -2439,6 +2443,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	// TODO:60 Re-Add AboutMe data in footerLinks state
 	exports.default = {
 	  superpowers: [{
 	    name: 'HTML/CSS',

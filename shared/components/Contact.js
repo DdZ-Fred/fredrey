@@ -36,7 +36,7 @@ class Contact extends React.Component {
     $('#contactFormModal').modal('hide');
   }
 
-  // DONE:0 Update LinkedIn icon (Rendering issue on Chrome)
+  // DONE:10 Update LinkedIn icon (Rendering issue on Chrome)
   render() {
     return (
       <div id="contact" className="eight wide column">
@@ -60,7 +60,7 @@ class Contact extends React.Component {
                 <a
                   href="https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299"
                   target="_blank">
-                  <img id="linkedinIcon" src="/img/png/linkedin.png" alt="LinkedIn"/>
+                  <img id="linkedinIcon" src="/img/png/link-edin.png" alt="LinkedIn Profile"/>
                 </a>
                 {' profile'}
               </span>
