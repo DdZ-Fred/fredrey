@@ -42,7 +42,7 @@ function animHeaderFullName() {
     });
 }
 
-export function animHeader() {
+function animHeader() {
   $('.ui.blue.card')
     .transition({
       animation: 'fly down in',
