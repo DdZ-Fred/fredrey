@@ -44,8 +44,6 @@ class Header extends React.Component {
     );
   }
 
-  componentDidMount() {
-  }
 }
 
 Header.propTypes = propTypes;
