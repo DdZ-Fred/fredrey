@@ -16,7 +16,7 @@ class Header extends React.Component {
       <div id="header" className="row header-main-container">
 
         <div className="column">
-          <div className="ui centered blue card hidden">
+          <div className="ui centered blue card">
             <div className="image">
               <img src="https://avatars.githubusercontent.com/u/6842608?v=3" alt=""/>
             </div>
