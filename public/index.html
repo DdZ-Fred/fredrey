@@ -22,58 +22,12 @@
         contactMeBtn.classList.remove('disabled');
         contactMeBtn.classList.add('blue');
       }
-      //
-      // var animHeaderFlagPF = function () {
-      //   $('.headerContentLeftContainer .flag')
-      //     .transition({
-      //       animation: 'flash',
-      //       duration: 200,
-      //     });
-      // };
-      //
-      // var animHeaderDev = function () {
-      //   $('.headerContentRightContainer .dev')
-      //     .transition({
-      //       animation: 'slide right in',
-      //       duration: 100,
-      //       onComplete: () => animHeaderFlagPF(),
-      //     });
-      // };
-      //
-      // var animHeaderEnd = function () {
-      //   $('.headerContentRightContainer .end')
-      //     .transition({
-      //       animation: 'slide right in',
-      //       duration: 100,
-      //       onComplete: () => animHeaderDev(),
-      //     });
-      // };
-      //
-      // var animHeaderFront = function () {
-      //   $('.headerContentRightContainer .front')
-      //     .transition({
-      //       animation: 'slide right in',
-      //       duration: 200,
-      //       onComplete: () => animHeaderEnd(),
-      //     });
-      // };
-      //
-      // var animHeaderFullName = function () {
-      //   $('.headerContentLeftContainer h3')
-      //     .transition({
-      //       animation: 'tada',
-      //       duration: 500,
-      //       onComplete: () => animHeaderFront(),
-      //     });
-      // };
-      //
-      // var animHeader = function () {
-      //   $('.ui.blue.card')
-      //     .transition({
-      //       animation: 'fly down in',
-      //       onComplete: () => animHeaderFullName(),
-      //     });
-      // };
+
+      window.onload = function() {
+        console.log('Window loaded! Executing animations...');
+        animHeader();
+      }
+
     </script>
     <script
       src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
@@ -84,9 +38,5 @@
     <script src="/jquery/jquery-2.2.3.min.js"></script>
     <script src="/semantic/dist/semantic.min.js"></script>
     <script src="/bundle.js"></script>
-    <script type="text/javascript">
-      // To execute when everything is loaded
-      animHeader();
-    </script>
   </body>
 </html>
