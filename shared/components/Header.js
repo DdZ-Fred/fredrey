@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import HeaderContentLeft from './HeaderContentLeft';
 import HeaderContentRight from './HeaderContentRight';
-import { animHeader } from '../animations';
 
 
 const propTypes = {
@@ -46,9 +45,6 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    // $('.ui.blue.card')
-    //   .transition('fly down in');
-    animHeader();
   }
 }
 
