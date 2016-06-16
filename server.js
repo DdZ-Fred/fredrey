@@ -46,6 +46,7 @@ function renderPage(appHtml) {
       <link rel="stylesheet" href="/devicons/css/devicons.min.css">
       <link rel="stylesheet" href="/common.css">
       <link rel="stylesheet" href="/index.css">
+      <script src="/animations.js"></script>
       <script type="text/javascript">
         var onloadCallback = function() {
           console.log('reCAPTCHA IS ready!');
@@ -53,6 +54,10 @@ function renderPage(appHtml) {
           contactMeBtn.classList.remove('grey');
           contactMeBtn.classList.remove('disabled');
           contactMeBtn.classList.add('blue');
+        }
+        window.onload = function() {
+          console.log('Window loaded! Executing animations...');
+          animHeader();
         }
       </script>
       <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>

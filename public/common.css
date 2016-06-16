@@ -70,9 +70,9 @@ body {
   position: relative;
 }
 
-.ui.centered.blue.card {
+/*.ui.centered.blue.card {
   display: none;
-}
+}*/
 
 .header-main-container .ui.grid.content .two.column.row {
   padding-bottom: 0px;
