@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { resetSemanticInvalidForm } from '../utils';
-import { handleContactMeErrors } from '../../client/errorHandlers';
+import { handleContactMeErrors } from '../errorHandlers';
 import axios from 'axios';
 
 

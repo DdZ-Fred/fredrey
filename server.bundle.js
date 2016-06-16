@@ -72,10 +72,10 @@
 
 	// #TODO:20 Test Heroku Free SSL Beta
 	// https://blog.heroku.com/archives/2016/5/18/announcing_heroku_free_ssl_beta_and_flexible_dyno_hours
-	var express = __webpack_require__(32);
-	var path = __webpack_require__(33);
-	var bodyParser = __webpack_require__(34);
-	var compression = __webpack_require__(35);
+	var express = __webpack_require__(31);
+	var path = __webpack_require__(32);
+	var bodyParser = __webpack_require__(33);
+	var compression = __webpack_require__(34);
 	// Allows to render our app to an html string
 
 	// Alows to match the url to route and then render
@@ -96,7 +96,7 @@
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	function renderPage(appHtml) {
-	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset="utf-8"/>\n      <meta name="viewport" content="width=device-width, initial-scale=1">\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link rel="icon" href="/favicon.ico" type="image/x-icon">\n      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">\n      <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent+Marker" type="text/css">\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel="stylesheet" href="/index.css">\n      <script type="text/javascript">\n        var onloadCallback = function() {\n          console.log(\'reCAPTCHA IS ready!\');\n          var contactMeBtn = document.querySelector(\'#contactBottom .grey.disabled.button\');\n          contactMeBtn.classList.remove(\'grey\');\n          contactMeBtn.classList.remove(\'disabled\');\n          contactMeBtn.classList.add(\'blue\');\n        }\n      </script>\n      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>\n      <div id="app">' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
+	  return '\n    <!doctype html public="storage">\n    <html>\n      <meta charset="utf-8"/>\n      <meta name="viewport" content="width=device-width, initial-scale=1">\n      <title>Frederic Rey - Front-end Web Developer</title>\n      <link rel="icon" href="/favicon.ico" type="image/x-icon">\n      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">\n      <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent+Marker" type="text/css">\n      <link rel="stylesheet" href="/semantic/dist/semantic.min.css">\n      <link rel="stylesheet" href="/devicons/css/devicons.min.css">\n      <link rel="stylesheet" href="/common.css">\n      <link rel="stylesheet" href="/index.css">\n      <script src="/animations.js"></script>\n      <script type="text/javascript">\n        var onloadCallback = function() {\n          console.log(\'reCAPTCHA IS ready!\');\n          var contactMeBtn = document.querySelector(\'#contactBottom .grey.disabled.button\');\n          contactMeBtn.classList.remove(\'grey\');\n          contactMeBtn.classList.remove(\'disabled\');\n          contactMeBtn.classList.add(\'blue\');\n        }\n        window.onload = function() {\n          console.log(\'Window loaded! Executing animations...\');\n          animHeader();\n        }\n      </script>\n      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>\n      <div id="app">' + appHtml + '</div>\n      <script src="/jquery/jquery-2.2.3.min.js"></script>\n      <script src="/semantic/dist/semantic.min.js"></script>\n      <script src="/bundle.js"></script>\n  ';
 	}
 
 	app.post('/contactMe', function (req, res) {
@@ -541,23 +541,23 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Superpowers = __webpack_require__(15);
+	var _Superpowers = __webpack_require__(14);
 
 	var _Superpowers2 = _interopRequireDefault(_Superpowers);
 
-	var _Works = __webpack_require__(21);
+	var _Works = __webpack_require__(20);
 
 	var _Works2 = _interopRequireDefault(_Works);
 
-	var _Contact = __webpack_require__(22);
+	var _Contact = __webpack_require__(21);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Footer = __webpack_require__(29);
+	var _Footer = __webpack_require__(28);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _appState = __webpack_require__(31);
+	var _appState = __webpack_require__(30);
 
 	var _appState2 = _interopRequireDefault(_appState);
 
@@ -664,8 +664,6 @@
 
 	var _HeaderContentRight2 = _interopRequireDefault(_HeaderContentRight);
 
-	var _animations = __webpack_require__(14);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -700,7 +698,7 @@
 	          { className: 'column' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'ui centered blue card hidden' },
+	            { className: 'ui centered blue card' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'image' },
@@ -729,13 +727,6 @@
 	          )
 	        )
 	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // $('.ui.blue.card')
-	      //   .transition('fly down in');
-	      (0, _animations.animHeader)();
 	    }
 	  }]);
 
@@ -855,72 +846,6 @@
 
 /***/ },
 /* 14 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.animHeader = animHeader;
-	function animHeaderFlagPF() {
-	  $('.headerContentLeftContainer .flag').transition({
-	    animation: 'flash',
-	    duration: 200
-	  });
-	}
-
-	function animHeaderDev() {
-	  $('.headerContentRightContainer .dev').transition({
-	    animation: 'slide right in',
-	    duration: 100,
-	    onComplete: function onComplete() {
-	      return animHeaderFlagPF();
-	    }
-	  });
-	}
-
-	function animHeaderEnd() {
-	  $('.headerContentRightContainer .end').transition({
-	    animation: 'slide right in',
-	    duration: 100,
-	    onComplete: function onComplete() {
-	      return animHeaderDev();
-	    }
-	  });
-	}
-
-	function animHeaderFront() {
-	  $('.headerContentRightContainer .front').transition({
-	    animation: 'slide right in',
-	    duration: 200,
-	    onComplete: function onComplete() {
-	      return animHeaderEnd();
-	    }
-	  });
-	}
-
-	function animHeaderFullName() {
-	  $('.headerContentLeftContainer h3').transition({
-	    animation: 'tada',
-	    duration: 500,
-	    onComplete: function onComplete() {
-	      return animHeaderFront();
-	    }
-	  });
-	}
-
-	function animHeader() {
-	  $('.ui.blue.card').transition({
-	    animation: 'fly down in',
-	    onComplete: function onComplete() {
-	      return animHeaderFullName();
-	    }
-	  });
-	}
-
-/***/ },
-/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -935,7 +860,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Superpower = __webpack_require__(16);
+	var _Superpower = __webpack_require__(15);
 
 	var _Superpower2 = _interopRequireDefault(_Superpower);
 
@@ -1016,7 +941,7 @@
 	exports.default = Superpowers;
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1031,7 +956,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(16);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1105,7 +1030,7 @@
 	exports.default = Superpower;
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1121,15 +1046,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DeviconsIcon = __webpack_require__(18);
+	var _DeviconsIcon = __webpack_require__(17);
 
 	var _DeviconsIcon2 = _interopRequireDefault(_DeviconsIcon);
 
-	var _SemanticIcon = __webpack_require__(19);
+	var _SemanticIcon = __webpack_require__(18);
 
 	var _SemanticIcon2 = _interopRequireDefault(_SemanticIcon);
 
-	var _SvgIcon = __webpack_require__(20);
+	var _SvgIcon = __webpack_require__(19);
 
 	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
@@ -1233,7 +1158,7 @@
 	}
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1264,7 +1189,7 @@
 	exports.default = DeviconsIcon;
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1295,7 +1220,7 @@
 	exports.default = SemanticIcon;
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1331,7 +1256,7 @@
 	exports.default = SvgIcon;
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1402,7 +1327,7 @@
 	exports.default = Works;
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1417,15 +1342,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactFormModal = __webpack_require__(23);
+	var _ContactFormModal = __webpack_require__(22);
 
 	var _ContactFormModal2 = _interopRequireDefault(_ContactFormModal);
 
-	var _ContactInnerModalContainer = __webpack_require__(25);
+	var _ContactInnerModalContainer = __webpack_require__(24);
 
 	var _ContactInnerModalContainer2 = _interopRequireDefault(_ContactInnerModalContainer);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(16);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1479,7 +1404,7 @@
 	      $('#contactFormModal').modal('hide');
 	    }
 
-	    // DONE:0 Update LinkedIn icon (Rendering issue on Chrome)
+	    // DONE:10 Update LinkedIn icon (Rendering issue on Chrome)
 
 	  }, {
 	    key: 'render',
@@ -1530,7 +1455,7 @@
 	                  {
 	                    href: 'https://www.linkedin.com/in/fr%C3%A9d%C3%A9ric-rey-a2928299',
 	                    target: '_blank' },
-	                  _react2.default.createElement('img', { id: 'linkedinIcon', src: '/img/png/link-edin.png', alt: 'LinkedIn' })
+	                  _react2.default.createElement('img', { id: 'linkedinIcon', src: '/img/png/link-edin.png', alt: 'LinkedIn Profile' })
 	                ),
 	                ' profile'
 	              )
@@ -1593,7 +1518,7 @@
 	exports.default = Contact;
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1608,9 +1533,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utils = __webpack_require__(17);
+	var _utils = __webpack_require__(16);
 
-	var _errorHandlers = __webpack_require__(24);
+	var _errorHandlers = __webpack_require__(23);
 
 	var _axios = __webpack_require__(1);
 
@@ -1866,7 +1791,7 @@
 	exports.default = ContactFormModal;
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1910,7 +1835,7 @@
 	}
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1923,15 +1848,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ContactInnerModalSuccess = __webpack_require__(26);
+	var _ContactInnerModalSuccess = __webpack_require__(25);
 
 	var _ContactInnerModalSuccess2 = _interopRequireDefault(_ContactInnerModalSuccess);
 
-	var _ContactInnerModalMissing = __webpack_require__(27);
+	var _ContactInnerModalMissing = __webpack_require__(26);
 
 	var _ContactInnerModalMissing2 = _interopRequireDefault(_ContactInnerModalMissing);
 
-	var _ContactInnerModalFailure = __webpack_require__(28);
+	var _ContactInnerModalFailure = __webpack_require__(27);
 
 	var _ContactInnerModalFailure2 = _interopRequireDefault(_ContactInnerModalFailure);
 
@@ -1977,7 +1902,7 @@
 	exports.default = ContactInnerModalContainer;
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2072,7 +1997,7 @@
 	exports.default = ContactInnerModalSuccess;
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2168,7 +2093,7 @@
 	exports.default = ContactInnerModalMissing;
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2302,7 +2227,7 @@
 	exports.default = ContactInnerModalFailure;
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2317,7 +2242,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _FooterLinks = __webpack_require__(30);
+	var _FooterLinks = __webpack_require__(29);
 
 	var _FooterLinks2 = _interopRequireDefault(_FooterLinks);
 
@@ -2386,7 +2311,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2435,7 +2360,7 @@
 	exports.default = FooterLinks;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2536,25 +2461,25 @@
 	};
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");

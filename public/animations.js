@@ -11,7 +11,9 @@ function animHeaderDev() {
     .transition({
       animation: 'slide right in',
       duration: 100,
-      onComplete: () => animHeaderFlagPF(),
+      onComplete: function () {
+        animHeaderFlagPF();
+      },
     });
 }
 
@@ -20,7 +22,9 @@ function animHeaderEnd() {
     .transition({
       animation: 'slide right in',
       duration: 100,
-      onComplete: () => animHeaderDev(),
+      onComplete: function () {
+        animHeaderDev();
+      },
     });
 }
 
@@ -29,7 +33,9 @@ function animHeaderFront() {
     .transition({
       animation: 'slide right in',
       duration: 200,
-      onComplete: () => animHeaderEnd(),
+      onComplete: function () {
+        animHeaderEnd();
+      },
     });
 }
 
@@ -38,7 +44,9 @@ function animHeaderFullName() {
     .transition({
       animation: 'tada',
       duration: 500,
-      onComplete: () => animHeaderFront(),
+      onComplete: function () {
+        animHeaderFront();
+      },
     });
 }
 
@@ -46,6 +54,8 @@ function animHeader() {
   $('.ui.blue.card')
     .transition({
       animation: 'fly down in',
-      onComplete: () => animHeaderFullName(),
+      onComplete: function () {
+        animHeaderFullName();
+      },
     });
 }
